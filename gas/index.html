@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Timeline Portfolio</title>
+  
+  <!-- Modern Tailwind CSS CDN v3 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Integrations: Prompt and Sarabun for professional Thai/English UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons for smooth graphical representation -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <?!= include('style'); ?>
+</head>
+<body class="bg-[#fafbfd] text-gray-800 font-['Sarabun'] antialiased selection:bg-cyan-100 min-h-screen pb-24">
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <header class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-[#1e293b] to-cyan-950 text-white min-h-[340px] flex items-center mb-10 shadow-lg">
+    <!-- Decorative Ambient Blobs -->
+    <div class="absolute top-0 right-0 w-80 h-80 bg-cyan-500 rounded-full filter blur-[100px] opacity-15 pointer-events-none -mr-20 -mt-20"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-500 rounded-full filter blur-[100px] opacity-10 pointer-events-none -ml-20 -mb-20"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 py-12 w-full relative z-10">
+      <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+        <!-- Profile Frame with Elegant Border -->
+        <div class="relative group">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+          <div class="relative w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-white bg-slate-800 flex items-center justify-center">
+            <!-- Replace with direct picture. Default falls back to custom elegant letter icon -->
+            <img id="profile-img" src="<?= profile.profileImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop' ?>" alt="Profile" class="w-full h-full object-cover" onerror="this.classList.add('hidden'); document.getElementById('profile-init').classList.remove('hidden');" />
+            <div id="profile-init" class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-tr from-cyan-600 to-blue-500 text-white font-['Prompt'] font-bold text-3xl hidden">
+              <i class="ph-bold ph-user text-4xl"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bio Content Details -->
+        <div class="text-center md:text-left flex-1">
+          <h1 class="text-3xl md:text-4xl font-extrabold font-['Prompt'] tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-100 to-blue-200">
+            <?= profile.name || 'Your Name' ?>
+          </h1>
+          <p class="text-cyan-200 font-light font-['Prompt'] text-lg mb-3">
+            <?= profile.nameThai || '' ?><? if (profile.nameThai && profile.title) { ?> | <? } ?><?= profile.title || '' ?>
+          </p>
+          <p class="text-slate-300 font-light max-w-xl text-sm leading-relaxed mb-4">
+            <?= profile.summary || '' ?>
+          </p>
+          
+          <!-- Social Contact Badges -->
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs font-['Prompt']">
+            <? if (profile.email) { ?>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-slate-200 backdrop-blur-md font-mono">
+              <i class="ph ph-envelope text-cyan-300 text-sm"></i> <?= profile.email ?>
+            </span>
+            <? } ?>
+            <? if (profile.phone) { ?>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-slate-200 backdrop-blur-md font-mono">
+              <i class="ph ph-phone text-cyan-300 text-sm"></i> <?= profile.phone ?>
+            </span>
+            <? } ?>
+            <? if (profile.address) { ?>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-slate-200 backdrop-blur-md">
+              <i class="ph ph-map-pin text-cyan-300 text-sm"></i> <?= profile.address ?>
+            </span>
+            <? } ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTAINER ==================== -->
+  <main class="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+    
+    <!-- ==================== LEFT SIDEBAR ==================== -->
+    <div class="md:col-span-4 space-y-6">
+      
+      <!-- ==================== FILTERS CONTAINER ==================== -->
+      <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3.5 font-['Prompt'] flex items-center gap-1.5">
+          <i class="ph-bold ph-funnel text-slate-500 text-sm"></i> คัดกรองหมวดหมู่
+        </h2>
+        <div id="filter-buttons" class="flex flex-wrap gap-2 font-['Prompt']">
+          <button onclick="filterCategory('All')" class="category-btn active px-4 py-2 text-sm font-medium rounded-xl transition duration-200 hover:scale-[1.02] focus:outline-none">
+            ทั้งหมด
+          </button>
+        </div>
+      </section>
+
+      <!-- ==================== ATTACHED DOCUMENTS ==================== -->
+      <? if (profile.documents && profile.documents.length > 0) { ?>
+      <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3.5 font-['Prompt'] flex items-center gap-1.5">
+          <i class="ph-bold ph-file-text text-slate-500 text-sm"></i> เอกสารแนบ (Documents)
+        </h2>
+        <div class="space-y-2.5 font-['Prompt'] text-xs">
+          <? for (var i = 0; i < profile.documents.length; i++) { ?>
+          <div class="flex items-center justify-between p-2 bg-slate-50 border border-slate-100 rounded-xl">
+            <span class="font-medium text-slate-700 truncate max-w-[130px]" title="<?= profile.documents[i].name ?>"><?= profile.documents[i].name ?></span>
+            <a href="<?= profile.documents[i].url ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 bg-cyan-50 hover:bg-cyan-100 border border-cyan-100 rounded text-[10px] text-cyan-600 font-semibold transition">
+              เปิดดู <i class="ph-bold ph-arrow-square-out text-[10px]"></i>
+            </a>
+          </div>
+          <? } ?>
+        </div>
+      </section>
+      <? } ?>
+
+      <!-- ==================== LICENSES & CERTIFICATIONS ==================== -->
+      <? if (profile.licenses && profile.licenses.length > 0) { ?>
+      <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3.5 font-['Prompt'] flex items-center gap-1.5">
+          <i class="ph-bold ph-award text-slate-500 text-sm"></i> ใบประกอบวิชาชีพ & Cert
+        </h2>
+        <div class="space-y-3 font-['Prompt'] text-xs">
+          <? for (var i = 0; i < profile.licenses.length; i++) { ?>
+          <div class="relative pl-3.5 before:absolute before:left-0 before:top-1.5 before:w-1.5 before:h-1.5 before:bg-cyan-500 before:rounded-full">
+            <strong class="text-slate-800 block"><?= profile.licenses[i].name ?></strong>
+            <span class="text-slate-400 block text-[10px]"><?= profile.licenses[i].issuer ?></span>
+          </div>
+          <? } ?>
+        </div>
+      </section>
+      <? } ?>
+
+      <!-- ==================== EDUCATION ==================== -->
+      <? if (profile.education && profile.education.length > 0) { ?>
+      <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3.5 font-['Prompt'] flex items-center gap-1.5">
+          <i class="ph-bold ph-book-open text-slate-500 text-sm"></i> ประวัติการศึกษา
+        </h2>
+        <div class="space-y-3 font-['Prompt'] text-xs">
+          <? for (var i = 0; i < profile.education.length; i++) { ?>
+          <div class="relative pl-3.5 before:absolute before:left-0 before:top-1.5 before:w-1.5 before:h-1.5 before:bg-cyan-500 before:rounded-full">
+            <strong class="text-slate-800 block"><?= profile.education[i].degree ?></strong>
+            <span class="text-slate-400 block text-[10px]"><?= profile.education[i].school ?></span>
+          </div>
+          <? } ?>
+        </div>
+      </section>
+      <? } ?>
+
+    </div>
+
+    <!-- ==================== RIGHT TIMELINE SECTION ==================== -->
+    <div class="md:col-span-8 space-y-6">
+      
+      <!-- ==================== TIMELINE AREA ==================== -->
+      <section class="relative">
+        <!-- Loading Spinner Interface -->
+        <div id="loader" class="flex flex-col items-center justify-center py-20 text-cyan-600 transition">
+          <div class="w-12 h-12 border-4 border-cyan-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p class="font-['Prompt'] text-slate-500 text-sm font-light">กำลังประมวลฐานข้อมูล Google Sheets...</p>
+        </div>
+
+        <!-- Empty State Graphic -->
+        <div id="empty-state" class="hidden text-center py-16 px-4 bg-white rounded-2xl border border-slate-100 shadow-sm max-w-lg mx-auto">
+          <div class="w-16 h-16 bg-slate-50 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="ph-bold ph-tray text-3xl"></i>
+          </div>
+          <h3 class="font-['Prompt'] font-bold text-slate-700 mb-1 text-lg">ไม่พบข้อมูลในหมวดหมู่นี้</h3>
+          <p class="text-slate-400 font-light text-sm">โปรดระบุเกณฑ์การคัดกรองหรือลองเลือกหัวข้ออื่นอีกครั้ง</p>
+        </div>
+
+        <!-- Main Visual Timeline Track Line -->
+        <div id="timeline-track" class="hidden absolute left-5 md:left-1/2 top-4 bottom-4 w-[3px] bg-cyan-100 transform md:-translate-x-1/2 pointer-events-none"></div>
+
+        <!-- Vertical Timeline Output Wrapper -->
+        <div id="timeline-container" class="relative min-h-[100px]">
+          <!-- Cards loaded dynamically via script -->
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Include Client Script Logic -->
+  <?!= include('script'); ?>
+</body>
+</html>

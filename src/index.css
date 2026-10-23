@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Prompt:wght@200;300;400;500;600;700&family=Kanit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Prompt", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Kanit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-card: var(--brand-card);
+  --color-brand-card-hover: var(--brand-card-hover);
+  --color-brand-border: var(--brand-border);
+  --color-brand-border-muted: var(--brand-border-muted);
+  --color-brand-card-sec: var(--brand-card-sec);
+  
+  --color-brand-text: var(--brand-text);
+  --color-brand-text-muted: var(--brand-text-muted);
+  --color-brand-text-heading: var(--brand-text-heading);
+}
+
+:root {
+  --brand-bg: #030712; /* Rich Slate-950 */
+  --brand-card: rgba(17, 24, 39, 0.7); /* Translucent Gray-900 */
+  --brand-card-hover: rgba(31, 41, 55, 0.85);
+  --brand-border: rgba(75, 85, 99, 0.2); /* Translucent Border */
+  --brand-border-muted: rgba(55, 65, 81, 0.15);
+  --brand-card-sec: rgba(17, 24, 39, 0.4);
+  
+  --brand-text: #9ca3af; /* gray-400 */
+  --brand-text-muted: #6b7280; /* gray-500 */
+  --brand-text-heading: #f3f4f6; /* gray-100 */
+}
+
+/* Light Mode Overrides */
+.light {
+  --brand-bg: #f8fafc; /* slate-50 */
+  --brand-card: rgba(255, 255, 255, 0.85);
+  --brand-card-hover: rgba(241, 245, 249, 0.95);
+  --brand-border: rgba(203, 213, 225, 0.65); /* slate-300 */
+  --brand-border-muted: rgba(226, 232, 240, 0.5);
+  --brand-card-sec: rgba(241, 245, 249, 0.7);
+  
+  --brand-text: #334155; /* slate-700 */
+  --brand-text-muted: #64748b; /* slate-500 */
+  --brand-text-heading: #0f172a; /* slate-900 */
+}
+
+
+/* Premium custom styles */
+.glass-panel {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.light .glass-panel {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+}
+
+/* Scrollbar customizations */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--brand-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.3);
+  border-radius: 9999px;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.55);
+}
+
+/* Print CV Styling */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  .print-page-break {
+    page-break-before: always;
+  }
+}
+
+/* Custom fade-in animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

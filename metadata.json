@@ -1,0 +1,6 @@
+{
+  "name": "GAS Timeline Portfolio Builder",
+  "description": "An interactive vertical timeline portfolio builder that generates complete, production-ready code for Google Apps Script Web Apps with Google Sheets and Drive integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

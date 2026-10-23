@@ -1,0 +1,250 @@
+<script>
+  // Global State Variable variables
+  let allPortfolioItems = [];
+  let currentCategory = 'All';
+
+  // Bootstrapping operations, runs when window loaded
+  window.addEventListener('load', function() {
+    retrieveData();
+  });
+
+  /**
+   * Fetches latest record values from Google Sheets via Code.gs
+   */
+  function retrieveData() {
+    document.getElementById('loader').classList.remove('hidden');
+    document.getElementById('timeline-track').classList.add('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    
+    google.script.run
+      .withSuccessHandler(function(response) {
+        allPortfolioItems = response || [];
+        initializeFilters();
+        renderTimeline();
+      })
+      .withFailureHandler(function(err) {
+        console.error("Retrieve error: ", err);
+        document.getElementById('loader').innerHTML = `
+          <div class="text-red-500 text-center font-['Prompt']">
+            <i class="ph-bold ph-warning-circle text-4xl mb-2"></i>
+            <h4 class="font-bold">เกิดข้อผิดพลาดในการโหลดข้อมูล</h4>
+            <p class="text-xs font-light text-slate-400 mt-1">${err.message || err}</p>
+          </div>
+        `;
+      })
+      .getPortfolioData();
+  }
+
+  /**
+   * Generates dynamic filter lists using Category field found inside the database
+   */
+  function initializeFilters() {
+    const listContainer = document.getElementById('filter-buttons');
+    if (!listContainer) return;
+
+    // Collate all unique categories present in sheet response
+    const categoriesSet = new Set();
+    allPortfolioItems.forEach(item => {
+      if (item.Category) {
+        categoriesSet.add(item.Category.trim());
+      }
+    });
+
+    const categoryList = ['All', ...Array.from(categoriesSet)];
+    
+    // Clear structure
+    listContainer.innerHTML = '';
+
+    categoryList.forEach(categoryName => {
+      const isSelected = categoryName === currentCategory;
+      const labelText = categoryName === 'All' ? 'ทั้งหมด' : categoryName;
+      
+      const button = document.createElement('button');
+      button.className = `category-btn px-4 py-2 text-xs font-medium rounded-xl transition duration-200 hover:scale-[1.02] focus:outline-none ${isSelected ? 'active' : ''}`;
+      button.innerText = labelText;
+      button.onclick = function() {
+        filterCategory(categoryName);
+      };
+      
+      listContainer.appendChild(button);
+    });
+  }
+
+  /**
+   * Modifies dynamic filter selection and redraws cards list
+   */
+  function filterCategory(categoryName) {
+    currentCategory = categoryName;
+    
+    // Update active visual tags
+    const buttons = document.querySelectorAll('#filter-buttons button');
+    buttons.forEach(btn => {
+      if (btn.innerText === (categoryName === 'All' ? 'ทั้งหมด' : categoryName)) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+    
+    renderTimeline();
+  }
+
+  /**
+   * Master render method to construct the vertical timeline
+   */
+  function renderTimeline() {
+    const container = document.getElementById('timeline-container');
+    const track = document.getElementById('timeline-track');
+    const loader = document.getElementById('loader');
+    const emptyState = document.getElementById('empty-state');
+    
+    // Hide loading screen
+    loader.classList.add('hidden');
+    
+    // Filter array to current selection
+    const filteredItems = allPortfolioItems.filter(item => {
+      if (currentCategory === 'All') return true;
+      return item.Category === currentCategory;
+    });
+
+    if (filteredItems.length === 0) {
+      container.innerHTML = '';
+      track.classList.add('hidden');
+      emptyState.classList.remove('hidden');
+      return;
+    }
+
+    emptyState.classList.add('hidden');
+    track.classList.remove('hidden');
+    
+    let htmlContent = '';
+    
+    filteredItems.forEach((item, index) => {
+      const isLeft = index % 2 === 0; // alternates sides under desktop grids
+      
+      // Split Tools field and create badge tags
+      let badgesHtml = '';
+      if (item.Tools) {
+        const toolsArr = item.Tools.split(',').map(t => t.trim());
+        toolsArr.forEach(toolName => {
+          if (toolName) {
+            badgesHtml += `
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-50 border border-cyan-100/50 text-cyan-700 text-xs font-medium font-['Prompt']">
+                <i class="ph-bold ph-cpu text-[11px] text-cyan-400"></i>${toolName}
+              </span>
+            `;
+          }
+        });
+      }
+
+      // Format elegant Category Badge UI styling
+      const categoryTheme = getCategoryTheme(item.Category);
+
+      // Handle fallback image if no Drive link provided or contains invalid ID placeholders
+      const imageSourceUrl = item.Drive_Image_Link && !item.Drive_Image_Link.includes('_demo_image') 
+        ? item.Drive_Image_Link 
+        : getCategoryFallbackImage(item.Category);
+
+      // Visual structure: Responsive flex/grid. Left margin on mobile to align dot path, center alternate layout in desktop md:
+      htmlContent += `
+        <div class="relative flex flex-col md:flex-row items-start md:justify-between w-full mb-10 last:mb-0 text-left fade-in-up" style="animation-delay: ${index * 0.15}s;">
+          
+          <!-- Desktop Alternating Alignment Content Placement -->
+          <div class="w-full md:w-[46%] pl-12 md:pl-0 order-2 md:order-1 ${isLeft ? 'md:text-right' : 'md:opacity-0 md:h-0 md:overflow-hidden md:pointer-events-none'}` + (isLeft ? '' : ' md:hidden') + `">
+            ${isLeft ? createCardElement(item, imageSourceUrl, badgesHtml, categoryTheme) : ''}
+          </div>
+
+          <!-- Chronology Timeline Node (Dot Point) -->
+          <div class="absolute left-1.5 md:left-1/2 top-4 w-10 h-10 rounded-full bg-white border-2 border-cyan-500 flex items-center justify-center transform md:-translate-x-1/2 z-10 timeline-dot">
+            <i class="${categoryTheme.icon} text-lg text-cyan-600 animate-pulse"></i>
+          </div>
+
+          <div class="w-full md:w-[46%] pl-12 md:pl-0 order-2 ${!isLeft ? 'md:text-left' : 'md:opacity-0 md:h-0 md:overflow-hidden md:pointer-events-none md:order-3'}` + (!isLeft ? '' : ' md:hidden') + `">
+            ${!isLeft ? createCardElement(item, imageSourceUrl, badgesHtml, categoryTheme) : ''}
+          </div>
+          
+        </div>
+      `;
+    });
+    
+    container.innerHTML = htmlContent;
+  }
+
+  /**
+   * Dynamic theme mapping dictionary to stylize timeline nodes
+   */
+  function getCategoryTheme(category) {
+    if (!category) return { bg: 'bg-cyan-100', text: 'text-cyan-800', border: 'border-cyan-200', icon: 'ph-bold ph-folder' };
+    
+    const catUpper = category.trim().toUpperCase();
+    if (catUpper.includes('SAFETY') || catUpper.includes('COMPLIANCE') || catUpper.includes('SECURITY') || catUpper.includes('HR')) {
+      return { bg: 'bg-rose-50 text-rose-800', border: 'border-rose-100', icon: 'ph-bold ph-shield-check', accent: 'bg-rose-500' };
+    } else if (catUpper.includes('INFRASTRUCTURE') || catUpper.includes('IT') || catUpper.includes('NETWORK')) {
+      return { bg: 'bg-cyan-50 text-cyan-800', border: 'border-cyan-100', icon: 'ph-bold ph-hard-drives', accent: 'bg-cyan-500' };
+    } else if (catUpper.includes('MANAGEMENT') || catUpper.includes('TOOLS') || catUpper.includes('PROJECT')) {
+      return { bg: 'bg-indigo-50 text-indigo-800', border: 'border-indigo-100', icon: 'ph-bold ph-presentation-chart', accent: 'bg-indigo-500' };
+    }
+    
+    return { bg: 'bg-slate-50 text-slate-800', border: 'border-slate-100', icon: 'ph-bold ph-cube', accent: 'bg-cyan-500' };
+  }
+
+  /**
+   * Smart fallback images with placeholder visual representations fitting each niche
+   */
+  function getCategoryFallbackImage(category) {
+    if (!category) return 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop';
+    
+    const catUpper = category.trim().toUpperCase();
+    if (catUpper.includes('SAFETY') || catUpper.includes('COMPLIANCE') || catUpper.includes('SECURITY') || catUpper.includes('HR')) {
+      return 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=600&auto=format&fit=crop'; // industrial safety
+    } else if (catUpper.includes('INFRASTRUCTURE') || catUpper.includes('IT') || catUpper.includes('NETWORK')) {
+      return 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=600&auto=format&fit=crop'; // server hardware
+    } else if (catUpper.includes('MANAGEMENT') || catUpper.includes('TOOLS') || catUpper.includes('PROJECT')) {
+      return 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop'; // management desk
+    }
+    
+    return 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop'; // Office setup
+  }
+
+  /**
+   * Compiles elements to render the dynamic portfolio projects card
+   */
+  function createCardElement(item, imageUrl, badgesHtml, theme) {
+    return `
+      <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 hover:border-slate-200">
+        <!-- Project Thumbnail Frame -->
+        <div class="relative aspect-video w-full overflow-hidden bg-slate-900 group">
+          <img src="${imageUrl}" alt="${item.Title}" class="w-full h-full object-cover image-hover-zoom" loading="lazy" />
+          
+          <!-- Category Floating Overlay Pill -->
+          <span class="absolute top-3.5 left-3.5 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${theme.bg} ${theme.border} border font-['Prompt']">
+            ${item.Category}
+          </span>
+
+          <!-- Time frame Tag Overlay -->
+          <span class="absolute bottom-3 right-3 px-2.5 py-1 text-[11px] font-medium rounded-lg bg-slate-900/70 text-white backdrop-blur-sm shadow-sm font-['Prompt'] flex items-center gap-1">
+            <i class="ph ph-calendar"></i> ${item.Date}
+          </span>
+        </div>
+
+        <!-- Descriptive Metadata Body -->
+        <div class="p-5 font-prompt">
+          <h3 class="text-base font-bold font-['Prompt'] text-slate-800 leading-snug mb-2.5 hover:text-cyan-600 transition duration-200">
+            ${item.Title}
+          </h3>
+          <p class="text-slate-500 font-light text-xs leading-relaxed mb-4 font-['Sarabun']">
+            ${item.Description}
+          </p>
+
+          <!-- Separator Line -->
+          <div class="h-px bg-slate-100/80 mb-3.5"></div>
+
+          <!-- Skill Chipsets list footer -->
+          <div class="flex flex-wrap gap-1.5">
+            ${badgesHtml ? badgesHtml : '<span class="text-xs text-slate-400 font-light italic font-prompt">ไม่ได้ระบุเครื่องมือ</span>'}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+</script>

@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ทวีศักดิ์ คำปก (Taweesak Khampok) — Executive & Technical Web Portfolio</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        if (typeof tailwind !== 'undefined') {
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Sarabun', 'Inter', 'sans-serif'],
+                            display: ['Prompt', 'Inter', 'sans-serif'],
+                            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+                        }
+                    }
+                }
+            };
+        }
+
+        window.executiveSvgAvatar = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
+                <defs>
+                    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#0f172a"/>
+                        <stop offset="50%" stop-color="#1e293b"/>
+                        <stop offset="100%" stop-color="#0369a1"/>
+                    </linearGradient>
+                </defs>
+                <rect width="600" height="750" fill="url(#bg)"/>
+                <circle cx="300" cy="260" r="115" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-width="3"/>
+                <circle cx="300" cy="245" r="65" fill="#e2e8f0"/>
+                <path d="M165 510 C165 395 435 395 435 510 Z" fill="#e2e8f0"/>
+                <rect x="70" y="575" width="460" height="100" rx="20" fill="#0f172a" fill-opacity="0.7" stroke="#38bdf8" stroke-opacity="0.4"/>
+                <text x="300" y="620" text-anchor="middle" fill="#ffffff" font-family="Prompt, sans-serif" font-size="28" font-weight="bold">ทวีศักดิ์ คำปก</text>
+                <text x="300" y="652" text-anchor="middle" fill="#38bdf8" font-family="Inter, sans-serif" font-size="16" font-weight="600" letter-spacing="2">TAWEESAK KHAMPOK</text>
+            </svg>
+        `);
+
+        window.handleHeroImageFallback = function (img) {
+            if (!img || (img.src && img.src.startsWith("data:"))) return;
+            const driveId = img.dataset.driveId || "1CdBgiIlgzRiveKbQMhV30s9qrzCyL3FF";
+            if (!img.dataset.fallbackStep) {
+                img.dataset.fallbackStep = "1";
+                img.src = "https://drive.google.com/thumbnail?id=" + driveId + "&sz=w1000";
+            } else if (img.dataset.fallbackStep === "1") {
+                img.dataset.fallbackStep = "2";
+                img.src = "https://drive.google.com/uc?export=view&id=" + driveId;
+            } else {
+                img.dataset.fallbackStep = "3";
+                img.src = window.executiveSvgAvatar;
+            }
+        };
+
+        window.handleDrivePreviewImgError = function (img) {
+            if (!img || (img.src && img.src.startsWith("data:"))) return;
+            const driveId = window.currentDriveDocId || "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM";
+            if (!img.dataset.fallbackStep) {
+                img.dataset.fallbackStep = "1";
+                img.src = "https://drive.google.com/thumbnail?id=" + driveId + "&sz=w1200";
+            } else {
+                img.classList.add('hidden');
+                const fallbackCard = document.getElementById('drive-fallback-card');
+                if (fallbackCard) fallbackCard.classList.remove('hidden');
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --text-muted: #64748b;
+            --border-std: #e2e8f0;
+            --accent-blue: #0284c7;
+            --accent-teal: #0d9488;
+            --accent-amber: #f59e0b;
+        }
+        html.dark {
+            --bg-page: #020617;
+            --bg-surface: #0f172a;
+            --bg-muted: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-std: #1e293b;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Sarabun', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Prompt', 'Inter', sans-serif;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .top-right-edit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-family: 'Prompt', 'Sarabun', sans-serif;
+            font-weight: 700;
+            font-size: 13.5px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: #0f172a;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .top-right-edit-btn:hover {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+        .top-right-edit-btn.unlocked {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+        }
+        .bg-soft-mesh {
+            background-image:
+                radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(20, 184, 166, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+        body.edit-mode-active [contenteditable="true"] {
+            outline: 2px dashed rgba(2, 132, 199, 0.7);
+            outline-offset: 3px;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            cursor: text;
+        }
+        body.edit-mode-active [contenteditable="true"]:hover,
+        body.edit-mode-active [contenteditable="true"]:focus {
+            outline: 2px solid #0284c7;
+            background-color: rgba(14, 165, 233, 0.12);
+        }
+        .admin-only-control {
+            display: none !important;
+        }
+        body.edit-mode-active .admin-only-control {
+            display: inline-flex !important;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(148, 163, 184, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.4);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.65);
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 bg-soft-mesh selection:bg-sky-500 selection:text-white transition-colors duration-200">
+
+    <!-- STICKY NAVIGATION HEADER WITH TOP-RIGHT "แก้ไขข้อมูล" BUTTON -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+            <a href="#top" class="flex items-center space-x-3 group shrink-0">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-600 to-teal-600 flex items-center justify-center text-white font-display font-bold text-base shadow-md shadow-sky-600/20 group-hover:scale-105 transition">
+                    TK
+                </div>
+                <div>
+                    <div class="font-display font-bold text-slate-900 dark:text-white text-sm sm:text-base leading-tight">
+                        ทวีศักดิ์ คำปก
+                    </div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                        EXECUTIVE &amp; TECH PORTFOLIO
+                    </div>
+                </div>
+            </a>
+
+            <nav class="hidden xl:flex items-center space-x-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+                <a href="#about" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ข้อมูลสรุป</a>
+                <a href="#drive-showcase" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">คลังเอกสาร &amp; E-Book</a>
+                <a href="#competencies" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ความเชี่ยวชาญ 4 มิติ</a>
+                <a href="#lpr-project" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ผลงานโครงการ LPR</a>
+                <a href="#experience" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ประวัติ &amp; คุณวุฒิ</a>
+                <a href="#licenses-section" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ใบรับรอง (19)</a>
+                <a href="#training-section" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 transition">ประวัติอบรม (65)</a>
+            </nav>
+
+            <div class="flex items-center space-x-2 shrink-0">
+                <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="hidden sm:inline-flex px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs sm:text-sm shadow-sm transition items-center">
+                    <i class="fa-solid fa-book-open mr-1.5"></i>
+                    <span>อ่าน E-Book</span>
+                </button>
+
+                <button type="button" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition" title="สลับโหมดสี สว่าง/มืด">
+                    <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+
+                <button type="button" onclick="window.print()" class="hidden md:inline-flex px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-medium transition items-center" title="พิมพ์หรือบันทึกเป็น PDF">
+                    <i class="fa-solid fa-print mr-1.5 text-slate-500"></i> PDF
+                </button>
+
+                <!-- TOP-RIGHT EDIT BUTTON (Password: NUTza067668141) -->
+                <button type="button" id="header-edit-btn" onclick="handleEditButtonClick()" class="top-right-edit-btn" title="คลิกเพื่อเข้าสู่โหมดแก้ไขข้อมูล">
+                    <i id="header-edit-icon" class="fa-solid fa-lock"></i>
+                    <span id="header-edit-text">แก้ไขข้อมูล</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ADMIN FLOATING TOOLBAR -->
+        <div id="admin-toolbar" class="hidden bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white px-4 py-3 shadow-xl border-b-2 border-amber-400">
+            <div class="max-w-7xl mx-auto flex flex-col gap-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="px-2.5 py-1 rounded-md bg-amber-400 text-slate-950 font-display font-bold text-xs flex items-center">
+                            <i class="fa-solid fa-unlock-keyhole mr-1.5"></i> โหมดแก้ไขเปิดอยู่
+                        </span>
+                        <span id="save-status-badge" class="px-2.5 py-1 rounded-md bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-xs flex items-center">
+                            <i class="fa-solid fa-circle-check mr-1.5"></i> พร้อมบันทึกอัตโนมัติ
+                        </span>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button type="button" onclick="openMediaManagerModal('profile')" class="px-3 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs transition flex items-center shadow-sm">
+                            <i class="fa-solid fa-camera mr-1.5"></i> เปลี่ยนรูปโปรไฟล์
+                        </button>
+                        <button type="button" onclick="openMediaManagerModal('drive')" class="px-3 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs transition flex items-center shadow-sm">
+                            <i class="fa-solid fa-file-arrow-up mr-1.5"></i> อัปโหลดเอกสาร / Drive
+                        </button>
+                        <button type="button" onclick="openSlideEditorModal()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition flex items-center shadow-sm">
+                            <i class="fa-solid fa-layer-group mr-1.5"></i> แก้ไขสไลด์ E-Book
+                        </button>
+                        <button type="button" onclick="saveAllPortfolioChanges(true)" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition flex items-center">
+                            <i class="fa-solid fa-floppy-disk mr-1.5"></i> บันทึกข้อมูลทันที
+                        </button>
+                        <button type="button" onclick="copyUpdatedHtmlForGoogleSites()" class="px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs shadow transition flex items-center" title="คัดลอกโค้ดเพื่อนำไปวางทับใน Google Sites">
+                            <i class="fa-solid fa-copy mr-1.5"></i> คัดลอกโค้ดลง Google Sites
+                        </button>
+                        <button type="button" onclick="exportUpdatedHtmlFile()" class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs shadow transition flex items-center">
+                            <i class="fa-solid fa-download text-sky-600 mr-1.5"></i> ดาวน์โหลด .HTML
+                        </button>
+                        <button type="button" onclick="resetPortfolioToDefault()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white font-semibold text-xs transition" title="คืนค่าเริ่มต้น">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button type="button" onclick="exitEditMode()" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs transition flex items-center">
+                            <i class="fa-solid fa-lock mr-1.5"></i> ล็อกโหมดแก้ไข
+                        </button>
+                    </div>
+                </div>
+                <div class="text-[11px] text-amber-200/90 bg-slate-950/60 px-3 py-1.5 rounded-lg border border-amber-400/20 flex items-center justify-between gap-2">
+                    <span><i class="fa-solid fa-circle-info mr-1 text-amber-400"></i> <strong>คำแนะนำสำหรับ Google Sites:</strong> เมื่อแก้ไขเสร็จ ให้กดปุ่มสีเหลือง <strong>"คัดลอกโค้ดลง Google Sites"</strong> แล้วนำไปวางทับในกล่อง Embed Code ของ Google Sites เพื่อให้ข้อมูลและรูปภาพอัปเดตถาวรครับ</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main id="top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16">
+
+        <!-- 1. HERO EXECUTIVE PROFILE SECTION -->
+        <section id="about" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 lg:p-12 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-sky-400/10 dark:bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-400/10 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative">
+                <div class="lg:col-span-4 flex flex-col items-center">
+                    <div class="relative group w-60 sm:w-64">
+                        <div class="w-60 h-72 sm:w-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border-4 border-white dark:border-slate-800 shadow-xl relative cursor-pointer" onclick="openDriveFullscreenModal('profile-photo')" title="คลิกเพื่อดูภาพโปรไฟล์ขนาดเต็มจอ">
+                            <img id="hero-drive-img"
+                                 referrerpolicy="no-referrer"
+                                 src="/profile.jpg" data-drive-id="1CdBgiIlgzRiveKbQMhV30s9qrzCyL3FF"
+                                 alt="ทวีศักดิ์ คำปก (Taweesak Khampok)"
+                                 class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
+                                 onerror="handleHeroImageFallback(this)"
+                                 data-drive-id="16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM">
+                            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                <span class="px-3.5 py-2 rounded-xl bg-white/95 text-slate-900 font-semibold text-xs shadow-lg flex items-center">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-sky-600 mr-1.5"></i> คลิกดูภาพจริงเต็มจอ
+                                </span>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="openMediaManagerModal('profile')" class="admin-only-control mt-2.5 w-full py-2.5 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow transition items-center justify-center">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> อัปโหลดรูปใหม่ / เลือกจาก Google Drive
+                        </button>
+
+                        <button type="button" onclick="openDriveFullscreenModal('profile-photo')" class="mt-2.5 w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-sky-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-medium border border-slate-200 dark:border-slate-700 transition flex items-center justify-center">
+                            <i class="fa-brands fa-google-drive text-sky-600 dark:text-sky-400 mr-1.5"></i>
+                            <span id="profile-source-label">Google Drive: 16ZL5Xl3TY6m... (คลิกขยาย)</span>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 flex flex-wrap justify-center gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
+                            TSM Certified 2025
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+                            13+ Years Enterprise Exp.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/80 border border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 text-xs font-semibold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>IT INFRASTRUCTURE • SMART SECURITY (LPR/CCTV) • OPERATIONS MANAGEMENT</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-slate-900 dark:text-white tracking-tight">
+                            ทวีศักดิ์ คำปก <span class="text-sky-600 dark:text-sky-400 font-semibold text-2xl sm:text-3xl block sm:inline">(Taweesak Khampok)</span>
+                        </h1>
+                        <p class="text-base sm:text-lg font-medium text-slate-600 dark:text-slate-300">
+                            ผู้เชี่ยวชาญด้านการบริหารระบบโครงสร้างพื้นฐานไอที ระบบรักษาความปลอดภัยอัจฉริยะ (LPR / CCTV) และการจัดการจราจรระดับองค์กร
+                        </p>
+                    </div>
+
+                    <div class="p-5 sm:p-6 rounded-2xl bg-slate-50/90 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 space-y-3 text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed">
+                        <p>
+                            ผู้เชี่ยวชาญด้านการบริหารงานปฏิบัติการโครงสร้างพื้นฐานไอที ระบบรักษาความปลอดภัย และการจัดการจราจร (<strong>IT Infrastructure &amp; Security Operations Specialist</strong>) ด้วยประสบการณ์ระดับองค์กรรวมกว่า <strong>13 ปี</strong> เชี่ยวชาญเฉพาะทางในการผสานเทคโนโลยี <strong>License Plate Recognition (LPR)</strong> และโครงข่ายกล้องวงจรปิด <strong>CCTV Surveillance ขนาดใหญ่กว่า 2,000+ กล้อง</strong> เข้ากับระบบบริหารทรัพยากรบุคคลและระบบบริหารจัดการองค์กรอย่างเป็นรูปธรรม
+                        </p>
+                        <p>
+                            ออกแบบและติดตั้งระบบ LPR บริหารจัดการยานพาหนะมากกว่า <strong>5,000+ คัน</strong> เชื่อมโยงผ่านแพลตฟอร์ม <strong>HikCentral Professional</strong> และ <strong>ZKBio CVSecurity</strong> พร้อมกำกับดูแลตัวชี้วัดด้วย <strong>Microsoft Power BI Dashboard</strong> และถือใบอนุญาต <strong>ผู้จัดการความปลอดภัยด้านการขนส่ง (Transport Safety Manager - TSM 2025)</strong> จากกรมการขนส่งทางบก
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                        <div onclick="copyToClipboard('062-3285963', 'คัดลอกเบอร์โทรศัพท์เรียบร้อยแล้ว')" class="cursor-pointer p-3.5 rounded-2xl bg-slate-50 hover:bg-sky-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700 transition flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-[11px] text-slate-400">โทรศัพท์ (คลิกคัดลอก)</div>
+                                <div class="text-xs sm:text-sm font-bold text-slate-800 dark:text-white truncate">062-3285963</div>
+                            </div>
+                        </div>
+
+                        <div onclick="copyToClipboard('closec16522@gmail.com', 'คัดลอกอีเมลเรียบร้อยแล้ว')" class="cursor-pointer p-3.5 rounded-2xl bg-slate-50 hover:bg-teal-50/70 dark:bg-slate-800/70 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700 transition flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-[11px] text-slate-400">อีเมลติดต่อ</div>
+                                <div class="text-xs sm:text-sm font-bold text-slate-800 dark:text-white truncate">closec16522@gmail.com</div>
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-[11px] text-slate-400">ที่อยู่ปัจจุบัน</div>
+                                <div class="text-xs sm:text-sm font-bold text-slate-800 dark:text-white truncate">116/1 ม.8 ต.ห้วยทราย อ.หนองแค จ.สระบุรี</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 KEY ACHIEVEMENT METRICS BAR -->
+            <div class="mt-10 pt-8 border-t border-slate-200/80 dark:border-slate-800 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-sky-600 dark:text-sky-400">5,000+ คัน</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">LPR Fleet Management</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">บริหารฐานข้อมูลทะเบียนรถและสิทธิ์เข้า-ออก</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-teal-600 dark:text-teal-400">2,000+ โหนด</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">Enterprise CCTV</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">ดูแลโครงข่ายกล้องและระบบ VMware 99.9%</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-emerald-600 dark:text-emerald-400">0.5% Error</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">High LPR Accuracy</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">จูนพารามิเตอร์ลด Error จาก 4.37% เหลือ 0.5%</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-indigo-600 dark:text-indigo-400">&lt; 30 วินาที</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">Fast Gate Processing</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">ลดเวลาผ่านป้อมจาก 3-5 นาที เร็วขึ้น 6-10 เท่า</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-amber-600 dark:text-amber-400">64,980 ฿</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">100% Cost Avoidance</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">ประหยัดงบลงทุนเครื่องและบัตรผ่าน (Zero Cost)</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/70">
+                    <div class="text-2xl font-display font-bold text-rose-600 dark:text-rose-400">100% Auto</div>
+                    <div class="text-xs font-bold text-slate-800 dark:text-slate-200 mt-1">HR &amp; Power BI Sync</div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">เชื่อมเวลาเข้า-ออกงานและสรุปรายงานอัตโนมัติ</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. LIVE GOOGLE DRIVE & INTERACTIVE E-BOOK VIEWER SECTION -->
+        <section id="drive-showcase" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 space-y-6">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+                <div>
+                    <div class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
+                        <i class="fa-brands fa-google-drive"></i>
+                        <span>LIVE GOOGLE DRIVE &amp; INTERACTIVE E-BOOK PORTFOLIO</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+                        คลังไฟล์จริงจาก Google Drive และสไลด์ผลงานแบบ E-Book (กดดูเต็มจอได้)
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        ดึงข้อมูลโดยตรงจาก Google Drive ID: <code id="display-drive-id-code" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 font-mono">16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</code> พร้อมระบบเปิดอ่านสไลด์โครงการ LPR ครบทุกหน้า
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
+                        <i class="fa-solid fa-file-arrow-up mr-2"></i> อัปโหลดเอกสาร / เลือกไฟล์ Google Drive
+                    </button>
+                    <button type="button" onclick="openSlideEditorModal()" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
+                        <i class="fa-solid fa-pen-ruler mr-2"></i> แก้ไขสไลด์ E-Book
+                    </button>
+                    <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center">
+                        <i class="fa-solid fa-expand mr-2"></i> ดูไฟล์ Google Drive เต็มจอ
+                    </button>
+                    <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center">
+                        <i class="fa-solid fa-book-open mr-2"></i> เปิดอ่าน E-Book เต็มจอ
+                    </button>
+                    <a id="external-drive-link" href="https://drive.google.com/file/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM/view" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium border border-slate-200 dark:border-slate-700 transition flex items-center">
+                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดในแท็บใหม่
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Left: Google Drive & Uploaded Document Viewer Card -->
+                <div class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 overflow-hidden">
+                    <div class="p-4 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2.5">
+                            <i class="fa-brands fa-google-drive text-sky-600 dark:text-sky-400 text-lg"></i>
+                            <div>
+                                <h3 class="font-bold text-slate-800 dark:text-white text-sm">คลังไฟล์และเอกสาร (Google Drive / Upload)</h3>
+                                <p id="drive-card-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">ID: 16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-1.5">
+                            <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 hover:bg-amber-400 text-xs font-bold transition items-center">
+                                <i class="fa-solid fa-upload mr-1"></i> อัปโหลด/เปลี่ยน
+                            </button>
+                            <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="px-2.5 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400 hover:bg-sky-100 text-xs font-semibold transition flex items-center">
+                                <i class="fa-solid fa-expand mr-1"></i> เต็มจอ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="drive-preview-stage" class="relative bg-slate-900 h-80 sm:h-96 w-full flex flex-col items-center justify-center overflow-hidden p-3">
+                        <img id="inline-drive-direct-img"
+                             referrerpolicy="no-referrer"
+                             src="https://lh3.googleusercontent.com/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM=w1000"
+                             alt="Google Drive File Preview"
+                             onerror="handleDrivePreviewImgError(this)"
+                             onclick="openDriveFullscreenModal('drive-embed')"
+                             class="w-full h-full object-contain rounded-xl cursor-pointer transition duration-300 hover:scale-[1.02]" />
+
+                        <div id="drive-fallback-card" class="hidden w-full h-full flex flex-col items-center justify-center text-center p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 rounded-xl border border-slate-700">
+                            <div class="w-16 h-16 rounded-2xl bg-sky-500/20 border border-sky-400/30 text-sky-400 flex items-center justify-center text-3xl mb-3">
+                                <i class="fa-brands fa-google-drive"></i>
+                            </div>
+                            <h4 class="text-white font-display font-bold text-base">เชื่อมต่อไฟล์ Google Drive พร้อมใช้งาน</h4>
+                            <p id="drive-fallback-id-text" class="text-xs text-sky-300 font-mono mt-1">ID: 16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</p>
+                            <p class="text-xs text-slate-300 mt-2 max-w-xs">
+                                กรุณาตั้งค่าแชร์ไฟล์ใน Drive เป็น <strong>"ทุกคนที่มีลิงก์ (Anyone with the link)"</strong> หรืออัปโหลดไฟล์จากเครื่อง
+                            </p>
+                            <div class="mt-4 flex flex-wrap justify-center gap-2">
+                                <a id="fallback-open-drive-btn" href="https://drive.google.com/file/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM/view" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow transition flex items-center">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดบน Google Drive
+                                </a>
+                                <button type="button" onclick="openMediaManagerModal('drive')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow transition flex items-center">
+                                    <i class="fa-solid fa-file-arrow-up mr-1.5"></i> อัปโหลดไฟล์
+                                </button>
+                            </div>
+                        </div>
+
+                        <iframe id="inline-uploaded-pdf-iframe" src="about:blank" class="hidden w-full h-full border-0 rounded-xl bg-white" title="Uploaded PDF Viewer"></iframe>
+                    </div>
+
+                    <div class="p-3.5 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span>รองรับการอัปโหลดและดึงภาพจาก Google Drive</span>
+                        <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline">
+                            คลิกขยายเต็มจอ →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive E-Book Slide Deck -->
+                <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 text-white border border-slate-800 overflow-hidden shadow-lg">
+                    <div class="p-4 bg-slate-950/80 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                            <span class="font-display font-bold text-sm text-white">E-Book สรุปผลงาน: โครงการ LPR ระบบรู้ทันทุกการเคลื่อนไหว</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span id="inline-slide-counter" class="px-2.5 py-1 rounded-full bg-slate-800 text-sky-300 font-mono text-xs">หน้า 1 / 8</span>
+                            <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold transition flex items-center">
+                                <i class="fa-solid fa-expand mr-1"></i> อ่านเต็มจอ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="inline-slide-stage" class="p-6 sm:p-8 flex-1 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/70 min-h-[320px]">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <div class="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between gap-2">
+                        <button type="button" onclick="changeSlide(-1)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center">
+                            <i class="fa-solid fa-chevron-left mr-1.5"></i> หน้าก่อนหน้า
+                        </button>
+                        <div id="inline-slide-dots" class="flex items-center space-x-1.5 overflow-x-auto py-1"></div>
+                        <button type="button" onclick="changeSlide(1)" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center">
+                            หน้าถัดไป <i class="fa-solid fa-chevron-right ml-1.5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CORE SYNERGIES & KEY COMPETENCIES (4 PILLARS) -->
+        <section id="competencies" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
+                        CORE SYNERGIES &amp; KEY COMPETENCIES
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+                        จุดเด่นและความเชี่ยวชาญเฉพาะด้าน 4 มิติหลัก
+                    </h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                    บูรณาการเทคโนโลยีโครงสร้างพื้นฐานไอที ระบบรักษาความปลอดภัย และการบริหารจัดการหน้างานจริง
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Pillar A -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-mono uppercase text-sky-600 dark:text-sky-400 font-bold">PILLAR A • IT &amp; AUTOMATION</span>
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">IT Infrastructure &amp; System Integration</h3>
+                        </div>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-sky-500 mt-1 shrink-0"></i>
+                            <span><strong>LPR Architecture & Camera Setup:</strong> วางแผน ออกแบบ และติดตั้งระบบกล้อง LPR หน้างานจริง ปรับตั้งค่าพารามิเตอร์กล้อง (Shutter Speed, Gain, Video Streams, มุมกล้อง และไฟ IR/Flash) เพื่อจับป้ายทะเบียนแม่นยำทุกสภาพแสง</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-sky-500 mt-1 shrink-0"></i>
+                            <span><strong>VMS & Enterprise Security Platform:</strong> บริหารจัดการระบบผ่าน <strong>HikCentral Professional</strong> และ <strong>ZKBio CVSecurity</strong> ควบคู่กับเครือข่ายกล้องวงจรปิด CCTV ขนาดใหญ่กว่า 2,000 กล้อง</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-sky-500 mt-1 shrink-0"></i>
+                            <span><strong>HR Security x IT Infra Integration:</strong> เชื่อมโยงข้อมูลป้ายทะเบียนเข้ากับระบบ Time Attendance และส่งต่อระบบ Payroll อัตโนมัติ ลดความผิดพลาด 100%</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-sky-500 mt-1 shrink-0"></i>
+                            <span><strong>Network &amp; Virtualization Governance:</strong> ดูแลโครงสร้างเครือข่าย Fiber Optic, Factory Network Segments, VMware Infrastructure (Uptime 99.9%) และระบบสำรองข้อมูล</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pillar B -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-traffic-light"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-mono uppercase text-teal-600 dark:text-teal-400 font-bold">PILLAR B • TRAFFIC &amp; SAFETY</span>
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">Traffic Operations &amp; Incident Management</h3>
+                        </div>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-teal-500 mt-1 shrink-0"></i>
+                            <span><strong>Large-Scale Traffic &amp; Parking Operations:</strong> ควบคุมดูแลระบบจราจร ทางเข้า-ออก ป้อม รปภ. และลานจอดรถของพื้นที่โรงงานอุตสาหกรรมขนาดใหญ่ (โซนรังสิตและหนองแค)</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-teal-500 mt-1 shrink-0"></i>
+                            <span><strong>Digital Vehicle Registration Workflows:</strong> พัฒนาระบบลงทะเบียนยานพาหนะและผู้มาติดต่ออัตโนมัติด้วย Microsoft Forms และ LINE Official Account</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-teal-500 mt-1 shrink-0"></i>
+                            <span><strong>Intelligent Surveillance &amp; Response:</strong> เฝ้าระวังสายทางและพื้นที่ผ่านระบบอัจฉริยะ ตรวจจับความผิดปกติ สั่งการกล้อง CCTV และควบคุมไม้กั้นอัตโนมัติ</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-teal-500 mt-1 shrink-0"></i>
+                            <span><strong>Transport Safety Manager (TSM License 2025):</strong> ได้รับการรับรองจากกรมการขนส่งทางบก มีมาตรฐานการจัดตั้งแนวกั้นปลอดภัยและการวิเคราะห์จุดเสี่ยงอุบัติเหตุ</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pillar C -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-mono uppercase text-indigo-600 dark:text-indigo-400 font-bold">PILLAR C • DATA &amp; QUALITY</span>
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">Quality Control &amp; Data Analytics</h3>
+                        </div>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-indigo-500 mt-1 shrink-0"></i>
+                            <span><strong>Power BI Operations Dashboard:</strong> พัฒนาและใช้งาน Interactive Dashboard ติดตามตัวชี้วัดสำคัญ เช่น Recognition Rate, Processing Time และปริมาณรถเข้า-ออกรายชั่วโมง</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-indigo-500 mt-1 shrink-0"></i>
+                            <span><strong>Unreadable Plate &amp; Verification Strategy:</strong> คัดกรองและวิเคราะห์ป้ายทะเบียนทั้งกลุ่มที่อ่านได้สมบูรณ์และอ่านไม่ได้ พร้อมปรับปรุงจนเหลือ Error เพียง 0.5%</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-indigo-500 mt-1 shrink-0"></i>
+                            <span><strong>Data Reconciliation &amp; Audit:</strong> กระทบยอดรายการผ่านทางและตรวจสอบความถูกต้องของฐานข้อมูล Whitelist ป้องกันความคลาดเคลื่อนและลดการใช้กระดาษ 100%</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pillar D -->
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-center space-x-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl shrink-0">
+                            <i class="fa-solid fa-users-gear"></i>
+                        </div>
+                        <div>
+                            <span class="text-[11px] font-mono uppercase text-amber-600 dark:text-amber-400 font-bold">PILLAR D • LEADERSHIP &amp; SOP</span>
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">Shift Leadership &amp; People Management</h3>
+                        </div>
+                    </div>
+                    <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-amber-500 mt-1 shrink-0"></i>
+                            <span><strong>24/7 Operations &amp; Shift Planning:</strong> วางแผนตารางปฏิบัติงาน 24 ชั่วโมง (4 Teams / 3 Shifts Forward Rotation) และจัดทำแผนสำรองอัตรากำลัง</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-amber-500 mt-1 shrink-0"></i>
+                            <span><strong>Cross-Generational Team Leadership:</strong> บริหารทีมงานต่างวัยได้อย่างลงตัว ทั้งการให้เกียรติทีมงานอาวุโสและการโค้ชทีมงานรุ่นใหม่ด้วยเทคโนโลยี</span>
+                        </li>
+                        <li class="flex items-start space-x-2.5">
+                            <i class="fa-solid fa-check text-amber-500 mt-1 shrink-0"></i>
+                            <span><strong>SOP &amp; Work Instruction Governance:</strong> จัดทำมาตรฐานการปฏิบัติงาน (เช่น มาตรฐาน LHS-006 Gate Flow Standard) และควบคุมการส่งมอบงานระหว่างกะอย่างเคร่งครัด</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CASE STUDY DEEP-DIVE & KPI COMPARISON TABLE -->
+        <section id="lpr-project" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 space-y-8">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-1">
+                        FLAGSHIP PROJECT CASE STUDY • NHR QCC 2025
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
+                        เจาะลึกโครงการ LPR ระบบรู้ทันทุกการเคลื่อนไหว &amp; ตารางผลลัพธ์ KPI
+                    </h2>
+                </div>
+                <span class="px-3.5 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold">
+                    100% Success • Zero Cost • Zero Error
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-2">
+                    <div class="text-xs font-mono font-bold text-sky-600 dark:text-sky-400">01 • GENBA &amp; WHY-WHY ANALYSIS</div>
+                    <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">ปิดจุดบอดรถ Visitor 40% สู่ความครอบคลุม 100%</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                        วิเคราะห์ด้วย Fishbone (4M) และ Why-Why-Why Analysis พบว่าระบบเดิมพึ่งพาบัตรสแกนซึ่งตรวจสอบได้เพียง 60% จึงเปลี่ยนมาใช้เทคโนโลยี LPR อ่านป้ายทะเบียนแทนการซื้อบัตรใหม่
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-2">
+                    <div class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">02 • LOW-LIGHT CAMERA TUNING</div>
+                    <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">ลด Error Rate จาก 4.37% เหลือเพียง 0.50%</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                        แก้ไขปัญหาภาพป้ายทะเบียนมืดหรือไฟหน้ารถส่องย้อนในเวลากลางคืน ด้วยการอัปเกรด Firmware และปรับจูน Parameter จนความแม่นยำสูงถึง 99.5%
+                    </p>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 space-y-2">
+                    <div class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400">03 • POWER BI &amp; WORK INSTRUCTION</div>
+                    <h3 class="font-display font-bold text-base text-slate-900 dark:text-white">เชื่อมโยง MyHR Time Attendance &amp; WI LHS-006</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                        นำเวลาที่รถผ่านไม้กั้นขาเข้าและขาออก ส่งเข้าสู่ระบบบันทึกเวลาทำงานอัตโนมัติโดยไม่ต้องสแกนนิ้วซ้ำ พร้อมประกาศใช้มาตรฐานการปฏิบัติงานเลขที่ LHS-006
+                    </p>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="text-base sm:text-lg font-display font-bold text-slate-900 dark:text-white flex items-center">
+                    <i class="fa-solid fa-table-list text-sky-600 mr-2"></i>
+                    ตารางเปรียบเทียบตัวชี้วัดประสิทธิภาพ (KPI Comparison: Before vs After)
+                </h3>
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                    <table id="kpi-comparison-table" class="w-full text-left border-collapse text-xs sm:text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                                <th class="py-3.5 px-4 font-bold">ตัวชี้วัดประสิทธิภาพ (KPI Items)</th>
+                                <th class="py-3.5 px-4 font-bold text-rose-600 dark:text-rose-400">รูปแบบเดิม / แจกบัตร (Before)</th>
+                                <th class="py-3.5 px-4 font-bold text-sky-700 dark:text-sky-300">ระบบใหม่ LPR + Power BI (After)</th>
+                                <th class="py-3.5 px-4 font-bold text-emerald-700 dark:text-emerald-400">ผลลัพธ์ที่ได้ (Verified Outcome)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="kpi-table-body" class="divide-y divide-slate-200/70 dark:divide-slate-800 text-slate-600 dark:text-slate-300">
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">1. ความครอบคลุมการตรวจสอบรถ (Vehicle Coverage)</td>
+                                <td class="py-3.5 px-4">60% (เฉพาะรถพนักงานที่มีบัตร)</td>
+                                <td class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">100% (พนักงาน + Visitor / Vendor)</td>
+                                <td class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ ปิดจุดบอดด้านความปลอดภัย 100%</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">2. เวลาตรวจสอบต่อคัน (Processing Time)</td>
+                                <td class="py-3.5 px-4">3 – 5 นาที / คัน (จดมือ / แลกบัตร)</td>
+                                <td class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">&lt; 30 วินาที / คัน (Auto LPR Scan)</td>
+                                <td class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ เร็วขึ้น 6–10 เท่า การจราจรลื่นไหล</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">3. งบลงทุนเครื่องและบัตรผ่าน (Cost Avoidance)</td>
+                                <td class="py-3.5 px-4">64,980 บาท (ค่าเครื่อง 20,000 + บัตร 346 ใบ)</td>
+                                <td class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">0 บาท (ใช้ป้ายทะเบียนรถแทนบัตร)</td>
+                                <td class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ ประหยัดงบลงทุน 100% (Save 64,980 บาท)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">4. เวลาจัดทำรายงานสรุป &amp; กำลังคน (Manpower)</td>
+                                <td class="py-3.5 px-4">3 วัน/เดือน (ใช้พนักงาน 2–3 คน)</td>
+                                <td class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">Real-time Daily Power BI Automation</td>
+                                <td class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ ลดเวลาทำรายงาน 100% (3 To 1 Step)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                <td class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">5. ปริมาณกระดาษและความแม่นยำ (Accuracy)</td>
+                                <td class="py-3.5 px-4">~500 แผ่น/เดือน (เสี่ยง Human Error)</td>
+                                <td class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">0 แผ่น (Digital Workflow 100%)</td>
+                                <td class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ ลดกระดาษ 100% &amp; Zero Human Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-only-control pt-2 gap-2">
+                    <button type="button" onclick="addKpiTableRow()" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center">
+                        <i class="fa-solid fa-plus mr-1.5"></i> เพิ่มแถวตาราง KPI
+                    </button>
+                    <button type="button" onclick="removeLastKpiTableRow()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold transition flex items-center">
+                        <i class="fa-solid fa-trash-can mr-1.5"></i> ลบแถวสุดท้าย
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. WORK EXPERIENCE, EDUCATION & LICENSES -->
+        <section id="experience" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">CAREER TRACK RECORD</div>
+                    <h2 class="text-2xl font-display font-bold text-slate-900 dark:text-white">ประสบการณ์การทำงาน (Work Experience)</h2>
+                </div>
+
+                <div class="space-y-6 relative before:absolute before:top-2 before:bottom-2 before:left-3 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800">
+                    <div class="relative pl-9">
+                        <div class="absolute left-1 top-1.5 w-4 h-4 rounded-full bg-sky-600 border-4 border-white dark:border-slate-900"></div>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">Security &amp; General Affairs</h3>
+                            <span class="px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-mono font-semibold">2025 – Present</span>
+                        </div>
+                        <div class="text-sm font-semibold text-sky-600 dark:text-sky-400 mt-0.5">Thai Bridgestone Company Limited</div>
+                        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                            <li>บริหารจัดการการติดตั้ง ตรวจสอบความถูกต้องของข้อมูล และควบคุมระบบอ่านป้ายทะเบียนอัตโนมัติ (LPR) และไม้กั้นอัตโนมัติ เชื่อมต่อกับฐานข้อมูล <strong>ZKBio CVSecurity</strong> และ <strong>HikCentral Professional</strong></li>
+                            <li>ออกแบบและพัฒนาระบบลงทะเบียนยานพาหนะและบริหารลานจอดรถอัตโนมัติด้วย Digital Workflows (Microsoft Forms, LINE Official Account)</li>
+                            <li>พัฒนา Operational Dashboards ด้วย <strong>Microsoft Power BI</strong> เพื่อวิเคราะห์รูปแบบการเข้า-ออกของรถ ปริมาณจราจร และบันทึกความปลอดภัยแบบ Real-time</li>
+                            <li>กำหนดยุทธศาสตร์ <strong>5-Year Smart General Affairs Transformation Strategy</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="relative pl-9">
+                        <div class="absolute left-1 top-1.5 w-4 h-4 rounded-full bg-teal-600 border-4 border-white dark:border-slate-900"></div>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">Site Engineer</h3>
+                            <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-semibold">2011 – 2026</span>
+                        </div>
+                        <div class="text-sm font-semibold text-teal-600 dark:text-teal-400 mt-0.5">Thai Bridgestone Company Limited</div>
+                        <ul class="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                            <li>บริหาร ดูแลรักษา และอัปเกรดระบบกล้องวงจรปิดระดับองค์กร (Enterprise CCTV Surveillance System) มากกว่า <strong>2,000+ กล้อง</strong></li>
+                            <li>ออกแบบและวางโครงสร้างเครือข่ายภายในโรงงาน และดูแลระบบเซิร์ฟเวอร์เสมือน <strong>VMware Infrastructure</strong> รักษาระดับ Uptime สูงถึง <strong>99.9%</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="text-xs font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400">LICENSES &amp; CERTIFICATIONS</div>
+                    <h2 class="text-xl font-display font-bold text-slate-900 dark:text-white">ใบอนุญาตและประกาศนียบัตร</h2>
+                    <div id="licenses-section" class="space-y-3 text-sm max-h-[560px] overflow-y-auto pr-1">
+                        
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#1</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ผู้จัดการความปลอดภัยด้านการขนส่ง (TSM)</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Transport Safety Manager (TSM)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>กรมการขนส่งทางบก, 2025
+          </div>
+        </div>
+        
+          <span class="shrink-0 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 text-[11px] font-mono">Digital</span>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#2</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">การบริหารจัดการฐานข้อมูล Oracle 12c</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Oracle 12c: Database Administration</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>SYS Operations, 2019
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1962.jpg', 'การบริหารจัดการฐานข้อมูล Oracle 12c')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#3</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ขยายศูนย์ข้อมูลด้วย Microsoft Azure</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Extend Your Datacenter with Microsoft Azure</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>Microsoft, 2015
+          </div>
+        </div>
+        
+          <span class="shrink-0 px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 text-[11px] font-mono">Digital</span>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#4</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรับรองสำเร็จหลักสูตร Microsoft PowerPoint 2010</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Certificate of Accomplishment - Microsoft PowerPoint 2010</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>Bits (Thailand), 2555
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1955.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft PowerPoint 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#5</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรับรองสำเร็จหลักสูตร Microsoft Access 2010</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Certificate of Accomplishment - Microsoft Access 2010</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>Bits (Thailand), 2555
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1956.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft Access 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#6</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรับรองการเข้าร่วมอบรมเชิงปฏิบัติการการเขียนภาษาอังกฤษธุรกิจ</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Certificate of Workshop - Business English Writing</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>Worldwide Education Services Co., Ltd. / Bridgestone, 2557
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1957.jpg', 'ใบรับรองการเข้าร่วมอบรมเชิงปฏิบัติการการเขียนภาษาอังกฤษธุรกิจ')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#7</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">วุฒิบัตรหลักสูตรการทำงานทางด้านการคำนวณโดยใช้โปรแกรม Microsoft Excel 2010 ขั้นสูง</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Advanced Microsoft Excel 2010 Training Certificate</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>สถาบัน DS Johnson Development / Bridgestone, 2559
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1958.jpg', 'วุฒิบัตรหลักสูตรการทำงานทางด้านการคำนวณโดยใช้โปรแกรม Microsoft Excel 2010 ขั้นสูง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#8</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">วุฒิบัตรหลักสูตรการเขียนแบบทางวิศวกรรมโดยใช้โปรแกรม AutoCAD (3 มิติ)</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">AutoCAD 3D Engineering Drawing Training Certificate</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>สถาบัน DS Johnson Development / Bridgestone, 2559
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1959.jpg', 'วุฒิบัตรหลักสูตรการเขียนแบบทางวิศวกรรมโดยใช้โปรแกรม AutoCAD (3 มิติ)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#9</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">เกียรติบัตรรางวัลชมเชย โครงงานสหกิจศึกษาดีเด่น ด้านนวัตกรรม ระดับเครือข่าย</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Consolation Prize for Outstanding Co-operative Education Project (Innovation)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>เครือข่ายพัฒนาสหกิจศึกษาภาคกลางตอนบน, 2559
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1960.jpg', 'เกียรติบัตรรางวัลชมเชย โครงงานสหกิจศึกษาดีเด่น ด้านนวัตกรรม ระดับเครือข่าย')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#10</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">เกียรติบัตรรางวัลรองชนะเลิศอันดับ 1 โครงงานสหกิจศึกษาดีเด่น กลุ่มวิทยาศาสตร์และเทคโนโลยี</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">1st Runner-up for Outstanding Co-operative Education Project (Science & Technology)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>มหาวิทยาลัยศรีปทุม, 2559
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1961.jpg', 'เกียรติบัตรรางวัลรองชนะเลิศอันดับ 1 โครงงานสหกิจศึกษาดีเด่น กลุ่มวิทยาศาสตร์และเทคโนโลยี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#11</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรายงานผลคะแนนสอบ TOEIC (470 คะแนน)</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">TOEIC Listening and Reading Test Score Report (470)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>ETS (Educational Testing Service), 2563
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1963.jpg', 'ใบรายงานผลคะแนนสอบ TOEIC (470 คะแนน)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#12</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">หนังสือแต่งตั้งตำแหน่งวิศวกรชำนาญการฝ่ายวิศวกรรม</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Appointment of Specialist Engineer - Engineering Department</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>บริษัท ไทยบริดจสโตน จำกัด, 2562
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1964.jpg', 'หนังสือแต่งตั้งตำแหน่งวิศวกรชำนาญการฝ่ายวิศวกรรม')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#13</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">เกียรติบัตรผู้ปฏิบัติงานด้วยความเสียสละและอุตสาหะครบรอบ 10 ปี</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">10 Years Long Service Recognition Certificate</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>บริษัท ไทยบริดจสโตน จำกัด, 2565
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1965.jpg', 'เกียรติบัตรผู้ปฏิบัติงานด้วยความเสียสละและอุตสาหะครบรอบ 10 ปี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#14</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Boom Lift 'Snorkel' รุ่น A46JE</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Safety Operation Certificate for Boom Lift 'Snorkel' Model A46JE</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>ASIAFIVE Safety Solution, 2564
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1966.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Boom Lift \'Snorkel\' รุ่น A46JE')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#15</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Scissor Lift 'Snorkel' รุ่น S4726E</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Safety Operation Certificate for Scissor Lift 'Snorkel' Model S4726E</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>ASIAFIVE Safety Solution, 2564
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1967.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Scissor Lift \'Snorkel\' รุ่น S4726E')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#16</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">หนังสือการขึ้นทะเบียนผู้บังคับหรือปล่อยอากาศยานซึ่งไม่มีคนขับ (ใบอนุญาตขับโดรน น้ำหนักไม่เกิน 25 กิโลกรัม)</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Unmanned Aircraft (Drone) Pilot Certificate (Weight not exceeding 25 kg)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>สำนักงานการบินพลเรือนแห่งประเทศไทย (CAAT), 2568
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1968.jpg', 'หนังสือการขึ้นทะเบียนผู้บังคับหรือปล่อยอากาศยานซึ่งไม่มีคนขับ (ใบอนุญาตขับโดรน น้ำหนักไม่เกิน 25 กิโลกรัม)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#17</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ประกาศนียบัตรหลักสูตรอบรมยานยนต์ไฟฟ้าดัดแปลง EV Conversion รุ่นที่ 51</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Certificate of EV Conversion Training (Class 51)</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>Szechter EV / บริษัท โบลส์ เซฟ คอร์ปอเรชั่น จำกัด, 2568
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1969.jpg', 'ประกาศนียบัตรหลักสูตรอบรมยานยนต์ไฟฟ้าดัดแปลง EV Conversion รุ่นที่ 51')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#18</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">ประกาศนียบัตรหลักสูตรอบรมการจัดการพลังงานและระบบกักเก็บพลังงานแสงอาทิตย์ (Energy Storage Solar System)</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Certificate of Energy Storage Solar System Training</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>B2H Solar / LVFU, 2568
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1970.jpg', 'ประกาศนียบัตรหลักสูตรอบรมการจัดการพลังงานและระบบกักเก็บพลังงานแสงอาทิตย์ (Energy Storage Solar System)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+
+    <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700 hover:border-teal-500/50 transition duration-200">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold text-teal-600 dark:text-teal-400">#19</span>
+            <div class="font-bold text-slate-900 dark:text-white leading-snug">วุฒิบัตรหลักสูตรความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้าสำหรับลูกจ้าง</div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Electrical Safety Training Certificate for Employees</div>
+          <div class="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1">
+            <i class="fa-solid fa-building-shield text-teal-500 mr-1 text-[11px]"></i>บริษัท ไทยบริดจสโตน จำกัด, 2568
+          </div>
+        </div>
+        
+          <button type="button" onclick="openCertLightbox('/certs/IMG_1971.jpg', 'วุฒิบัตรหลักสูตรความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้าสำหรับลูกจ้าง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+            <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
+            <span>ดูรูป</span>
+          </button>
+        
+      </div>
+    </div>
+  
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400">EDUCATION</div>
+                    <h2 class="text-xl font-display font-bold text-slate-900 dark:text-white">คุณวุฒิการศึกษา</h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="border-l-2 border-sky-500 pl-3.5">
+                            <div class="font-bold text-slate-900 dark:text-white">ปริญญาโท บริหารธุรกิจมหาบัณฑิต (M.B.A.)</div>
+                            <div class="text-xs text-sky-600 dark:text-sky-400 font-medium">กำลังศึกษา (In Progress)</div>
+                        </div>
+                        <div class="border-l-2 border-teal-500 pl-3.5">
+                            <div class="font-bold text-slate-900 dark:text-white">ปริญญาตรี เทคโนโลยีสารสนเทศธุรกิจ (IT for Business)</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400">มหาวิทยาลัยศรีปทุม (Sripatum University) • 2013 – 2016</div>
+                        </div>
+                        <div class="border-l-2 border-slate-400 pl-3.5">
+                            <div class="font-bold text-slate-900 dark:text-white">ปวส. เทคโนโลยีสารสนเทศ (High Vocational Certificate)</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400">วิทยาลัยอาชีวศึกษาสระบุรี (Saraburi Vocational College) • 2009 – 2010</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    
+        <!-- ========================================== -->
+        <!-- SECTION: TRAINING RECORDS (65 หลักสูตร TBSC) -->
+        <!-- ========================================== -->
+        <section id="training-section" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-6">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 rounded-full bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300 text-xs font-mono font-semibold">TBSC HR MATRIX</span>
+                        <span class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-mono font-semibold">65 COURSES</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white mt-2">
+                        ประวัติบันทึกการฝึกอบรมพนักงาน (Employee Training Records)
+                    </h2>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        บันทึกประวัติการฝึกอบรมหลักสูตรมาตรฐาน บริษัท ไทยบริดจสโตน จำกัด (TBSC) พร้อมสถานะการประเมิน
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" onclick="handleAddTrainingClick()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold shadow-sm transition">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>เพิ่มประวัติอบรม</span>
+                    </button>
+                    <a href="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=drive_link" target="_blank" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold transition">
+                        <i class="fa-solid fa-file-pdf text-red-500"></i>
+                        <span>ดูไฟล์ต้นฉบับ Drive</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+                <div class="relative flex-1 max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="training-search" oninput="filterTrainingTable()" placeholder="ค้นหาชื่อหลักสูตร หรือ รหัสหลักสูตร..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white">
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                    <button type="button" onclick="setTrainingCategory('all')" id="btn-cat-all" class="training-filter-pill active px-3 py-1.5 rounded-lg bg-sky-600 text-white font-semibold transition">ทั้งหมด (65)</button>
+                    <button type="button" onclick="setTrainingCategory('Safety & Compliance')" id="btn-cat-safety" class="training-filter-pill px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition">Safety</button>
+                    <button type="button" onclick="setTrainingCategory('IT & Technical')" id="btn-cat-tech" class="training-filter-pill px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition">Technical & IT</button>
+                    <button type="button" onclick="setTrainingCategory('Production & Quality')" id="btn-cat-prod" class="training-filter-pill px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition">Quality & Prod</button>
+                    <button type="button" onclick="setTrainingCategory('Management & General')" id="btn-cat-mgmt" class="training-filter-pill px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition">Management</button>
+                </div>
+            </div>
+
+            <!-- Responsive Table -->
+            <div class="overflow-x-auto rounded-2xl border border-slate-200/80 dark:border-slate-800 max-h-[550px] overflow-y-auto">
+                <table class="w-full text-left text-xs sm:text-sm">
+                    <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase tracking-wider font-mono text-[11px] sticky top-0 z-10 backdrop-blur-md">
+                        <tr>
+                            <th class="px-4 py-3">ลำดับ</th>
+                            <th class="px-4 py-3">รหัส / Class ID</th>
+                            <th class="px-4 py-3">ชื่อหลักสูตรอบรม (Course Title)</th>
+                            <th class="px-4 py-3">หมวดหมู่</th>
+                            <th class="px-4 py-3">วันที่จัดอบรม</th>
+                            <th class="px-4 py-3 text-center">ผลการประเมิน</th>
+                            <th class="px-4 py-3 text-right">จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="training-tbody" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="training-empty" class="hidden text-center py-10 text-slate-400">
+                <i class="fa-solid fa-inbox text-3xl mb-2"></i>
+                <p>ไม่พบข้อมูลหลักสูตรที่ตรงกับคำค้นหา</p>
+            </div>
+        </section>
+
+</main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-slate-200 dark:border-slate-800 text-center sm:flex sm:items-center sm:justify-between text-xs text-slate-500 dark:text-slate-400 no-print">
+        <div>
+            © 2026 <strong>ทวีศักดิ์ คำปก (Taweesak Khampok)</strong> • Executive &amp; Technical Portfolio
+        </div>
+        <div class="mt-2 sm:mt-0 flex items-center justify-center space-x-4">
+            <a href="#top" class="hover:text-sky-600 transition">กลับขึ้นด้านบน ↑</a>
+            <span>•</span>
+            <button type="button" onclick="handleEditButtonClick()" class="hover:text-amber-500 font-semibold transition">
+                <i class="fa-solid fa-lock mr-1"></i> แก้ไขข้อมูล (Admin)
+            </button>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: FULL-SCREEN GOOGLE DRIVE & E-BOOK VIEWER -->
+    <div id="fullscreen-modal" class="fixed inset-0 z-50 hidden bg-slate-950/95 backdrop-blur-md flex flex-col justify-between p-3 sm:p-6 no-print">
+        <div class="max-w-7xl w-full mx-auto flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div class="flex items-center space-x-2.5 text-white">
+                <i class="fa-brands fa-google-drive text-sky-400 text-lg"></i>
+                <h3 id="modal-title" class="font-display font-bold text-sm sm:text-base">Google Drive Full-Screen Viewer</h3>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" id="modal-btn-drive" onclick="openDriveFullscreenModal('drive-embed')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white transition">
+                    Google Drive Preview
+                </button>
+                <button type="button" id="modal-btn-photo" onclick="openDriveFullscreenModal('profile-photo')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    รูปโปรไฟล์
+                </button>
+                <button type="button" id="modal-btn-slides" onclick="openDriveFullscreenModal('ebook-slides')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+                    สไลด์ E-Book
+                </button>
+                <button type="button" onclick="triggerBrowserFullscreen()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 transition" title="ขยายเต็มหน้าจอเบราว์เซอร์">
+                    <i class="fa-solid fa-maximize"></i>
+                </button>
+                <button type="button" onclick="closeDriveFullscreenModal()" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white transition">
+                    <i class="fa-solid fa-xmark mr-1"></i> ปิดเต็มจอ (ESC)
+                </button>
+            </div>
+        </div>
+
+        <div id="modal-body" class="max-w-7xl w-full mx-auto flex-1 my-3 rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden flex items-center justify-center"></div>
+
+        <div class="max-w-7xl w-full mx-auto flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-800">
+            <div>แหล่งข้อมูล: Google Drive ID <code id="modal-footer-drive-id" class="text-sky-400">16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</code></div>
+            <a id="modal-footer-drive-link" href="https://drive.google.com/file/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM/view" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline flex items-center">
+                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> เปิดไฟล์ต้นฉบับบน Google Drive
+            </a>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PASSWORD AUTHENTICATION MODAL (Password: NUTza067668141) -->
+    <div id="password-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-500/15 text-amber-500 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">ยืนยันรหัสผ่านเพื่อแก้ไขข้อมูล</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">รหัสผ่าน: NUTza067668141</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closePasswordModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form onsubmit="verifyAdminPassword(event)" class="space-y-4">
+                <div>
+                    <label for="admin-password-input" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">รหัสผ่าน (Password)</label>
+                    <div class="relative">
+                        <input type="password" id="admin-password-input" placeholder="กรอกรหัสผ่าน..." class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs">
+                            <i id="pwd-eye-icon" class="fa-regular fa-eye"></i>
+                        </button>
+                    </div>
+                    <p id="password-error-msg" class="hidden text-xs text-rose-500 font-medium mt-2">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i> รหัสผ่านไม่ถูกต้อง
+                    </p>
+                </div>
+                <div class="flex items-center justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closePasswordModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold">ยกเลิก</button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md transition flex items-center">
+                        <i class="fa-solid fa-unlock-keyhole mr-1.5"></i> ปลดล็อกโหมดแก้ไข
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 3: MEDIA & GOOGLE DRIVE MANAGER -->
+    <div id="media-manager-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-600 dark:text-sky-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white">จัดการรูปภาพและไฟล์เอกสาร</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">เลือกอัปโหลดไฟล์จากเครื่อง หรือระบุลิงก์/ID จาก Google Drive</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeMediaManagerModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold">
+                <button type="button" id="tab-target-profile" onclick="switchMediaTarget('profile')" class="py-2.5 px-3 rounded-xl bg-white dark:bg-slate-900 text-sky-600 shadow-sm transition">รูปโปรไฟล์หลัก</button>
+                <button type="button" id="tab-target-drive" onclick="switchMediaTarget('drive')" class="py-2.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 transition">ไฟล์เอกสาร / Drive Viewer</button>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-sky-50/60 dark:bg-slate-800/60 border border-sky-200/80 space-y-3">
+                <span class="text-xs font-bold text-sky-800 dark:text-sky-300 flex items-center"><i class="fa-brands fa-google-drive text-base mr-2"></i> วางลิงก์ไฟล์หรือ File ID จาก Google Drive</span>
+                <input type="text" id="drive-input-url" placeholder="เช่น 16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM" class="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm font-mono text-slate-900 dark:text-white">
+                <div class="flex justify-between items-center pt-1">
+                    <button type="button" onclick="document.getElementById('drive-input-url').value='16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM'" class="text-[11px] text-sky-600 hover:underline">ใช้รหัสเริ่มต้น</button>
+                    <button type="button" onclick="applyGoogleDriveMedia()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow transition flex items-center"><i class="fa-solid fa-link mr-1.5"></i> ดึงไฟล์</button>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-teal-50/60 dark:bg-slate-800/60 border border-teal-200/80 space-y-3">
+                <span class="text-xs font-bold text-teal-800 dark:text-teal-300 flex items-center"><i class="fa-solid fa-file-arrow-up text-base mr-2"></i> อัปโหลดไฟล์จากคอมพิวเตอร์ / มือถือ</span>
+                <input type="file" id="local-file-upload" accept="image/*,application/pdf" onchange="handleLocalFileUpload(event)" class="block w-full text-xs text-slate-600 dark:text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-teal-600 file:text-white hover:file:bg-teal-500 cursor-pointer">
+            </div>
+            <div class="flex justify-end pt-2"><button type="button" onclick="closeMediaManagerModal()" class="px-5 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold">ปิดหน้าต่าง</button></div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: E-BOOK SLIDE EDITOR -->
+    <div id="slide-editor-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+                <h3 class="text-lg font-display font-bold text-slate-900 dark:text-white flex items-center"><i class="fa-solid fa-layer-group text-teal-500 mr-2"></i> แก้ไขสไลด์ผลงาน E-Book</h3>
+                <button type="button" onclick="closeSlideEditorModal()" class="text-slate-400 hover:text-slate-600 p-1"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="flex items-center justify-between gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-2xl">
+                <select id="editor-slide-select" onchange="loadSlideIntoEditor(this.value)" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-900 dark:text-white"></select>
+                <div class="flex gap-2">
+                    <button type="button" onclick="addNewPortfolioSlide()" class="px-3 py-1.5 rounded-xl bg-teal-600 text-white text-xs font-bold">เพิ่มหน้า</button>
+                    <button type="button" onclick="deleteCurrentPortfolioSlide()" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white text-xs font-bold">ลบหน้า</button>
+                </div>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm">
+                <div><label class="block font-semibold mb-1">ป้ายกำกับ (Badge)</label><input type="text" id="edit-slide-badge" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></div>
+                <div><label class="block font-semibold mb-1">หัวข้อหลัก (Title)</label><input type="text" id="edit-slide-title" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-bold"></div>
+                <div><label class="block font-semibold mb-1">หัวข้อรอง (Subtitle)</label><input type="text" id="edit-slide-subtitle" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></div>
+                <div><label class="block font-semibold mb-1">รายละเอียดแต่ละบรรทัด</label><textarea id="edit-slide-highlights" rows="4" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></textarea></div>
+                <div><label class="block font-semibold mb-1">ผลลัพธ์ / ตัวชี้วัด</label><input type="text" id="edit-slide-metrics" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700"></div>
+                <div><label class="block font-semibold mb-1">รูปภาพประกอบสไลด์ (Google Drive Link / ID)</label><input type="text" id="edit-slide-image-url" class="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 font-mono text-xs"></div>
+            </div>
+            <div class="flex justify-end space-x-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+                <button type="button" onclick="closeSlideEditorModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold">ยกเลิก</button>
+                <button type="button" onclick="saveCurrentSlideEdits()" class="px-5 py-2.5 rounded-xl bg-teal-600 text-white text-xs font-bold">บันทึกสไลด์นี้</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-xl bg-slate-900 text-white border border-emerald-500/50 text-xs sm:text-sm shadow-xl flex items-center space-x-2 no-print">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-message">ดำเนินการสำเร็จ</span>
+    </div>
+
+    <!-- BAKED STATE HOLDER -->
+    <script id="baked-portfolio-state" type="application/json"></script>
+
+    <!-- APPLICATION LOGIC -->
+    <script>
+        const ADMIN_PASSWORD = "NUTza067668141";
+        const STORAGE_KEY = "taweesak_portfolio_cms_v4";
+        const IDB_NAME = "TaweesakPortfolioDB";
+        const IDB_STORE = "portfolio_store";
+        const IDB_KEY = "main_state";
+
+        let isEditMode = false;
+        let currentMediaTarget = 'profile';
+        let currentDriveDocId = "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM";
+        let customUploadedDocDataUrl = "";
+        let customUploadedDocType = "";
+        let autoSaveTimer = null;
+
+        function openPortfolioIDB() {
+            return new Promise((resolve, reject) => {
+                if (!window.indexedDB) { reject(new Error("No IDB")); return; }
+                const req = indexedDB.open(IDB_NAME, 1);
+                req.onupgradeneeded = e => e.target.result.createObjectStore(IDB_STORE);
+                req.onsuccess = e => resolve(e.target.result);
+                req.onerror = e => reject(e.target.error);
+            });
+        }
+
+        async function saveToIDB(payload) {
+            try {
+                const db = await openPortfolioIDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(IDB_STORE, "readwrite");
+                    tx.objectStore(IDB_STORE).put(payload, IDB_KEY);
+                    tx.oncomplete = () => resolve(true);
+                    tx.onerror = e => reject(e.target.error);
+                });
+            } catch (e) { return false; }
+        }
+
+        async function loadFromIDB() {
+            try {
+                const db = await openPortfolioIDB();
+                return new Promise(resolve => {
+                    const tx = db.transaction(IDB_STORE, "readonly");
+                    const req = tx.objectStore(IDB_STORE).get(IDB_KEY);
+                    req.onsuccess = () => resolve(req.result || null);
+                    req.onerror = () => resolve(null);
+                });
+            } catch (e) { return null; }
+        }
+
+        async function clearIDB() {
+            try {
+                const db = await openPortfolioIDB();
+                db.transaction(IDB_STORE, "readwrite").objectStore(IDB_STORE).delete(IDB_KEY);
+            } catch (e) {}
+        }
+
+        let portfolioSlides = [
+            {
+                badge: "SLIDE 01–02 • PROJECT OVERVIEW",
+                title: "NHR QCC 2025: LPR ระบบรู้ทันทุกการเคลื่อนไหว สู่ความปลอดภัยที่เหนือกว่า",
+                subtitle: "Thai Bridgestone Co., Ltd. • แนวคิด \"Just do it safety First\"",
+                highlights: [
+                    "ผู้นำเสนอและพัฒนาระบบ: ทวีศักดิ์ คำปก (Taweesak Khampok) ร่วมกับทีม NHR / NGA และ CIT",
+                    "ยกระดับการควบคุมยานพาหนะเข้า-ออกโรงงานกว่า 5,000+ คัน ด้วยเทคโนโลยี LPR",
+                    "เชื่อมโยงระบบรักษาความปลอดภัยเข้ากับงานบริหารทรัพยากรบุคคล (HR Security x IT Infrastructure)"
+                ],
+                metrics: "เป้าหมายหลัก: ตรวจสอบรถครอบคลุม 100% | ลดเวลาผ่านป้อมเหลือ < 30 วินาที | ต้นทุนบัตร 0 บาท",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 03–04 • PAIN POINT & GOALS",
+                title: "ปัญหาหลักหน้างาน (Main Pain Point) และเป้าหมายการยกระดับ",
+                subtitle: "จากการสำรวจหน้างานจริง (Genba) บริเวณป้อม รปภ. ทางเข้า-ออกโรงงาน",
+                highlights: [
+                    "ระบบเดิมตรวจสอบสถานะรถได้เพียง 60% (เฉพาะรถพนักงานที่มีบัตรสแกน)",
+                    "รถ Visitor / Vendor / Maker (100+ คัน/วัน) เป็นจุดบอด (Blind Spot 40%) ที่ต้องใช้การจดมือและแลกบัตร",
+                    "หากแก้ปัญหาด้วยการแจกบัตรให้รถทุกคัน จะเกิดต้นทุนสูงถึง 64,980 บาท"
+                ],
+                metrics: "Current Coverage: 60% (Employees Only) ➔ Target Coverage: 100% (Including Visitor/Vendor)",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 05–06 • ROOT CAUSE ANALYSIS",
+                title: "การวิเคราะห์สาเหตุรากเหง้า (Fishbone & Why-Why-Why Analysis)",
+                subtitle: "วิเคราะห์ครบ 4 มิติ (Man, Machine, Method, Material)",
+                highlights: [
+                    "Man & Method: รปภ. เสี่ยงอุบัติเหตุและเปียกฝนขณะเดินตรวจ การจดบันทึกด้วยมือล่าช้า ทำให้รถติดสะสม",
+                    "Machine & Material: ระบบไม้กั้นเดิมรองรับเฉพาะบัตร ไม่รองรับข้อมูลทางกายภาพของรถ",
+                    "Root Cause: ระบบควบคุมการเข้า-ออกพึ่งพาอุปกรณ์บัตรมากเกินไป ขาดเทคโนโลยีการจำแนกอัตโนมัติ"
+                ],
+                metrics: "สรุปแนวทางแก้ไข: เปลี่ยนจากการใช้บัตร RFID/Card สู่การใช้ป้ายทะเบียนรถ (LPR - M-Flow Concept)",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 07–10 • SOLUTION & NEW GATE FLOW",
+                title: "การออกแบบระบบ Gate Automation (ป้อม รปภ. G1, G2, G3)",
+                subtitle: "\"No Card, No Control Gate Barrier\" — ใช้ป้ายทะเบียนที่มีอยู่แล้วกับรถทุกคัน",
+                highlights: [
+                    "ทีม CIT และ NGA ร่วมกันติดตั้งระบบกล้อง LPR และสร้างฐานข้อมูลทะเบียนรถ Whitelist",
+                    "ขั้นตอนใหม่: รถใน Whitelist ขับเข้าช่อง LPR ➔ กล้องอ่านป้ายอัตโนมัติ ➔ ไม้กั้นเปิดทันที",
+                    "เชื่อมต่อระบบบันทึกเวลาทำงานอัตโนมัติ (Time Recording) พนักงานไม่ต้องสแกนนิ้วซ้ำ"
+                ],
+                metrics: "ระยะเวลาโครงการ (PDCA): สำรวจ ม.ค. ➔ ติดตั้ง เม.ย.–ก.ค. ➔ ทดสอบ ส.ค.–ต.ค. ➔ Go-Live พ.ย.",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 11–12 • CAMERA TUNING & ERROR REDUCTION",
+                title: "การแก้ปัญหาความแม่นยำกล้อง LPR ในสภาพแสงน้อย (Low Light Optimization)",
+                subtitle: "ลดอัตราความผิดพลาด (Error Rate) จาก 4.37% เหลือเพียง 0.50%",
+                highlights: [
+                    "ปัญหาช่วงทดลอง: แสงน้อยเวลากลางคืนและไฟหน้ารถส่องย้อน ทำให้อ่านป้ายเป็น Unknown (Error 4.37%)",
+                    "การแก้ไข: อัปเกรด Firmware กล้องและปรับจูน Parameter (Shutter Speed, Gain, IR Mode)",
+                    "ผลลัพธ์: ภาพป้ายทะเบียนคมชัดทั้งกลางวันและกลางคืน ความแม่นยำสูงถึง 99.5%"
+                ],
+                metrics: "Technical Achievement: ลด Error Rate ลงได้ถึง 88.5%",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 13–14 • POWER BI & HR VALUE ADDED",
+                title: "รายงานอัตโนมัติด้วย Power BI และการเชื่อมโยงระบบ Time Attendance",
+                subtitle: "Dashboard Vehicle at Guard House 2",
+                highlights: [
+                    "เปลี่ยนการทำรายงานสรุปจากเดิม 3 วัน/เดือน เป็น Daily Automated Power BI Dashboard (3 To 1 Step)",
+                    "ลดการใช้กระดาษจาก ~500 แผ่น/เดือน เหลือ 0 แผ่น (Paperless 100%)",
+                    "Value Added: นำเวลาที่รถผ่านทางส่งเข้า Time Attendance (MyHR) ทันที"
+                ],
+                metrics: "ประหยัดงบลงทุนบัตรและเครื่องอ่าน 64,980 บาท (Zero Cost)",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 15 • WORK INSTRUCTION STANDARD",
+                title: "การวางมาตรฐานการปฏิบัติงาน (Work Instruction เลขที่ LHS-006)",
+                subtitle: "เรื่อง: มาตรฐานกระบวนการนำรถยนต์ผ่านเข้า-ออก ป้อม รปภ.2 (Gate Flow Standard)",
+                highlights: [
+                    "จัดทำโดย: ทวีศักดิ์ คำปก | อนุมัติโดย: Supranee Panich (ธันวาคม 2025)",
+                    "ประกาศยกเลิกการใช้บัตรสแกน และบังคับใช้ระบบ LPR 100% ณ ป้อม รปภ. G2 (ทางเข้าหลัก)",
+                    "กำหนดระเบียบขาเข้า-ขาออกและการเชื่อมโยงเวลาทำงาน MyHR อย่างชัดเจน"
+                ],
+                metrics: "Standardization: สร้างมาตรฐานการทำงานที่ยั่งยืนและตรวจสอบย้อนหลังได้ 100%",
+                imageUrl: ""
+            },
+            {
+                badge: "SLIDE 16 • 5-YEAR SMART SECURITY ROADMAP",
+                title: "แผนงานต่อยอดในอนาคต (Next Step: Smart Security Transformation)",
+                subtitle: "ยุทธศาสตร์การพัฒนาศูนย์สั่งการความปลอดภัยและจราจรอัจฉริยะ",
+                highlights: [
+                    "1. Smart Security Dashboard: รวมข้อมูลความปลอดภัยทั้งโรงงานไว้ในหน้าจอเดียว",
+                    "2. Smart Notification via LINE & Smart Parking: แจ้งเตือนเมื่อรถ VIP/Visitor มาถึง และแสดงช่องจอดว่าง",
+                    "3. AI Traffic Safety Monitoring: ใช้กล้องตรวจจับความเร็วเกินกำหนดหรือขับย้อนศร"
+                ],
+                metrics: "Vision: ยกระดับสู่ Central Security Command Center เต็มรูปแบบ",
+                imageUrl: ""
+            }
+        ];
+
+        let currentSlideIndex = 0;
+
+        function extractDriveId(input) {
+            if (!input) return "";
+            const trimmed = input.trim();
+            const matchFile = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (matchFile && matchFile[1]) return matchFile[1];
+            const matchIdParam = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (matchIdParam && matchIdParam[1]) return matchIdParam[1];
+            const matchFolderOrD = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (matchFolderOrD && matchFolderOrD[1]) return matchFolderOrD[1];
+            if (/^[a-zA-Z0-9_-]{15,}$/.test(trimmed)) return trimmed;
+            return "";
+        }
+
+        function resolveDisplayImageUrl(rawUrl) {
+            if (!rawUrl) return "";
+            if (rawUrl.startsWith("data:")) return rawUrl;
+            const driveId = extractDriveId(rawUrl);
+            if (driveId) return `https://lh3.googleusercontent.com/d/${driveId}=w1200`;
+            return rawUrl;
+        }
+
+        function renderSlideContent(index) {
+            if (index >= portfolioSlides.length) currentSlideIndex = 0;
+            const slide = portfolioSlides[currentSlideIndex];
+            const counter = document.getElementById('inline-slide-counter');
+            const stage = document.getElementById('inline-slide-stage');
+            const dotsContainer = document.getElementById('inline-slide-dots');
+
+            if (counter) counter.textContent = `หน้า ${currentSlideIndex + 1} / ${portfolioSlides.length}`;
+
+            const resolvedSlideImg = resolveDisplayImageUrl(slide.imageUrl);
+            const slideImageHtml = resolvedSlideImg ? `
+                <div class="my-3 rounded-xl overflow-hidden bg-slate-950/60 border border-white/15 max-h-48 flex items-center justify-center">
+                    <img referrerpolicy="no-referrer" src="${resolvedSlideImg}" alt="Slide Visual" class="max-h-48 object-contain">
+                </div>
+            ` : '';
+
+            const html = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-mono">
+                            ${slide.badge}
+                        </div>
+                        ${isEditMode ? `
+                            <button type="button" onclick="openSlideEditorModal(${currentSlideIndex})" class="px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition">
+                                <i class="fa-solid fa-pen mr-1"></i> แก้ไขหน้านี้
+                            </button>
+                        ` : ''}
+                    </div>
+                    <div>
+                        <h4 class="text-lg sm:text-xl font-display font-bold text-white leading-snug">${slide.title}</h4>
+                        <p class="text-xs sm:text-sm text-sky-200/80 mt-1">${slide.subtitle}</p>
+                    </div>
+                    ${slideImageHtml}
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-200 pt-1">
+                        ${slide.highlights.map(item => `
+                            <li class="flex items-start space-x-2.5">
+                                <i class="fa-solid fa-circle-check text-teal-400 mt-1 shrink-0"></i>
+                                <span>${item}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                <div class="mt-6 pt-3 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span class="text-amber-300 font-medium"><i class="fa-solid fa-bolt mr-1.5"></i>${slide.metrics}</span>
+                    <button type="button" onclick="openSlideAt(${currentSlideIndex})" class="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium transition">
+                        <i class="fa-solid fa-expand mr-1"></i> ขยายหน้านี้เต็มจอ
+                    </button>
+                </div>
+            `;
+
+            if (stage) stage.innerHTML = html;
+
+            if (dotsContainer) {
+                dotsContainer.innerHTML = portfolioSlides.map((_, i) => `
+                    <button type="button" onclick="goToSlide(${i})" class="h-2.5 rounded-full transition-all ${i === currentSlideIndex ? 'bg-sky-500 w-6' : 'bg-slate-700 w-2.5 hover:bg-slate-500'}" title="หน้าที่ ${i + 1}"></button>
+                `).join('');
+            }
+
+            const modalSlideContainer = document.getElementById('modal-slide-content');
+            if (modalSlideContainer) {
+                const modalImgHtml = resolvedSlideImg ? `
+                    <div class="rounded-2xl overflow-hidden bg-slate-950/70 border border-white/15 max-h-80 flex items-center justify-center p-2">
+                        <img referrerpolicy="no-referrer" src="${resolvedSlideImg}" alt="Slide Full Visual" class="max-h-72 object-contain rounded-lg">
+                    </div>
+                ` : '';
+
+                modalSlideContainer.innerHTML = `
+                    <div class="max-w-4xl w-full mx-auto p-6 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 border border-sky-500/30 text-white shadow-2xl space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3.5 py-1 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-mono">${slide.badge}</span>
+                            <span class="text-xs font-mono text-slate-400">SLIDE ${currentSlideIndex + 1} OF ${portfolioSlides.length}</span>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl sm:text-3xl font-display font-bold text-white">${slide.title}</h2>
+                            <p class="text-sm sm:text-base text-sky-300 mt-1">${slide.subtitle}</p>
+                        </div>
+                        ${modalImgHtml}
+                        <ul class="space-y-3.5 text-sm sm:text-base text-slate-200 bg-slate-950/50 p-6 rounded-2xl border border-white/10">
+                            ${slide.highlights.map(item => `
+                                <li class="flex items-start space-x-3">
+                                    <i class="fa-solid fa-circle-check text-teal-400 mt-1.5 shrink-0"></i>
+                                    <span>${item}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-semibold">
+                            <i class="fa-solid fa-trophy mr-2"></i> ${slide.metrics}
+                        </div>
+                        <div class="flex items-center justify-between pt-2">
+                            <button type="button" onclick="changeSlide(-1)" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-semibold transition flex items-center">
+                                <i class="fa-solid fa-arrow-left mr-2"></i> หน้าก่อนหน้า
+                            </button>
+                            <button type="button" onclick="changeSlide(1)" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs sm:text-sm font-bold transition flex items-center">
+                                หน้าถัดไป <i class="fa-solid fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function changeSlide(step) {
+            currentSlideIndex = (currentSlideIndex + step + portfolioSlides.length) % portfolioSlides.length;
+            renderSlideContent(currentSlideIndex);
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            renderSlideContent(currentSlideIndex);
+        }
+
+        function openSlideAt(index) {
+            currentSlideIndex = index;
+            openDriveFullscreenModal('ebook-slides');
+        }
+
+        function openDriveFullscreenModal(mode) {
+            const modal = document.getElementById('fullscreen-modal');
+            const body = document.getElementById('modal-body');
+            const title = document.getElementById('modal-title');
+            const btnDrive = document.getElementById('modal-btn-drive');
+            const btnPhoto = document.getElementById('modal-btn-photo');
+            const btnSlides = document.getElementById('modal-btn-slides');
+            const heroImg = document.getElementById('hero-drive-img');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            [btnDrive, btnPhoto, btnSlides].forEach(b => {
+                b.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+            });
+
+            if (mode === 'drive-embed') {
+                btnDrive.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white transition";
+                if (customUploadedDocDataUrl) {
+                    title.textContent = "แสดงไฟล์เอกสารที่อัปโหลด";
+                    if (customUploadedDocType === 'application/pdf') {
+                        body.innerHTML = `<iframe src="${customUploadedDocDataUrl}" class="w-full h-full border-0 bg-white" title="PDF Viewer"></iframe>`;
+                    } else {
+                        body.innerHTML = `<div class="w-full h-full flex items-center justify-center p-4 overflow-auto"><img src="${customUploadedDocDataUrl}" class="max-h-full max-w-full object-contain rounded-xl shadow-2xl" /></div>`;
+                    }
+                } else {
+                    title.textContent = `Google Drive Viewer (ID: ${currentDriveDocId})`;
+                    body.innerHTML = `
+                        <div class="w-full h-full flex flex-col items-center justify-between p-4 overflow-auto">
+                            <div class="flex-1 w-full flex items-center justify-center overflow-hidden">
+                                <img referrerpolicy="no-referrer"
+                                     src="https://lh3.googleusercontent.com/d/${currentDriveDocId}=w1600"
+                                     onerror="this.src='https://drive.google.com/thumbnail?id=${currentDriveDocId}&sz=w1600'"
+                                     alt="Google Drive Preview"
+                                     class="max-h-full max-w-full object-contain rounded-xl shadow-2xl border border-slate-700" />
+                            </div>
+                            <div class="mt-3">
+                                <a href="https://drive.google.com/file/d/${currentDriveDocId}/view" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow transition flex items-center">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดไฟล์ต้นฉบับบน Google Drive
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (mode === 'profile-photo') {
+                btnPhoto.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white transition";
+                title.textContent = "ภาพโปรไฟล์ความละเอียดสูง";
+                const currentPhotoSrc = heroImg ? heroImg.src : `https://lh3.googleusercontent.com/d/${currentDriveDocId}=w1600`;
+                body.innerHTML = `
+                    <div class="w-full h-full flex flex-col items-center justify-center p-4 overflow-auto">
+                        <img referrerpolicy="no-referrer" src="${currentPhotoSrc}" alt="Profile Full" class="max-h-full max-w-full object-contain rounded-xl shadow-2xl border border-slate-700">
+                    </div>
+                `;
+            } else if (mode === 'ebook-slides') {
+                btnSlides.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-teal-600 text-white transition";
+                title.textContent = "สไลด์ผลงานโครงการ LPR (Full-Screen E-Book Mode)";
+                body.innerHTML = `<div id="modal-slide-content" class="w-full h-full flex items-center justify-center p-4 overflow-y-auto"></div>`;
+                renderSlideContent(currentSlideIndex);
+            }
+        }
+
+        function closeDriveFullscreenModal() {
+            document.getElementById('fullscreen-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+        }
+
+        function triggerBrowserFullscreen() {
+            const modal = document.getElementById('fullscreen-modal');
+            if (!document.fullscreenElement) modal.requestFullscreen().catch(() => {});
+            else document.exitFullscreen().catch(() => {});
+        }
+
+        function handleEditButtonClick() {
+            if (isEditMode) {
+                exitEditMode();
+            } else {
+                const pwdModal = document.getElementById('password-modal');
+                const pwdInput = document.getElementById('admin-password-input');
+                document.getElementById('password-error-msg').classList.add('hidden');
+                pwdInput.value = '';
+                pwdModal.classList.remove('hidden');
+                setTimeout(() => pwdInput.focus(), 100);
+            }
+        }
+
+        function closePasswordModal() {
+            document.getElementById('password-modal').classList.add('hidden');
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('admin-password-input');
+            const icon = document.getElementById('pwd-eye-icon');
+            if (input.type === 'password') { input.type = 'text'; icon.className = 'fa-regular fa-eye-slash'; }
+            else { input.type = 'password'; icon.className = 'fa-regular fa-eye'; }
+        }
+
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('admin-password-input').value.trim();
+            if (input === ADMIN_PASSWORD) {
+                closePasswordModal();
+                enableEditMode();
+                showToast("ปลดล็อกโหมดแก้ไขข้อมูลสำเร็จ!");
+            } else {
+                document.getElementById('password-error-msg').classList.remove('hidden');
+            }
+        }
+
+        const EDITABLE_SELECTORS = [
+            'main h1', 'main h2', 'main h3', 'main p', 'main li', 'main td', 'main th',
+            '#about .font-bold', '#about .text-2xl', '#about .text-xs',
+            '#experience .font-bold', '#experience .text-xs', '#experience .text-sm'
+        ];
+
+        function enableEditMode() {
+            isEditMode = true;
+            document.body.classList.add('edit-mode-active');
+            document.getElementById('admin-toolbar').classList.remove('hidden');
+
+            const headerBtn = document.getElementById('header-edit-btn');
+            headerBtn.classList.add('unlocked');
+            document.getElementById('header-edit-icon').className = "fa-solid fa-check";
+            document.getElementById('header-edit-text').textContent = "บันทึก & ล็อก";
+
+            document.querySelectorAll(EDITABLE_SELECTORS.join(',')).forEach(el => {
+                if (!el.closest('#inline-slide-stage') && !el.closest('button') && !el.closest('.admin-only-control')) {
+                    el.setAttribute('contenteditable', 'true');
+                }
+            });
+            renderSlideContent(currentSlideIndex);
+        }
+
+        document.addEventListener('input', function (e) {
+            if (!isEditMode) return;
+            if (e.target && e.target.isContentEditable) {
+                const badge = document.getElementById('save-status-badge');
+                if (badge) badge.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1.5"></i> กำลังบันทึกอัตโนมัติ...`;
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(() => saveAllPortfolioChanges(false), 500);
+            }
+        });
+
+        async function exitEditMode() {
+            await saveAllPortfolioChanges(false);
+            isEditMode = false;
+            document.body.classList.remove('edit-mode-active');
+            document.getElementById('admin-toolbar').classList.add('hidden');
+
+            const headerBtn = document.getElementById('header-edit-btn');
+            headerBtn.classList.remove('unlocked');
+            document.getElementById('header-edit-icon').className = "fa-solid fa-lock";
+            document.getElementById('header-edit-text').textContent = "แก้ไขข้อมูล";
+
+            document.querySelectorAll('[contenteditable="true"]').forEach(el => el.removeAttribute('contenteditable'));
+            renderSlideContent(currentSlideIndex);
+            showToast("บันทึกข้อมูลเรียบร้อยแล้ว");
+        }
+
+        function addKpiTableRow() {
+            const tbody = document.getElementById('kpi-table-body');
+            if (!tbody) return;
+            const rowCount = tbody.querySelectorAll('tr').length + 1;
+            const tr = document.createElement('tr');
+            tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition";
+            tr.innerHTML = `
+                <td contenteditable="true" class="py-3.5 px-4 font-semibold text-slate-900 dark:text-white">${rowCount}. หัวข้อตัวชี้วัดใหม่</td>
+                <td contenteditable="true" class="py-3.5 px-4">ข้อมูลรูปแบบเดิม</td>
+                <td contenteditable="true" class="py-3.5 px-4 text-sky-700 dark:text-sky-300 font-medium">ข้อมูลระบบใหม่</td>
+                <td contenteditable="true" class="py-3.5 px-4 text-emerald-600 dark:text-emerald-400 font-semibold">✔ ผลลัพธ์</td>
+            `;
+            tbody.appendChild(tr);
+            saveAllPortfolioChanges(false);
+            showToast("เพิ่มแถวตาราง KPI แล้ว");
+        }
+
+        function removeLastKpiTableRow() {
+            const tbody = document.getElementById('kpi-table-body');
+            if (tbody && tbody.lastElementChild && tbody.querySelectorAll('tr').length > 1) {
+                tbody.removeChild(tbody.lastElementChild);
+                saveAllPortfolioChanges(false);
+                showToast("ลบแถวสุดท้ายแล้ว");
+            }
+        }
+
+        function openMediaManagerModal(target) {
+            if (!isEditMode) { handleEditButtonClick(); return; }
+            document.getElementById('media-manager-modal').classList.remove('hidden');
+            switchMediaTarget(target || 'profile');
+        }
+
+        function closeMediaManagerModal() {
+            document.getElementById('media-manager-modal').classList.add('hidden');
+        }
+
+        function switchMediaTarget(target) {
+            currentMediaTarget = target;
+            const tabProfile = document.getElementById('tab-target-profile');
+            const tabDrive = document.getElementById('tab-target-drive');
+            const driveInput = document.getElementById('drive-input-url');
+
+            if (target === 'profile') {
+                tabProfile.className = "py-2.5 px-3 rounded-xl bg-white dark:bg-slate-900 text-sky-600 shadow-sm transition font-bold";
+                tabDrive.className = "py-2.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 transition";
+                const heroImg = document.getElementById('hero-drive-img');
+                driveInput.value = (heroImg && heroImg.dataset.driveId) ? heroImg.dataset.driveId : currentDriveDocId;
+            } else {
+                tabDrive.className = "py-2.5 px-3 rounded-xl bg-white dark:bg-slate-900 text-sky-600 shadow-sm transition font-bold";
+                tabProfile.className = "py-2.5 px-3 rounded-xl text-slate-600 dark:text-slate-400 transition";
+                driveInput.value = currentDriveDocId;
+            }
+        }
+
+        async function applyGoogleDriveMedia() {
+            const rawInput = document.getElementById('drive-input-url').value.trim();
+            if (!rawInput) return;
+            const extractedId = extractDriveId(rawInput);
+
+            if (currentMediaTarget === 'profile') {
+                const heroImg = document.getElementById('hero-drive-img');
+                delete heroImg.dataset.fallbackStep;
+                if (extractedId) {
+                    heroImg.dataset.driveId = extractedId;
+                    heroImg.src = `https://lh3.googleusercontent.com/d/${extractedId}=w1000`;
+                    document.getElementById('profile-source-label').textContent = `Google Drive: ${extractedId.substring(0, 12)}...`;
+                } else {
+                    heroImg.dataset.driveId = "";
+                    heroImg.src = rawInput;
+                    document.getElementById('profile-source-label').textContent = `รูปภาพจาก URL`;
+                }
+                await saveAllPortfolioChanges(false);
+                closeMediaManagerModal();
+                showToast("อัปเดตรูปโปรไฟล์สำเร็จ");
+            } else {
+                currentDriveDocId = extractedId || rawInput;
+                customUploadedDocDataUrl = "";
+                customUploadedDocType = "";
+                updateDriveViewerDisplay();
+                await saveAllPortfolioChanges(false);
+                closeMediaManagerModal();
+                showToast(`เชื่อมโยงไฟล์ Google Drive ID: ${currentDriveDocId} สำเร็จ`);
+            }
+        }
+
+        function updateDriveViewerDisplay() {
+            const directImg = document.getElementById('inline-drive-direct-img');
+            const fallbackCard = document.getElementById('drive-fallback-card');
+            const pdfIframe = document.getElementById('inline-uploaded-pdf-iframe');
+            const idCode = document.getElementById('display-drive-id-code');
+            const cardSub = document.getElementById('drive-card-subtitle');
+
+            if (customUploadedDocDataUrl) {
+                if (fallbackCard) fallbackCard.classList.add('hidden');
+                if (customUploadedDocType === 'application/pdf') {
+                    if (directImg) directImg.classList.add('hidden');
+                    if (pdfIframe) { pdfIframe.classList.remove('hidden'); pdfIframe.src = customUploadedDocDataUrl; }
+                } else {
+                    if (pdfIframe) pdfIframe.classList.add('hidden');
+                    if (directImg) { directImg.classList.remove('hidden'); directImg.src = customUploadedDocDataUrl; }
+                }
+                if (cardSub) cardSub.textContent = "ไฟล์อัปโหลดจากเครื่อง";
+            } else {
+                if (pdfIframe) pdfIframe.classList.add('hidden');
+                if (fallbackCard) fallbackCard.classList.add('hidden');
+                if (directImg) {
+                    delete directImg.dataset.fallbackStep;
+                    directImg.classList.remove('hidden');
+                    directImg.src = `https://lh3.googleusercontent.com/d/${currentDriveDocId}=w1200`;
+                }
+                if (idCode) idCode.textContent = currentDriveDocId;
+                if (cardSub) cardSub.textContent = `ID: ${currentDriveDocId}`;
+            }
+        }
+
+        function compressImageFile(file, maxWidth, quality, callback) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    let w = img.width, h = img.height;
+                    if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    callback(canvas.toDataURL('image/jpeg', quality));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleLocalFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (currentMediaTarget === 'profile') {
+                if (!file.type.startsWith('image/')) { showToast("กรุณาเลือกไฟล์รูปภาพ"); return; }
+                compressImageFile(file, 800, 0.82, async function (dataUrl) {
+                    const heroImg = document.getElementById('hero-drive-img');
+                    heroImg.dataset.driveId = "";
+                    heroImg.src = dataUrl;
+                    document.getElementById('profile-source-label').textContent = `รูปอัปโหลด: ${file.name}`;
+                    await saveAllPortfolioChanges(false);
+                    closeMediaManagerModal();
+                    showToast("อัปโหลดรูปโปรไฟล์สำเร็จ");
+                });
+            } else {
+                if (file.type.startsWith('image/')) {
+                    compressImageFile(file, 1200, 0.82, async function (dataUrl) {
+                        customUploadedDocDataUrl = dataUrl;
+                        customUploadedDocType = file.type;
+                        updateDriveViewerDisplay();
+                        await saveAllPortfolioChanges(false);
+                        closeMediaManagerModal();
+                        showToast("อัปโหลดไฟล์ภาพเอกสารสำเร็จ");
+                    });
+                } else if (file.type === 'application/pdf') {
+                    const reader = new FileReader();
+                    reader.onload = async function (e) {
+                        customUploadedDocDataUrl = e.target.result;
+                        customUploadedDocType = 'application/pdf';
+                        updateDriveViewerDisplay();
+                        await saveAllPortfolioChanges(false);
+                        closeMediaManagerModal();
+                        showToast("อัปโหลดไฟล์ PDF สำเร็จ");
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function openSlideEditorModal(slideIdx) {
+            if (!isEditMode) { handleEditButtonClick(); return; }
+            currentSlideIndex = (typeof slideIdx === 'number') ? slideIdx : currentSlideIndex;
+            populateSlideEditorSelect();
+            loadSlideIntoEditor(currentSlideIndex);
+            document.getElementById('slide-editor-modal').classList.remove('hidden');
+        }
+
+        function closeSlideEditorModal() {
+            document.getElementById('slide-editor-modal').classList.add('hidden');
+        }
+
+        function populateSlideEditorSelect() {
+            const select = document.getElementById('editor-slide-select');
+            select.innerHTML = portfolioSlides.map((s, i) => `<option value="${i}" ${i === currentSlideIndex ? 'selected' : ''}>หน้าที่ ${i + 1}: ${s.title.substring(0, 35)}...</option>`).join('');
+        }
+
+        function loadSlideIntoEditor(index) {
+            const idx = parseInt(index, 10);
+            currentSlideIndex = idx;
+            const slide = portfolioSlides[idx];
+            if (!slide) return;
+            document.getElementById('edit-slide-badge').value = slide.badge || '';
+            document.getElementById('edit-slide-title').value = slide.title || '';
+            document.getElementById('edit-slide-subtitle').value = slide.subtitle || '';
+            document.getElementById('edit-slide-highlights').value = (slide.highlights || []).join('\n');
+            document.getElementById('edit-slide-metrics').value = slide.metrics || '';
+            document.getElementById('edit-slide-image-url').value = slide.imageUrl || '';
+        }
+
+        async function saveCurrentSlideEdits() {
+            const slide = portfolioSlides[currentSlideIndex];
+            if (!slide) return;
+            slide.badge = document.getElementById('edit-slide-badge').value.trim();
+            slide.title = document.getElementById('edit-slide-title').value.trim();
+            slide.subtitle = document.getElementById('edit-slide-subtitle').value.trim();
+            slide.highlights = document.getElementById('edit-slide-highlights').value.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            slide.metrics = document.getElementById('edit-slide-metrics').value.trim();
+            slide.imageUrl = document.getElementById('edit-slide-image-url').value.trim();
+
+            renderSlideContent(currentSlideIndex);
+            await saveAllPortfolioChanges(false);
+            closeSlideEditorModal();
+            showToast("บันทึกสไลด์เรียบร้อยแล้ว");
+        }
+
+        async function addNewPortfolioSlide() {
+            portfolioSlides.push({
+                badge: `SLIDE 0${portfolioSlides.length + 1} • NEW`,
+                title: "หัวข้อใหม่",
+                subtitle: "คำอธิบาย",
+                highlights: ["ประเด็นที่ 1"],
+                metrics: "ผลลัพธ์",
+                imageUrl: ""
+            });
+            currentSlideIndex = portfolioSlides.length - 1;
+            populateSlideEditorSelect();
+            loadSlideIntoEditor(currentSlideIndex);
+            renderSlideContent(currentSlideIndex);
+            await saveAllPortfolioChanges(false);
+            showToast("เพิ่มหน้าสไลด์ใหม่แล้ว");
+        }
+
+        async function deleteCurrentPortfolioSlide() {
+            if (portfolioSlides.length <= 1) { showToast("ต้องมีสไลด์อย่างน้อย 1 หน้า"); return; }
+            portfolioSlides.splice(currentSlideIndex, 1);
+            currentSlideIndex = Math.max(0, currentSlideIndex - 1);
+            populateSlideEditorSelect();
+            loadSlideIntoEditor(currentSlideIndex);
+            renderSlideContent(currentSlideIndex);
+            await saveAllPortfolioChanges(false);
+            showToast("ลบหน้าสไลด์แล้ว");
+        }
+
+        function buildCurrentPortfolioPayload() {
+            const heroImg = document.getElementById('hero-drive-img');
+            const editableTexts = [];
+            document.querySelectorAll(EDITABLE_SELECTORS.join(',')).forEach((el, idx) => {
+                if (!el.closest('#inline-slide-stage') && !el.closest('button') && !el.closest('.admin-only-control')) {
+                    editableTexts.push({ idx, html: el.innerHTML });
+                }
+            });
+
+            const kpiTableBody = document.getElementById('kpi-table-body');
+            const payload = {
+                updatedAt: new Date().toISOString(),
+                profileImgSrc: heroImg ? heroImg.src : '',
+                profileDriveId: heroImg ? (heroImg.dataset.driveId || '') : '',
+                profileLabel: document.getElementById('profile-source-label')?.textContent || '',
+                currentDriveDocId,
+                customUploadedDocDataUrl,
+                customUploadedDocType,
+                portfolioSlides,
+                kpiTableHtml: kpiTableBody ? kpiTableBody.innerHTML : '',
+                editableTexts
+            };
+
+            const bakedScript = document.getElementById('baked-portfolio-state');
+            if (bakedScript) bakedScript.textContent = JSON.stringify(payload);
+            return payload;
+        }
+
+        async function saveAllPortfolioChanges(notify = true) {
+            const payload = buildCurrentPortfolioPayload();
+            await saveToIDB(payload);
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch (e) {}
+
+            const nowStr = new Date().toLocaleTimeString('th-TH');
+            const badge = document.getElementById('save-status-badge');
+            if (badge) badge.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5"></i> บันทึกแล้วเมื่อ ${nowStr}`;
+
+            if (notify) showToast(`บันทึกข้อมูลเรียบร้อยแล้ว (${nowStr})! อย่าลืมกด 'คัดลอกโค้ดลง Google Sites' เพื่ออัปเดตเว็บสาธารณะ`);
+        }
+
+        function applyPortfolioPayloadToDOM(data) {
+            if (!data) return;
+            if (data.kpiTableHtml && document.getElementById('kpi-table-body')) {
+                document.getElementById('kpi-table-body').innerHTML = data.kpiTableHtml;
+            }
+            if (Array.isArray(data.editableTexts)) {
+                const nodes = [];
+                document.querySelectorAll(EDITABLE_SELECTORS.join(',')).forEach(el => {
+                    if (!el.closest('#inline-slide-stage') && !el.closest('button') && !el.closest('.admin-only-control')) nodes.push(el);
+                });
+                data.editableTexts.forEach(item => { if (nodes[item.idx]) nodes[item.idx].innerHTML = item.html; });
+            }
+            const heroImg = document.getElementById('hero-drive-img');
+            if (heroImg && data.profileImgSrc) {
+                delete heroImg.dataset.fallbackStep;
+                heroImg.src = data.profileImgSrc;
+                heroImg.dataset.driveId = data.profileDriveId || '';
+            }
+            if (data.profileLabel && document.getElementById('profile-source-label')) {
+                document.getElementById('profile-source-label').textContent = data.profileLabel;
+            }
+            if (data.currentDriveDocId) currentDriveDocId = data.currentDriveDocId;
+            if (typeof data.customUploadedDocDataUrl === 'string') customUploadedDocDataUrl = data.customUploadedDocDataUrl;
+            if (typeof data.customUploadedDocType === 'string') customUploadedDocType = data.customUploadedDocType;
+            updateDriveViewerDisplay();
+
+            if (Array.isArray(data.portfolioSlides) && data.portfolioSlides.length > 0) {
+                portfolioSlides = data.portfolioSlides;
+            }
+        }
+
+        async function loadSavedPortfolioChanges() {
+            try {
+                let data = await loadFromIDB();
+                if (!data) {
+                    const rawLs = localStorage.getItem(STORAGE_KEY);
+                    if (rawLs) data = JSON.parse(rawLs);
+                }
+                if (!data) {
+                    const bakedScript = document.getElementById('baked-portfolio-state');
+                    if (bakedScript && bakedScript.textContent.trim()) {
+                        data = JSON.parse(bakedScript.textContent.trim());
+                    }
+                }
+                if (data) applyPortfolioPayloadToDOM(data);
+            } catch (e) {}
+        }
+
+        async function resetPortfolioToDefault() {
+            await clearIDB();
+            try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+            const bakedScript = document.getElementById('baked-portfolio-state');
+            if (bakedScript) bakedScript.textContent = "";
+            window.location.reload();
+        }
+
+        function generateCleanHtmlSnapshot() {
+            buildCurrentPortfolioPayload();
+            const wasEdit = isEditMode;
+            if (wasEdit) {
+                document.body.classList.remove('edit-mode-active');
+                document.getElementById('admin-toolbar').classList.add('hidden');
+                document.getElementById('header-edit-btn').classList.remove('unlocked');
+                document.getElementById('header-edit-icon').className = "fa-solid fa-lock";
+                document.getElementById('header-edit-text').textContent = "แก้ไขข้อมูล";
+                document.querySelectorAll('[contenteditable="true"]').forEach(el => el.removeAttribute('contenteditable'));
+            }
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            if (wasEdit) enableEditMode();
+            return htmlContent;
+        }
+
+        async function copyUpdatedHtmlForGoogleSites() {
+            await saveAllPortfolioChanges(false);
+            const htmlContent = generateCleanHtmlSnapshot();
+            const tempInput = document.createElement('textarea');
+            tempInput.value = htmlContent;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("คัดลอกโค้ดเรียบร้อยแล้ว! นำไปวาง (Ctrl+V) ในช่อง Embed Code ของ Google Sites ได้เลย");
+        }
+
+        async function exportUpdatedHtmlFile() {
+            await saveAllPortfolioChanges(false);
+            const htmlContent = generateCleanHtmlSnapshot();
+            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "taweesak-portfolio-updated.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("ดาวน์โหลดไฟล์ .HTML เรียบร้อยแล้ว");
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            html.classList.toggle('dark');
+            icon.className = html.classList.contains('dark') ? 'fa-solid fa-sun text-amber-400 text-sm' : 'fa-solid fa-moon text-sm';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-box');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('hidden');
+            clearTimeout(window._toastTimeout);
+            window._toastTimeout = setTimeout(() => toast.classList.add('hidden'), 4500);
+        }
+
+        function copyToClipboard(text, message) {
+            if (isEditMode) return;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast(message);
+        }
+
+        window.onload = async function () {
+            await loadSavedPortfolioChanges();
+            renderSlideContent(0);
+        };
+    </script>
+
+    <!-- ========================================== -->
+    <!-- CERTIFICATE LIGHTBOX MODAL -->
+    <!-- ========================================== -->
+    <div id="cert-lightbox-modal" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="relative max-w-4xl w-full bg-slate-900 border border-slate-700 rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/80">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-award text-amber-400 text-lg"></i>
+                    <h3 id="cert-lightbox-title" class="text-base font-bold text-white truncate max-w-lg">ใบประกาศนียบัตร</h3>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a id="cert-lightbox-download" href="#" target="_blank" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-download"></i> ดาวน์โหลด
+                    </a>
+                    <button type="button" onclick="closeCertLightbox()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-4 flex-1 flex items-center justify-center overflow-auto bg-slate-950/60 min-h-[300px]">
+                <img id="cert-lightbox-img" src="" alt="Certificate" class="max-h-[75vh] w-auto max-w-full object-contain rounded-xl shadow-lg border border-slate-800 transition transform hover:scale-[1.02] duration-300">
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ADD/EDIT TRAINING RECORD MODAL -->
+    <!-- ========================================== -->
+    <div id="training-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 id="training-modal-title" class="text-lg font-bold text-slate-900 dark:text-white">เพิ่มประวัติการฝึกอบรม</h3>
+                <button type="button" onclick="closeTrainingModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="space-y-3 text-sm">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">รหัสหลักสูตร (Code)</label>
+                    <input type="text" id="tr-modal-code" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm" placeholder="เช่น INENG00880">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ชื่อหลักสูตร (Course Title)</label>
+                    <input type="text" id="tr-modal-title" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm" placeholder="เช่น ความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้า">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">หมวดหมู่</label>
+                        <select id="tr-modal-category" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm">
+                            <option value="Safety & Compliance">Safety & Compliance</option>
+                            <option value="IT & Technical">IT & Technical</option>
+                            <option value="Production & Quality">Production & Quality</option>
+                            <option value="Management & General">Management & General</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">วันที่ (Date)</label>
+                        <input type="text" id="tr-modal-date" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-sm" placeholder="DD-MM-YYYY">
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <button type="button" onclick="closeTrainingModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-semibold">ยกเลิก</button>
+                <button type="button" onclick="saveTrainingModal()" class="px-5 py-2 rounded-xl bg-teal-600 text-white text-sm font-semibold hover:bg-teal-700 shadow-sm">บันทึกข้อมูล</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC FOR CERTIFICATES & TRAINING -->
+    <!-- ========================================== -->
+    <script>
+        // Lightbox controls
+        window.openCertLightbox = function(imgSrc, title) {
+            const modal = document.getElementById('cert-lightbox-modal');
+            const img = document.getElementById('cert-lightbox-img');
+            const titleEl = document.getElementById('cert-lightbox-title');
+            const dl = document.getElementById('cert-lightbox-download');
+            if (!modal || !img) return;
+            img.src = imgSrc;
+            if (titleEl) titleEl.textContent = title || "ใบประกาศนียบัตร";
+            if (dl) dl.href = imgSrc;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeCertLightbox = function() {
+            const modal = document.getElementById('cert-lightbox-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        };
+
+        // Training records data & management
+        window.globalTrainings = [{"id":"tr1","code":"INENG00880","classId":"INENG00880250N","title":"ความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้า (Electrical Safety)","dateRange":"30-01-2025","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr2","code":"INPRO01870","classId":"INPRO018701024N","title":"การวิเคราะห์การสั่นสะเทือนของเครื่องจักร (Machine Vibration Analysis)","dateRange":"30-10-2024","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr3","code":"INPRO00170","classId":"INPRO001702408N","title":"ความรู้ด้านการบริหารการผลิต (IE - Industrial Engineering)","dateRange":"23-08-2024","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr4","code":"INPRO01970","classId":"INPRO019700424N","title":"เทคนิคการผลิต (กระบวนการผสมยาง) (Rubber Mixing Process Techniques)","dateRange":"23-04-2024","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr5","code":"INLAW00010","classId":"INLAW000102301N","title":"สิทธิประโยชน์ตาม พรบ.ประกันสังคม (Social Security Law)","dateRange":"09-06-2023","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr6","code":"INSAF01900","classId":"INSAF019002101N","title":"การใช้งานและการบำรุงรักษา รถ Boom Lift 14m อย่างถูกต้องและปลอดภัย (Boom Lift Operation & Safety)","dateRange":"10-11-2021","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr7","code":"INSAF02000","classId":"INSAF020002101N","title":"การอบรม Scissor lift car (Scissor Lift Safety Training)","dateRange":"26-10-2021","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr8","code":"ELTIR00040","classId":"ELTIR000402101C","title":"เรียนรู้และเข้าใจง่าย ๆ ไปกับ มอก.ยางล้อฯ (TIS Tire Standards)","dateRange":"01-09-2021 - 10-10-2021","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr9","code":"INENG00020","classId":"INENG000202101N","title":"จิตสำนึกด้านการอนุรักษ์พลังงาน (Energy Conservation Awareness)","dateRange":"09-06-2021","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr10","code":"ELCOM0001B","classId":"ELCOM0001B2101C","title":"การบริหารการสื่อสารในภาวะวิกฤต สำหรับพนักงาน (Crisis Communication for Employees)","dateRange":"01-05-2021 - 30-06-2021","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr11","code":"INLAW00060","classId":"INLAW000602101N","title":"อบรมการป้องกันการเลือกปฏิบัติและการล่วงละเมิดในที่ทำงาน (Anti-Discrimination & Harassment Prevention)","dateRange":"01-04-2021 - 30-06-2021","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr12","code":"ELCPL00010","classId":"ELCPL000012101C","title":"การต่อต้านการทุจริต: กรณีการจ่ายเงินที่ไม่เหมาะสม (Corporate Anti-Corruption Guidelines)","dateRange":"01-03-2021 - 31-03-2021","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr13","code":"ELCCV00010","classId":"ELCCV000102001C","title":"อัตลักษณ์ของแบรนด์และสโลแกนของบริดจสโตน (Global Brand & Slogan Launch)","dateRange":"20-10-2020 - 01-12-2020","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr14","code":"INTIR00020","classId":"TIR0002020202C","title":"ความรู้พื้นฐานเกี่ยวกับยางรถยนต์ 14 (Basic Tire Knowledge 14)","dateRange":"01-08-2020 - 31-10-2020","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr15","code":"INSAF0003A","classId":"SAF0003A201959N","title":"Re-Training แบบจำลองเครื่องจักรและการบ่งชี้อันตราย (Machine Simulation & Hazard ID)","dateRange":"25-12-2019","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr16","code":"INITI00310","classId":"ITI00310201901N","title":"Oracle 12c Database Administration (อบรมการดูแลฐานข้อมูล Oracle 12c)","dateRange":"09-09-2019 - 19-09-2019","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr17","code":"INCCV00090","classId":"CCV00090201809M","title":"อบรมความสามารถหลักเพื่อการขับเคลื่อนองค์กร (Core Competency Integration)","dateRange":"14-11-2018 - 04-12-2018","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr17b","code":"OTITI00050","classId":"ITI00050201801C","title":"การฝึกอบรมเทคโนโลยีสารสนเทศภายนอก (External IT Training)","dateRange":"11-09-2018 - 12-09-2018","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr18","code":"PBITI00360","classId":"ITI00360201801N","title":"เปิดโลกอนาคตด้วย IoT: ยุคใหม่แห่งการผลิต (IoT-New Era of Manufacturing)","dateRange":"11-07-2018","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr19","code":"Z000006362","classId":"Z000006362","title":"Re-Training KYT & Safety Simulation Machine Preparation # 28 / 2560","dateRange":"15-03-2017","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr20","code":"Z000006467","classId":"Z000006467","title":"Compliance (กฎปฏิบัติตามกฎหมายและแนวทางปฏิบัติทางธุรกิจ) # 1 / 2016","dateRange":"23-12-2016","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr21","code":"Z000009575","classId":"Z000009575","title":"VMware vForum 2016 (Hit the Town - System Virtualization)","dateRange":"30-11-2016","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr22","code":"Z000009540","classId":"Z000009540","title":"ช่างไฟฟ้าภายในอาคาร รุ่นที่ 2 / 2559 (Certified Building Electrician)","dateRange":"08-08-2016 - 10-08-2016","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr23","code":"Z000006492","classId":"Z000006492","title":"AutoCAD (แบบ 3 มิติ) # 1 / 2016 (3D CAD Modelling)","dateRange":"13-06-2016 - 15-06-2016","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr24","code":"Z000006541","classId":"Z000006541","title":"Microsoft Excel Advanced 2010 รุ่นที่ 1 / 2559","dateRange":"30-05-2016 - 01-06-2016","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr25","code":"Z000006578","classId":"Z000006578","title":"การประเมินความเสี่ยงและมาตรการป้องกันเครื่องจักร รุ่นที่ 3 / 2560 (Machine Risk Assessment)","dateRange":"01-03-2016 - 02-03-2016","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr26","code":"Z000006962","classId":"Z000006962","title":"QCC : Quality Control Circle รุ่นที่ 5 / 2558 กรุ๊ป C (กิจกรรมการปรับปรุงคุณภาพกลุ่มย่อย)","dateRange":"26-11-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr27","code":"Z000007006","classId":"Z000007006","title":"Common Manufacturing Standard (Safety & Hygienic) # 13 / 2558","dateRange":"11-08-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr28","code":"Z000007007","classId":"Z000007007","title":"Common Manufacturing Standard (Disaster Prevention & Fire Prevention) # 13 / 2558","dateRange":"11-08-2015","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr29","code":"Z000007024","classId":"Z000007024","title":"Common Manufacturing Standard (Standardization Suru Raku) # 12 / 2558","dateRange":"20-07-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr30","code":"Z000007023","classId":"Z000007023","title":"Common Manufacturing Standard (Autonomous Facility Maintenance) TPM # 12 / 2558","dateRange":"20-07-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr31","code":"Z000007004","classId":"Z000007004","title":"Common Manufacturing Standard (Quality Control & Improvement) # 12 / 2558","dateRange":"13-07-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr32","code":"Z000007005","classId":"Z000007005","title":"Common Manufacturing Standard (Quality Assurance) # 12 / 2558","dateRange":"13-07-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr33","code":"Z000006981","classId":"Z000006981","title":"KYT & Safety Simulation Machine Training Preparation 57 / 2558 for Group A","dateRange":"26-06-2015","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr34","code":"Z000009619","classId":"Z000009619","title":"Implementing a Mobile-First World with Microsoft Enterprise Device Infrastructure 1 / 2558","dateRange":"26-03-2015","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr35","code":"Z000009599","classId":"Z000009599","title":"การป้องกันและแก้ไขปัญหายาเสพติด รุ่นที่ 2 / 2557 (Anti-Drug Workplace Campaign)","dateRange":"25-03-2015","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr36","code":"Z000009618","classId":"Z000009618","title":"Extend your Datacenter with Microsoft Azure 1 / 2558 (การขยายระบบเซิร์ฟเวอร์ร่วมกับคลาวด์ Azure)","dateRange":"19-03-2015","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr37","code":"Z000006756","classId":"Z000006756","title":"Zen-Z-Bi มาตรฐานเครื่องจักร รุ่นที่ 4 / 2558 (Zen-Z-Bi Machine Standards)","dateRange":"13-02-2015","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr38","code":"Z000007131","classId":"Z000007131","title":"การอบรมเชิงปฏิบัติการหลักสูตรการเขียน E-mail ภาษาอังกฤษธุรกิจ รุ่นที่ 2 / 2557 (Business E-mail Writing)","dateRange":"16-10-2014","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr39","code":"Z000009643","classId":"Z000009643","title":"Azure and Windows Server Training for Customers (อบรมการดูแลระบบเซิร์ฟเวอร์ระบบปฏิบัติการ Windows)","dateRange":"26-09-2014","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr40","code":"Z000007292","classId":"Z000007292","title":"Common Manufacturing Standard # 3 / 2557 (มาตรฐานกลางประกอบโรงงาน)","dateRange":"25-06-2014 - 10-07-2014","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr41","code":"Z000007499","classId":"Z000007499","title":"3S, KY, RA, Safety Rules Training # 116 / 2013 (การวิเคราะห์ความเสี่ยงและกฎความปลอดภัย)","dateRange":"11-12-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr42","code":"Z000007423","classId":"Z000007423","title":"Compliance (กฎปฏิบัติทางธุรกิจและจริยธรรม) สำหรับ Staff / Administrator # 5 / 2013","dateRange":"07-10-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr43","code":"Z000006136","classId":"Z000006136","title":"การใช้สัญญาณมือในการสื่อสารระหว่างผู้ปฏิบัติงานเกี่ยวกับปั้นจั่น (Signal Hand Communication for Crane)","dateRange":"16-08-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr44","code":"Z000006137","classId":"Z000006137","title":"ข้อกำหนดหลักเกณฑ์การใช้ป้ายแท็กหยุดเครื่องจักร (LOTO - Lock Out Tag Out)","dateRange":"16-08-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr45","code":"Z000006135","classId":"Z000006135","title":"การอบรมกฎความปลอดภัยโรงงานเบื้องต้น (General Safety Rules)","dateRange":"08-08-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr46","code":"Z000007396","classId":"Z000007396","title":"มาตรฐานการปรับระยะห่าง Gap TL (Proximity Switch Adjustments)","dateRange":"30-07-2013","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr47","code":"Z000007516","classId":"Z000007516","title":"Microsoft Excel 2010 Foundations & Intermediate # 1 / 2013","dateRange":"16-07-2013 - 18-07-2013","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr48","code":"Z000007348","classId":"Z000007348","title":"TBSC-N Tire Security Gate (TSG System) - การติดตั้งและดูแลรักษาประตูด่านความมั่นคง","dateRange":"19-06-2013","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr49","code":"Z000007394","classId":"Z000007394","title":"การใช้งานใบ 3S กับการตรวจสอบและบำรุงรักษาอุปกรณ์เพื่อมาตรฐานความปลอดภัย","dateRange":"14-06-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr50","code":"Z000007388","classId":"Z000007388","title":"One Point Lesson: Side Tread Open (FM) (Toyota Claim Standars)","dateRange":"21-05-2013","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr51","code":"Z000007389","classId":"Z000007389","title":"มาตรฐานสำคัญด้านความคุมคุณภาพ: ข้อห้ามนำไม้เข้ามาปฏิบัติงานในกระบวนการผลิต (FOD Prevention)","dateRange":"21-05-2013","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr52","code":"Z000007387","classId":"Z000007387","title":"การหยุดระบบเครื่องจักร 4 ขั้นตอนเพื่อความปลอดภัยสูงสุด (4-Step Machinery Emergency Stops)","dateRange":"21-05-2013","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr53","code":"Z000007386","classId":"Z000007386","title":"การตรวจสอบหารอยแตกร้าวของเครื่องจักรกลโดยใช้สารเคมีสีน้ำยาพ่นตรวจสอบ (Non-Destructive Spray Testing)","dateRange":"30-04-2013","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr54","code":"Z000007364","classId":"Z000007364","title":"การสื่อสารและประสานงานความร่วมมือในการทำงาน 2 คนขึ้นไป REV.NO.2","dateRange":"08-02-2013","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr55","code":"Z000007897","classId":"Z000007897","title":"Microsoft PowerPoint 2010 Core Foundations Workshop #1 / 2012","dateRange":"17-07-2012 - 19-07-2012","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr56","code":"Z000007896","classId":"Z000007896","title":"Microsoft Access 2010 Core Relational Databases #1 / 2012","dateRange":"10-07-2012 - 12-07-2012","category":"IT & Technical","status":"ผ่าน (Passed)"},{"id":"tr57","code":"Z000007846","classId":"Z000007846","title":"ความรู้ความเข้าใจเรื่องทิศทางนโยบายองค์กร ปรัชญาการทำงาน และสิทธิมนุษยชน รุ่นที่ 5 / 2555","dateRange":"13-06-2012","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr58","code":"Z000007907","classId":"Z000007907","title":"มาตรฐานความปลอดภัยความมั่นคงระดับโรงงานและการฝึกซ้อมระงับอัคคีภัย (Safety, Fire, Suru Raku # 35 / 2555)","dateRange":"01-06-2012","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr59","code":"Z000007889","classId":"Z000007889","title":"ความรู้ระดับเทคโนโลยีเทคนิคเพื่อการผลิตยางล้อขั้นสูง รุ่นที่ 1 / 2555 (Advanced Tire Engineering)","dateRange":"04-04-2012 - 05-04-2012","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr60","code":"Z000008244","classId":"Z000008244","title":"การปฐมนิเทศพนักงานเข้าทำงานใหม่ (สำนักงานใหญ่) รุ่นที่ 2 / 2554 (TBSC Employee Orientation)","dateRange":"20-09-2011 - 23-09-2011","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr61","code":"Z000008185","classId":"Z000008185","title":"หลักสูตรพัฒนาทักษะการใช้ไวยากรณ์ภาษาอังกฤษเพื่อการสื่อสารธุรกิจ ระดับ 1 (English Grammar Level 1)","dateRange":"13-09-2011 - 01-11-2011","category":"Management & General","status":"ผ่าน (Passed)"},{"id":"tr62","code":"Z000008233","classId":"Z000008233","title":"ความรู้ความเข้าใจพื้นฐานหลักสูตรผลิตภัณฑ์ยางรถยนต์ทั่วไป รุ่นที่ 2 / 2554 (Basic Tire Knowledge)","dateRange":"23-06-2011 - 24-06-2011","category":"Production & Quality","status":"ผ่าน (Passed)"},{"id":"tr63","code":"Z000008251","classId":"Z000008251","title":"การป้องกันการเกิดและการระงับอัคคีภัยขั้นต้นระดับแผนกงาน รุ่นที่ 8 / 2544 (Primary Fire Fighting Class)","dateRange":"09-06-2011","category":"Safety & Compliance","status":"ผ่าน (Passed)"},{"id":"tr64","code":"Z000007363","classId":"Z000007363","title":"สารจาก MD (MD Message)","dateRange":"01-01-1900","category":"Management & General","status":"ผ่าน (Passed)"}];
+        window.currentTrainingCategory = 'all';
+        window.editingTrainingId = null;
+
+        window.renderTrainingTable = function() {
+            const tbody = document.getElementById('training-tbody');
+            const emptyEl = document.getElementById('training-empty');
+            const searchVal = (document.getElementById('training-search')?.value || '').toLowerCase().trim();
+            if (!tbody) return;
+
+            const filtered = window.globalTrainings.filter(item => {
+                const matchCat = window.currentTrainingCategory === 'all' || item.category === window.currentTrainingCategory;
+                const matchSearch = !searchVal || 
+                    (item.title && item.title.toLowerCase().includes(searchVal)) ||
+                    (item.code && item.code.toLowerCase().includes(searchVal)) ||
+                    (item.classId && item.classId.toLowerCase().includes(searchVal));
+                return matchCat && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                if (emptyEl) emptyEl.classList.remove('hidden');
+                return;
+            }
+            if (emptyEl) emptyEl.classList.add('hidden');
+
+            const categoryColors = {
+                'Safety & Compliance': 'bg-amber-50 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300 border-amber-200 dark:border-amber-800',
+                'IT & Technical': 'bg-sky-50 text-sky-700 dark:bg-sky-950/70 dark:text-sky-300 border-sky-200 dark:border-sky-800',
+                'Production & Quality': 'bg-teal-50 text-teal-700 dark:bg-teal-950/70 dark:text-teal-300 border-teal-200 dark:border-teal-800',
+                'Management & General': 'bg-purple-50 text-purple-700 dark:bg-purple-950/70 dark:text-purple-300 border-purple-200 dark:border-purple-800'
+            };
+
+            tbody.innerHTML = filtered.map((item, idx) => {
+                const catColor = categoryColors[item.category] || 'bg-slate-100 text-slate-700';
+                return `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="px-4 py-3 font-mono text-xs text-slate-400 font-semibold">${idx + 1}</td>
+                        <td class="px-4 py-3 font-mono font-semibold text-sky-600 dark:text-sky-400">${item.code || '-'}</td>
+                        <td class="px-4 py-3 font-medium text-slate-900 dark:text-white max-w-xs sm:max-w-md">${item.title}</td>
+                        <td class="px-4 py-3">
+                            <span class="inline-block px-2.5 py-1 rounded-full border text-[11px] font-semibold whitespace-nowrap ${catColor}">${item.category}</span>
+                        </td>
+                        <td class="px-4 py-3 font-mono text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">${item.dateRange || '-'}</td>
+                        <td class="px-4 py-3 text-center">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-semibold whitespace-nowrap">
+                                <i class="fa-solid fa-circle-check text-[10px]"></i> ผ่าน (Passed)
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-right whitespace-nowrap">
+                            <button type="button" onclick="handleEditTrainingClick('${item.id}')" class="px-2 py-1 text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 mr-1" title="แก้ไข">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button type="button" onclick="handleDeleteTrainingClick('${item.id}')" class="px-2 py-1 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400" title="ลบ">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        };
+
+        window.filterTrainingTable = function() {
+            window.renderTrainingTable();
+        };
+
+        window.setTrainingCategory = function(cat) {
+            window.currentTrainingCategory = cat;
+            document.querySelectorAll('.training-filter-pill').forEach(btn => {
+                btn.classList.remove('bg-sky-600', 'text-white', 'font-semibold');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            });
+            const activeId = cat === 'all' ? 'btn-cat-all' :
+                             cat === 'Safety & Compliance' ? 'btn-cat-safety' :
+                             cat === 'IT & Technical' ? 'btn-cat-tech' :
+                             cat === 'Production & Quality' ? 'btn-cat-prod' : 'btn-cat-mgmt';
+            const activeBtn = document.getElementById(activeId);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                activeBtn.classList.add('bg-sky-600', 'text-white', 'font-semibold');
+            }
+            window.renderTrainingTable();
+        };
+
+        // Password protected handlers
+        window.requirePassword = function(callback) {
+            const pass = prompt('กรุณากรอกรหัสผ่านเพื่อดำเนินการ (Password):');
+            if (pass === 'NUTza067668141') {
+                callback();
+            } else if (pass !== null) {
+                alert('รหัสผ่านไม่ถูกต้อง (Incorrect Password)');
+            }
+        };
+
+        window.handleAddTrainingClick = function() {
+            window.requirePassword(() => {
+                window.editingTrainingId = null;
+                document.getElementById('training-modal-title').textContent = 'เพิ่มประวัติการฝึกอบรม';
+                document.getElementById('tr-modal-code').value = '';
+                document.getElementById('tr-modal-title').value = '';
+                document.getElementById('tr-modal-date').value = new Date().toLocaleDateString('th-TH');
+                document.getElementById('training-modal').classList.remove('hidden');
+                document.getElementById('training-modal').classList.add('flex');
+            });
+        };
+
+        window.handleEditTrainingClick = function(id) {
+            window.requirePassword(() => {
+                const item = window.globalTrainings.find(t => t.id === id);
+                if (!item) return;
+                window.editingTrainingId = id;
+                document.getElementById('training-modal-title').textContent = 'แก้ไขประวัติการฝึกอบรม';
+                document.getElementById('tr-modal-code').value = item.code || '';
+                document.getElementById('tr-modal-title').value = item.title || '';
+                document.getElementById('tr-modal-category').value = item.category || 'Safety & Compliance';
+                document.getElementById('tr-modal-date').value = item.dateRange || '';
+                document.getElementById('training-modal').classList.remove('hidden');
+                document.getElementById('training-modal').classList.add('flex');
+            });
+        };
+
+        window.handleDeleteTrainingClick = function(id) {
+            window.requirePassword(() => {
+                if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบรายการนี้?')) {
+                    window.globalTrainings = window.globalTrainings.filter(t => t.id !== id);
+                    window.renderTrainingTable();
+                }
+            });
+        };
+
+        window.closeTrainingModal = function() {
+            const m = document.getElementById('training-modal');
+            if (m) {
+                m.classList.add('hidden');
+                m.classList.remove('flex');
+            }
+        };
+
+        window.saveTrainingModal = function() {
+            const code = document.getElementById('tr-modal-code').value.trim();
+            const title = document.getElementById('tr-modal-title').value.trim();
+            const category = document.getElementById('tr-modal-category').value;
+            const dateRange = document.getElementById('tr-modal-date').value.trim();
+            if (!title) {
+                alert('กรุณากรอกชื่อหลักสูตร');
+                return;
+            }
+
+            if (window.editingTrainingId) {
+                const item = window.globalTrainings.find(t => t.id === window.editingTrainingId);
+                if (item) {
+                    item.code = code;
+                    item.title = title;
+                    item.category = category;
+                    item.dateRange = dateRange;
+                }
+            } else {
+                window.globalTrainings.unshift({
+                    id: 'tr_' + Date.now(),
+                    code,
+                    classId: code,
+                    title,
+                    category,
+                    dateRange,
+                    status: 'ผ่าน (Passed)'
+                });
+            }
+            window.closeTrainingModal();
+            window.renderTrainingTable();
+        };
+
+        // Initialize table on DOM ready
+        document.addEventListener('DOMContentLoaded', function() {
+            window.renderTrainingTable();
+        });
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            window.renderTrainingTable();
+        }
+    </script>
+
+</body>
+</html>
