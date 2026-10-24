@@ -419,136 +419,170 @@
             </div>
         </section>
 
-                <!-- 2. LIVE GOOGLE DRIVE & INTERACTIVE E-BOOK VIEWER SECTION -->
+                        <!-- 2. LIVE GOOGLE DRIVE DOCUMENT SHOWCASE & INTERACTIVE TIMELINE PORTFOLIO -->
         <section id="drive-showcase" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 space-y-6">
+            <!-- Header -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
                 <div>
                     <div class="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-1">
                         <i class="fa-brands fa-google-drive"></i>
-                        <span>LIVE GOOGLE DRIVE &amp; INTERACTIVE E-BOOK PORTFOLIO</span>
+                        <span>TIMELINE DOCUMENT REPOSITORY &amp; VERIFIED CREDENTIALS</span>
                     </div>
                     <h2 class="text-2xl sm:text-3xl font-display font-bold text-slate-900 dark:text-white">
-                        คลังไฟล์จริงจาก Google Drive และสไลด์ผลงานแบบ E-Book (กดดูเต็มจอได้)
+                        คลังไฟล์และเอกสารจริง (Google Drive Timeline)
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                        ดึงเอกสารผลงานและไฟล์ PDF โดยตรงจาก Google Drive ID: <code id="display-drive-id-code" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 font-mono">1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI</code> พร้อมระบบเปิดอ่านสไลด์โครงการ LPR ครบทุกหน้า
+                        ด้านซ้ายแสดงเอกสารต้นฉบับความละเอียดสูง ด้านขวาอธิบายข้อมูลสำคัญ พร้อมระบบเรียงลำดับตาม Timeline เหตุการณ์
                     </p>
                 </div>
 
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
-                        <i class="fa-solid fa-file-arrow-up mr-2"></i> อัปโหลดเอกสาร / เปลี่ยน ID Drive
+                <!-- Controls: View Mode, Rotate, Fullscreen, Protected Download -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Orientation Toggle Button (กดหมุด/ปรับแนวนอน-แนวตั้ง) -->
+                    <button type="button" id="btn-toggle-orientation" onclick="toggleDocOrientation()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="กดหมุดเพื่อสลับมุมมอง แนวนอน / แนวตั้ง">
+                        <i id="orientation-icon" class="fa-solid fa-arrows-rotate text-sky-600 dark:text-sky-400"></i>
+                        <span id="orientation-text">หมุนดูแนวนอน/ตั้ง</span>
                     </button>
-                    <button type="button" onclick="openSlideEditorModal()" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
-                        <i class="fa-solid fa-pen-ruler mr-2"></i> แก้ไขสไลด์ E-Book
+
+                    <!-- Rotate 90 deg button (กดหมุน) -->
+                    <button type="button" onclick="rotateCurrentDoc()" class="px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="หมุนเอกสาร 90 องศา">
+                        <i class="fa-solid fa-rotate-right text-teal-600 dark:text-teal-400"></i>
+                        <span>หมุน 90°</span>
                     </button>
-                    <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center">
-                        <i class="fa-solid fa-expand mr-2"></i> ดูไฟล์ Google Drive เต็มจอ
+
+                    <!-- Toggle Full-Width Document vs Dual Pane (เอกสารอย่างเดียว vs พร้อมคำอธิบาย) -->
+                    <button type="button" id="btn-toggle-layout-mode" onclick="toggleShowcaseLayoutMode()" class="px-3.5 py-2.5 rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900 text-xs sm:text-sm font-semibold border border-sky-300 dark:border-sky-800 transition flex items-center gap-1.5" title="สลับโหมด แสดงเอกสารเต็มๆ หรือ แสดงคู่กับคำอธิบาย">
+                        <i id="layout-mode-icon" class="fa-solid fa-columns text-sky-600"></i>
+                        <span id="layout-mode-text">เอกสาร + อธิบาย</span>
                     </button>
-                    <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center">
-                        <i class="fa-solid fa-book-open mr-2"></i> เปิดอ่าน E-Book เต็มจอ
+
+                    <!-- Protected Download Button (ใส่รหัสผ่าน) -->
+                    <button type="button" onclick="triggerProtectedDownload()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5" title="ดาวน์โหลดเอกสาร (ต้องใช้รหัสผ่านยืนยัน)">
+                        <i class="fa-solid fa-lock text-xs"></i>
+                        <i class="fa-solid fa-download"></i>
+                        <span>ดาวน์โหลด</span>
                     </button>
-                    <a id="external-drive-link" href="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium border border-slate-200 dark:border-slate-700 transition flex items-center">
-                        <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดในแท็บใหม่
-                    </a>
+
+                    <!-- Fullscreen -->
+                    <button type="button" onclick="openDocFullscreenModal()" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-expand"></i>
+                        <span>เต็มจอ</span>
+                    </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                <!-- Left: Google Drive & Interactive PDF Viewer Card -->
-                <div class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 overflow-hidden shadow-sm">
-                    <div class="p-4 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
-                        <div class="flex items-center space-x-2.5">
-                            <i class="fa-brands fa-google-drive text-sky-600 dark:text-sky-400 text-xl"></i>
-                            <div>
-                                <h3 class="font-bold text-slate-800 dark:text-white text-sm">คลังไฟล์และเอกสารจริง (Google Drive)</h3>
-                                <p id="drive-card-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">ID: 1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI</p>
-                            </div>
+            <!-- Interactive Timeline Stepper Bar -->
+            <div class="bg-slate-100/90 dark:bg-slate-950/80 rounded-2xl p-2.5 sm:p-3.5 border border-slate-200 dark:border-slate-800 overflow-x-auto">
+                <div class="flex items-center gap-2 min-w-[760px] text-xs" id="timeline-stepper-container">
+                    <!-- Populated dynamically via renderTimelineStepper() -->
+                </div>
+            </div>
+
+            <!-- Main Content Area: Left (Document Viewer) & Right (Document Explanation) -->
+            <div id="showcase-content-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Left: Document Viewer Stage -->
+                <div id="showcase-left-col" class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300">
+                    <!-- Stage Top Bar -->
+                    <div class="p-3.5 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+                        <div class="flex items-center space-x-2 text-white">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
+                            <span id="stage-doc-title-bar" class="font-display font-bold text-slate-200">หนังสือสำคัญทางทหาร (สด.8)</span>
                         </div>
-                        <div class="flex items-center space-x-1.5">
-                            <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 hover:bg-amber-400 text-xs font-bold transition items-center">
-                                <i class="fa-solid fa-upload mr-1"></i> เปลี่ยน ID
+                        <div class="flex items-center space-x-2 text-slate-400">
+                            <button type="button" onclick="rotateCurrentDoc()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="หมุนเอกสาร 90 องศา">
+                                <i class="fa-solid fa-rotate-right"></i>
                             </button>
-                            <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="px-2.5 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400 hover:bg-sky-100 text-xs font-semibold transition flex items-center">
-                                <i class="fa-solid fa-expand mr-1"></i> เต็มจอ
+                            <button type="button" onclick="toggleDocZoom()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="ซูมเข้า/ออก">
+                                <i id="zoom-icon" class="fa-solid fa-magnifying-glass-plus"></i>
+                            </button>
+                            <button type="button" onclick="openDocFullscreenModal()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="ขยายเต็มหน้าจอ">
+                                <i class="fa-solid fa-expand"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Document Selection Bar -->
-                    <div class="px-3.5 py-2.5 bg-slate-100/90 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-2 w-full">
-                            <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 shrink-0 flex items-center gap-1">
-                                <i class="fa-solid fa-file-pdf text-rose-500"></i> เลือกเอกสาร:
-                            </span>
-                            <select id="drive-doc-selector" onchange="selectDriveDocument(this.value)" class="text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-sky-500 flex-1 font-sans">
-                                <option value="1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI">📄 การฝึกอบรมและสไลด์ผลงาน LPR (PDF)</option>
-                                <option value="12D73LL6TVwvpoyWS7VbaFOfPLmb-U0xs">📄 เรซูเม่ประวัติการทำงาน (Resume1.pdf)</option>
-                                <option value="1kHAlCARHL77hVaZEf0xl94d67JwruBDj">📄 ผลสอบภาษาอังกฤษ (TOEIC.pdf)</option>
-                                <option value="14Gh3NGcM7dUfuGc1EFOjaeLTzVgle9WU">📄 ทรานสคริปต์ ป.ตรี (Transcripts.pdf)</option>
-                                <option value="12ErpfsgbHDpV6BYG2QJ-Alsk80PyLcU-">📄 ใบสมัครงาน SCG Ceramics (PDF)</option>
-                                <option value="1w2SECTasi8YGIufpz93EMe90dGnn2zkg">📄 เอกสารสำคัญทหาร สด.8 (PDF)</option>
-                                <option value="16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM">📂 โฟลเดอร์รวมเอกสารและใบเซอร์ทั้งหมด (Folder)</option>
-                            </select>
-                            <a id="drive-doc-external-link" href="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs transition shrink-0" title="เปิดไฟล์บน Google Drive">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    <!-- Image / Document Viewport -->
+                    <div id="stage-viewport" class="relative bg-slate-950 flex-1 min-h-[460px] sm:min-h-[540px] flex items-center justify-center p-4 overflow-hidden select-none">
+                        <img id="stage-main-doc-img"
+                             src="./docs/sd8.png"
+                             alt="Document Viewer"
+                             class="max-h-[500px] max-w-full object-contain rounded-lg shadow-2xl transition-transform duration-300 cursor-zoom-in"
+                             onclick="openDocFullscreenModal()" />
+                    </div>
+
+                    <!-- Stage Bottom Controls Bar -->
+                    <div class="p-3 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
+                        <div class="flex items-center space-x-2">
+                            <span id="stage-doc-counter" class="font-mono text-sky-400">เอกสารที่ 1 จาก 7</span>
+                            <span class="text-slate-600">•</span>
+                            <span id="stage-doc-dimensions" class="text-slate-400 font-mono">แนวตั้ง (Portrait)</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <button type="button" onclick="triggerProtectedDownload()" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-lock text-[10px]"></i>
+                                <i class="fa-solid fa-download"></i>
+                                <span>ดาวน์โหลดไฟล์</span>
+                            </button>
+                            <span class="text-slate-600">|</span>
+                            <a id="stage-external-drive-link" href="https://drive.google.com/file/d/1w2SECTasi8YGIufpz93EMe90dGnn2zkg/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition">
+                                <span>เปิดบน Google Drive</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
                             </a>
-                        </div>
-                    </div>
-
-                    <!-- PDF / Drive Preview Stage -->
-                    <div id="drive-preview-stage" class="relative bg-slate-900 h-96 sm:h-[460px] w-full flex flex-col items-center justify-center overflow-hidden">
-                        <iframe id="inline-drive-embed-iframe"
-                                src="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/preview"
-                                class="w-full h-full border-0 bg-slate-900"
-                                allow="autoplay"
-                                title="Google Drive Document Preview">
-                        </iframe>
-                    </div>
-
-                    <div class="p-3 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
-                        <span id="current-doc-status-text" class="flex items-center gap-1.5">
-                            <i class="fa-solid fa-circle-check text-emerald-500"></i>
-                            <span>แสดงตัวอย่างเอกสารจริงจาก Google Drive Cloud</span>
-                        </span>
-                        <div class="flex items-center gap-3">
-                            <a id="drive-doc-download-link" href="https://drive.google.com/uc?export=download&id=1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline flex items-center gap-1">
-                                <i class="fa-solid fa-download"></i> ดาวน์โหลด
-                            </a>
-                            <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline flex items-center gap-1">
-                                <i class="fa-solid fa-expand"></i> ขยายเต็มจอ
-                            </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Interactive E-Book Slide Deck -->
-                <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 text-white border border-slate-800 overflow-hidden shadow-lg">
-                    <div class="p-4 bg-slate-950/80 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse"></span>
-                            <span class="font-display font-bold text-sm text-white">E-Book สรุปผลงาน: โครงการ LPR ระบบรู้ทันทุกการเคลื่อนไหว</span>
+                <!-- Right: Document Description & Details (ด้านขวา อธิบายเอกสาร) -->
+                <div id="showcase-right-col" class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-6 sm:p-7 space-y-5 transition-all duration-300">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between gap-2">
+                            <span id="desc-doc-badge" class="px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-mono text-xs font-bold border border-sky-300 dark:border-sky-800">
+                                MILITARY SERVICE • สด.8
+                            </span>
+                            <span id="desc-doc-year" class="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
+                                ปี พ.ศ. 2550
+                            </span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <span id="inline-slide-counter" class="px-2.5 py-1 rounded-full bg-slate-800 text-sky-300 font-mono text-xs">หน้า 1 / 8</span>
-                            <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold transition flex items-center">
-                                <i class="fa-solid fa-expand mr-1"></i> อ่านเต็มจอ
+
+                        <div>
+                            <h3 id="desc-doc-title" class="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white leading-snug">
+                                หนังสือสำคัญทางทหาร (แบบ สด.8)
+                            </h3>
+                            <p id="desc-doc-subtitle" class="text-xs sm:text-sm text-sky-600 dark:text-sky-400 font-semibold mt-1">
+                                กระทรวงกลาโหม • กองทัพบก
+                            </p>
+                        </div>
+
+                        <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60">
+                            <p id="desc-doc-narrative">
+                                หลักฐานการผ่านการเกณฑ์ทหารและสำเร็จการฝึกวิชาทหารตามพระราชบัญญัติรับราชการทหาร กองหนุนประเภทที่ 1 พร้อมปฏิบัติงานเต็มเวลาโดยไม่มีพันธะทางทหาร
+                            </p>
+                        </div>
+
+                        <div class="space-y-2">
+                            <div class="text-[11px] font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold flex items-center gap-1.5">
+                                <i class="fa-solid fa-list-check"></i> ประเด็นสำคัญและความสำคัญ
+                            </div>
+                            <ul id="desc-doc-highlights" class="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-3 border-t border-slate-200 dark:border-slate-700">
+                        <div id="desc-doc-metrics" class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2">
+                            <i class="fa-solid fa-shield-check text-emerald-600 dark:text-emerald-400 text-base shrink-0"></i>
+                            <span>Status: ปลอดภาระทางทหาร 100% | หมวดหมู่: กองหนุนประเภทที่ 1</span>
+                        </div>
+
+                        <div class="flex items-center justify-between gap-2 pt-1">
+                            <button type="button" onclick="changeTimelineStep(-1)" class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-chevron-left"></i> เอกสารก่อนหน้า
+                            </button>
+                            <button type="button" onclick="changeTimelineStep(1)" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition flex items-center gap-1.5">
+                                เอกสารถัดไป <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </div>
-                    </div>
-
-                    <div id="inline-slide-stage" class="p-6 sm:p-8 flex-1 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/70 min-h-[360px]">
-                        <!-- Populated dynamically via renderSlideContent() -->
-                    </div>
-
-                    <div class="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between gap-2">
-                        <button type="button" onclick="changeSlide(-1)" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center">
-                            <i class="fa-solid fa-chevron-left mr-1.5"></i> หน้าก่อนหน้า
-                        </button>
-                        <div id="inline-slide-dots" class="flex items-center space-x-1.5 overflow-x-auto py-1"></div>
-                        <button type="button" onclick="changeSlide(1)" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center">
-                            หน้าถัดไป <i class="fa-solid fa-chevron-right ml-1.5"></i>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -1826,6 +1860,7 @@
                         if (p.driveDocId) {
                             currentDriveDocId = p.driveDocId;
                             updateDriveViewerDisplay();
+            selectTimelineStep(0);
                         }
                     }
 
@@ -1908,221 +1943,327 @@
             saveAllPortfolioChanges(true);
         }
 
-        function selectDriveDocument(fileId) {
-            currentDriveDocId = fileId;
-            updateDriveViewerDisplay();
-            saveAllPortfolioChanges(true);
-        }
-
-        function updateDriveViewerDisplay() {
-            const iframe = document.getElementById('inline-drive-embed-iframe');
-            const subtitle = document.getElementById('drive-card-subtitle');
-            const extLink = document.getElementById('drive-doc-external-link');
-            const headerExtLink = document.getElementById('external-drive-link');
-            const dlLink = document.getElementById('drive-doc-download-link');
-            const selector = document.getElementById('drive-doc-selector');
-            const codeDisplay = document.getElementById('display-drive-id-code');
-
-            const isFolder = (currentDriveDocId === "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM");
-            const previewUrl = isFolder 
-                ? `https://drive.google.com/embeddedfolderview?id=${currentDriveDocId}#grid`
-                : `https://drive.google.com/file/d/${currentDriveDocId}/preview`;
-            const viewUrl = isFolder
-                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
-                : `https://drive.google.com/file/d/${currentDriveDocId}/view?usp=sharing`;
-            const dlUrl = isFolder
-                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
-                : `https://drive.google.com/uc?export=download&id=${currentDriveDocId}`;
-
-            if (iframe) {
-                iframe.src = previewUrl;
-            }
-            if (subtitle) {
-                subtitle.textContent = "ID: " + currentDriveDocId;
-            }
-            if (codeDisplay) {
-                codeDisplay.textContent = currentDriveDocId;
-            }
-            if (extLink) {
-                extLink.href = viewUrl;
-            }
-            if (headerExtLink) {
-                headerExtLink.href = viewUrl;
-            }
-            if (dlLink) {
-                dlLink.href = dlUrl;
-            }
-            if (selector && selector.value !== currentDriveDocId) {
-                selector.value = currentDriveDocId;
-            }
-        }
-
-        // Slide Editor Modal
-        function openSlideEditorModal() {
-            const modal = document.getElementById('slide-editor-modal');
-            const select = document.getElementById('editor-slide-select');
-            if (select) {
-                select.innerHTML = portfolioSlides.map((s, i) => `<option value="${i}">สไลด์ที่ ${i + 1}: ${s.title.substring(0, 30)}...</option>`).join('');
-                select.value = currentSlideIndex;
-            }
-            loadSlideIntoEditor(currentSlideIndex);
-            if (modal) {
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            }
-        }
-
-        function closeSlideEditorModal() {
-            const modal = document.getElementById('slide-editor-modal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        }
-
-        function loadSlideIntoEditor(idx) {
-            editingSlideIndex = parseInt(idx, 10) || 0;
-            const slide = portfolioSlides[editingSlideIndex];
-            if (!slide) return;
-            const b = document.getElementById('edit-slide-badge');
-            const t = document.getElementById('edit-slide-title');
-            const s = document.getElementById('edit-slide-subtitle');
-            const hl = document.getElementById('edit-slide-highlights');
-            const m = document.getElementById('edit-slide-metrics');
-            const img = document.getElementById('edit-slide-image-url');
-            if (b) b.value = slide.badge || '';
-            if (t) t.value = slide.title || '';
-            if (s) s.value = slide.subtitle || '';
-            if (hl) hl.value = Array.isArray(slide.highlights) ? slide.highlights.join('\n') : (slide.highlights || '');
-            if (m) m.value = slide.metrics || '';
-            if (img) img.value = slide.imageUrl || '';
-        }
-
-        function saveCurrentSlideEdits() {
-            const slide = portfolioSlides[editingSlideIndex];
-            if (slide) {
-                slide.badge = document.getElementById('edit-slide-badge')?.value || slide.badge;
-                slide.title = document.getElementById('edit-slide-title')?.value || slide.title;
-                slide.subtitle = document.getElementById('edit-slide-subtitle')?.value || slide.subtitle;
-                const hlText = document.getElementById('edit-slide-highlights')?.value || '';
-                slide.highlights = hlText.split('\n').map(l => l.trim()).filter(Boolean);
-                slide.metrics = document.getElementById('edit-slide-metrics')?.value || slide.metrics;
-                const img = document.getElementById('edit-slide-image-url')?.value;
-                if (img !== undefined) slide.imageUrl = img.trim();
-                renderSlideContent(currentSlideIndex);
-                closeSlideEditorModal();
-                saveAllPortfolioChanges(true);
-            }
-        }
-
-        function addNewPortfolioSlide() {
-            const newIndex = portfolioSlides.length + 1;
-            portfolioSlides.push({
-                badge: "SLIDE " + String(newIndex).padStart(2, '0') + " • NEW SECTION",
-                title: "หัวข้อสไลด์ผลงานใหม่",
-                subtitle: "คำอธิบายภาพรวมและรายละเอียดของสไลด์นี้",
+        const TIMELINE_PORTFOLIO_DOCS = [
+            {
+                id: "doc_sd8",
+                year: "2007",
+                dateTh: "พ.ศ. 2550",
+                badge: "MILITARY SERVICE • สด.8",
+                title: "หนังสือสำคัญทางทหาร (แบบ สด.8)",
+                subtitle: "กระทรวงกลาโหม • กองทัพบก",
+                category: "Military & Identity",
+                localUrl: "./docs/sd8.png",
+                driveId: "1w2SECTasi8YGIufpz93EMe90dGnn2zkg",
+                driveViewUrl: "https://drive.google.com/file/d/1w2SECTasi8YGIufpz93EMe90dGnn2zkg/view?usp=sharing",
+                defaultOrientation: "portrait",
+                description: "หลักฐานการผ่านการเกณฑ์ทหารและสำเร็จการฝึกวิชาทหารตามพระราชบัญญัติรับราชการทหาร กองหนุนประเภทที่ 1 พร้อมปฏิบัติงานเต็มเวลาโดยไม่มีพันธะทางทหาร",
                 highlights: [
-                    "รายละเอียดผลงานหรือความสำเร็จจุดที่ 1",
-                    "รายละเอียดผลงานหรือความสำเร็จจุดที่ 2"
+                    "ผ่านการรับรองจากกองทัพบกและกระทรวงกลาโหม",
+                    "สถานะปลอดภาระทางทหาร 100% พร้อมเริ่มงานได้ทันที",
+                    "มีระเบียบวินัย ความรับผิดชอบ และความพร้อมในการปฏิบัติงานในองค์กรอุตสาหกรรม"
                 ],
-                metrics: "ผลลัพธ์ตัวชี้วัดหรือประสิทธิภาพของโครงการ",
-                imageUrl: ""
-            });
-            const select = document.getElementById('editor-slide-select');
-            if (select) {
-                select.value = portfolioSlides.length - 1;
-                loadSlideIntoEditor(portfolioSlides.length - 1);
+                metrics: "Status: ปลอดภาระทางทหาร 100% | หมวดหมู่: กองหนุนประเภทที่ 1"
+            },
+            {
+                id: "doc_transcript",
+                year: "2010",
+                dateTh: "พ.ศ. 2553",
+                badge: "HIGHER EDUCATION • ปริญญาตรี",
+                title: "ใบรายงานผลการศึกษา (Transcripts ปริญญาตรี)",
+                subtitle: "มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี (RMUTT)",
+                category: "Education",
+                localUrl: "./docs/transcript.png",
+                driveId: "14Gh3NGcM7dUfuGc1EFOjaeLTzVgle9WU",
+                driveViewUrl: "https://drive.google.com/file/d/14Gh3NGcM7dUfuGc1EFOjaeLTzVgle9WU/view?usp=sharing",
+                defaultOrientation: "portrait",
+                description: "สำเร็จการศึกษาระดับปริญญาตรีอย่างเป็นทางการ พื้นฐานด้านวิศวกรรม/เทคโนโลยี การคำนวณ การคิดเชิงระบบ และการวิเคราะห์โครงสร้างข้อมูลเทคโนโลยีสารสนเทศ",
+                highlights: [
+                    "สำเร็จการศึกษาจากสถาบันการศึกษาชั้นนำด้านเทคโนโลยี ราชมงคลธัญบุรี",
+                    "ทักษะหลัก: การบริหารจัดการระบบ, การวิเคราะห์ข้อมูล, สถิติวิศวกรรม",
+                    "เอกสารรับรองวุฒิการศึกษาฉบับจริงพร้อมลายเซ็นนายทะเบียนมหาวิทยาลัย"
+                ],
+                metrics: "วุฒิการศึกษา: ปริญญาตรี | สถาบัน: มหาวิทยาลัยเทคโนโลยีราชมงคลธัญบุรี"
+            },
+            {
+                id: "doc_scg",
+                year: "2014",
+                dateTh: "พ.ศ. 2557",
+                badge: "CAREER HISTORY • SCG CERAMICS",
+                title: "ประวัติการทำงานและใบสมัคร SCG Ceramics",
+                subtitle: "บริษัท เอสซีจี เซรามิกส์ จำกัด (มหาชน)",
+                category: "Experience",
+                localUrl: "./docs/scg_ceramics.png",
+                driveId: "12ErpfsgbHDpV6BYG2QJ-Alsk80PyLcU-",
+                driveViewUrl: "https://drive.google.com/file/d/12ErpfsgbHDpV6BYG2QJ-Alsk80PyLcU-/view?usp=sharing",
+                defaultOrientation: "portrait",
+                description: "บันทึกประวัติการร่วมงานกับกลุ่มบริษัทในเครือ SCG Ceramics ด้านการควบคุมงานผลิต โครงสร้างพื้นฐานไอที และการจัดการกระบวนการตามมาตรฐานอุตสาหกรรมสากล",
+                highlights: [
+                    "ผ่านการฝึกอบรมวัฒนธรรมองค์กรและมาตรฐานคุณภาพขั้นสูงของ SCG",
+                    "ประสบการณ์บริหารโครงการและการทำงานร่วมกับทีมวิศวกรโรงงานขนาดใหญ่",
+                    "วางรากฐานการบริหารความปลอดภัยและกระบวนการอัตโนมัติ"
+                ],
+                metrics: "องค์กร: เครือปูนซิเมนต์ไทย (SCG Group) | การประเมินผล: ระดับดีเยี่ยม"
+            },
+            {
+                id: "doc_toeic",
+                year: "2023",
+                dateTh: "พ.ศ. 2566",
+                badge: "GLOBAL COMMERCE • ภาษาอังกฤษ",
+                title: "ใบรายงานผลคะแนนสอบภาษาอังกฤษสากล (TOEIC)",
+                subtitle: "Center for Professional Assessment (Thailand)",
+                category: "Language & Global",
+                localUrl: "./docs/toeic.png",
+                driveId: "1kHAlCARHL77hVaZEf0xl94d67JwruBDj",
+                driveViewUrl: "https://drive.google.com/file/d/1kHAlCARHL77hVaZEf0xl94d67JwruBDj/view?usp=sharing",
+                defaultOrientation: "portrait",
+                description: "ผลคะแนนการทดสอบความสามารถภาษาอังกฤษเพื่อการสื่อสารในการทำงานระดับสากล ยืนยันความพร้อมในการสื่อสาร การประสานงานกับผู้บริหารระดับสูง และคู่ค้าข้ามชาติ",
+                highlights: [
+                    "ผ่านการทดสอบมาตรฐานสากล Listening & Reading Comprehension",
+                    "รองรับการทำงานในองค์กรข้ามชาติ (MNC) และการประสานงานกับทีมงานต่างประเทศ",
+                    "สามารถจัดทำรายงานทางเทคนิคและคู่มือการปฏิบัติงานเป็นภาษาอังกฤษได้"
+                ],
+                metrics: "English Proficiency: Professional Workplace English Communication"
+            },
+            {
+                id: "doc_resume",
+                year: "2024",
+                dateTh: "พ.ศ. 2567",
+                badge: "EXECUTIVE RESUME • ประวัติการทำงาน 15+ ปี",
+                title: "ประวัติส่วนตัวและผลงานฉบับสมบูรณ์ (Executive Resume)",
+                subtitle: "ทวีศักดิ์ คำปก (Taweesak Khampok)",
+                category: "Career Profile",
+                localUrl: "./docs/resume.png",
+                driveId: "12D73LL6TVwvpoyWS7VbaFOfPLmb-U0xs",
+                driveViewUrl: "https://drive.google.com/file/d/12D73LL6TVwvpoyWS7VbaFOfPLmb-U0xs/view?usp=sharing",
+                defaultOrientation: "portrait",
+                description: "เอกสารสรุปประวัติการทำงาน ทักษะความเชี่ยวชาญด้าน IT Infrastructure, Traffic Management, Security Automation และการบริหารทีมงานตลอดระยะเวลากว่า 15+ ปี",
+                highlights: [
+                    "ประสบการณ์บริหารโครงการเทคโนโลยีขนาดใหญ่และระบบกล้อง CCTV กว่า 2,000+ ตัว",
+                    "การพัฒนาซอฟต์แวร์และแดชบอร์ด Power BI เชื่อมโยงระบบ ERP & Payroll",
+                    "ประวัติการทำงานต่อเนื่องพร้อมตัวเลขอ้างอิงและรางวัลความสำเร็จระดับองค์กร"
+                ],
+                metrics: "Experience: 15+ Years Enterprise | Core Focus: IT Infra, Security, Automation"
+            },
+            {
+                id: "doc_tsm",
+                year: "2025",
+                dateTh: "พ.ศ. 2568",
+                badge: "STATUTORY LICENSE • ผู้จัดการความปลอดภัย",
+                title: "ใบอนุญาตผู้จัดการความปลอดภัยด้านการขนส่ง (TSM Certified 2025)",
+                subtitle: "กรมการขนส่งทางบก (Department of Land Transport - DLT)",
+                category: "License & Safety",
+                localUrl: "./certs/IMG_1955.jpg",
+                driveId: "1BWz9wq0lru53p4p9jRgN0TLkkZ9TI9jB",
+                driveViewUrl: "https://drive.google.com/file/d/1BWz9wq0lru53p4p9jRgN0TLkkZ9TI9jB/view?usp=sharing",
+                defaultOrientation: "landscape",
+                description: "ใบอนุญาตผู้จัดการความปลอดภัยด้านการขนส่งทางถนน (Transport Safety Manager - TSM) ตามข้อกำหนดกฎหมายของกรมการขนส่งทางบก กำกับดูแลมาตรฐานความปลอดภัยยานพาหนะและพนักงานขับรถ",
+                highlights: [
+                    "ผ่านการฝึกอบรมและสอบวัดผลตามมาตรฐานข้อกำหนดกฎหมายขนส่งทางบก 2568",
+                    "มีอำนาจกำกับดูแลความปลอดภัยการเดินรถ ตรวจสภาพยานพาหนะ และความพร้อมของพนักงาน",
+                    "ยกระดับการบริหารลานจอดรถและป้อม รปภ. ให้สอดคล้องตามมาตรฐานสากล"
+                ],
+                metrics: "License: Transport Safety Manager (TSM 2025) | กรมการขนส่งทางบก"
+            },
+            {
+                id: "doc_lpr",
+                year: "2025",
+                dateTh: "พ.ศ. 2568",
+                badge: "FLAGSHIP INNOVATION • โครงการนวัตกรรม LPR",
+                title: "สไลด์นำเสนอโครงการ LPR และเอกสารการฝึกอบรม (NHR QCC 2025)",
+                subtitle: "Thai Bridgestone Co., Ltd. • นวัตกรรมระบบรู้ทันทุกการเคลื่อนไหว",
+                category: "Flagship Project",
+                localUrl: "./docs/training_lpr.png",
+                driveId: "1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI",
+                driveViewUrl: "https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=sharing",
+                defaultOrientation: "landscape",
+                description: "สไลด์และเอกสารการฝึกอบรมโครงการพัฒนาระบบอ่านป้ายทะเบียนรถอัตโนมัติ (License Plate Recognition - LPR) ที่นำเสนอในเวที NHR QCC 2025 ยกระดับความปลอดภัยและประหยัดงบประมาณ 100%",
+                highlights: [
+                    "ออกแบบและติดตั้งระบบกล้อง LPR 4MP พร้อมเชื่อมต่อไม้กั้นอัตโนมัติ",
+                    "ยกระดับความแม่นยำสูงถึง 99.50% ด้วยการจูนพารามิเตอร์กล้องหน้างานจริง",
+                    "เชื่อมต่อระบบฐานข้อมูล Active Directory และ Time Attendance ของฝ่ายบุคคล"
+                ],
+                metrics: "Accuracy: 99.50% | Cost Avoidance: 64,980 บาท | Throughput: < 30 วินาที/คัน"
             }
-            renderSlideContent(portfolioSlides.length - 1);
-            saveAllPortfolioChanges(true);
+        ];
+
+        let currentTimelineIndex = 0;
+        let currentDocRotation = 0;
+        let isFullWidthLayout = false;
+        let isDocumentZoomed = false;
+
+        function renderTimelineStepper() {
+            const container = document.getElementById('timeline-stepper-container');
+            if (!container) return;
+
+            container.innerHTML = TIMELINE_PORTFOLIO_DOCS.map((doc, idx) => {
+                const isActive = (idx === currentTimelineIndex);
+                return `
+                    <button type="button" onclick="selectTimelineStep(${idx})" class="group flex items-center gap-2 px-3.5 py-2 rounded-xl transition duration-200 shrink-0 border ${
+                        isActive 
+                            ? 'bg-sky-600 text-white border-sky-500 shadow-md shadow-sky-500/20 font-bold' 
+                            : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-sky-400'
+                    }">
+                        <span class="w-6 h-6 rounded-lg flex items-center justify-center font-mono text-xs font-bold ${
+                            isActive ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400'
+                        }">${idx + 1}</span>
+                        <div class="text-left">
+                            <div class="font-mono text-[10px] uppercase tracking-wider opacity-80">${doc.year}</div>
+                            <div class="text-xs font-semibold whitespace-nowrap">${doc.title.split('(')[0].trim().substring(0, 22)}...</div>
+                        </div>
+                    </button>
+                `;
+            }).join('');
         }
 
-        function deleteCurrentPortfolioSlide() {
-            if (portfolioSlides.length <= 1) {
-                alert("ต้องมีสไลด์อย่างน้อย 1 หน้า");
-                return;
+        function selectTimelineStep(index) {
+            currentTimelineIndex = Math.max(0, Math.min(index, TIMELINE_PORTFOLIO_DOCS.length - 1));
+            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            if (!doc) return;
+
+            // Reset rotation and zoom on step change
+            currentDocRotation = 0;
+            isDocumentZoomed = false;
+
+            // Update Left Column (Document Stage)
+            const img = document.getElementById('stage-main-doc-img');
+            const titleBar = document.getElementById('stage-doc-title-bar');
+            const counter = document.getElementById('stage-doc-counter');
+            const dims = document.getElementById('stage-doc-dimensions');
+            const extLink = document.getElementById('stage-external-drive-link');
+
+            if (img) {
+                img.src = doc.localUrl;
+                img.alt = doc.title;
+                img.style.transform = 'rotate(0deg) scale(1)';
             }
-            if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบสไลด์นี้?")) {
-                portfolioSlides.splice(editingSlideIndex, 1);
-                currentSlideIndex = Math.max(0, editingSlideIndex - 1);
-                renderSlideContent(currentSlideIndex);
-                closeSlideEditorModal();
-                saveAllPortfolioChanges(true);
+            if (titleBar) titleBar.textContent = doc.title;
+            if (counter) counter.textContent = `เอกสารที่ ${currentTimelineIndex + 1} จาก ${TIMELINE_PORTFOLIO_DOCS.length}`;
+            if (dims) dims.textContent = doc.defaultOrientation === 'landscape' ? 'แนวนอน (Landscape)' : 'แนวตั้ง (Portrait)';
+            if (extLink) extLink.href = doc.driveViewUrl;
+
+            // Update Right Column (Explanation)
+            const badge = document.getElementById('desc-doc-badge');
+            const year = document.getElementById('desc-doc-year');
+            const title = document.getElementById('desc-doc-title');
+            const subtitle = document.getElementById('desc-doc-subtitle');
+            const narrative = document.getElementById('desc-doc-narrative');
+            const highlights = document.getElementById('desc-doc-highlights');
+            const metrics = document.getElementById('desc-doc-metrics');
+
+            if (badge) badge.textContent = doc.badge;
+            if (year) year.textContent = `ปี ${doc.dateTh} (${doc.year})`;
+            if (title) title.textContent = doc.title;
+            if (subtitle) subtitle.textContent = doc.subtitle;
+            if (narrative) narrative.textContent = doc.description;
+
+            if (highlights) {
+                highlights.innerHTML = (doc.highlights || []).map(h => `
+                    <li class="flex items-start space-x-2.5">
+                        <i class="fa-solid fa-circle-check text-teal-500 mt-1 shrink-0 text-xs"></i>
+                        <span>${h}</span>
+                    </li>
+                `).join('');
             }
-        }
 
-        // Dynamic Slide Viewer
-        function renderSlideContent(index) {
-            currentSlideIndex = index;
-            const slide = portfolioSlides[index];
-            if (!slide) return;
-
-            const stage = document.getElementById('inline-slide-stage');
-            if (stage) {
-                stage.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 font-mono text-xs font-semibold border border-sky-500/30">
-                                <i class="fa-solid fa-layer-group text-[10px]"></i>
-                                ${slide.badge}
-                            </span>
-                            <span class="text-xs font-mono text-slate-400">สไลด์ ${index + 1} / ${portfolioSlides.length}</span>
-                        </div>
-                        
-                        <h3 class="text-xl sm:text-2xl font-display font-bold text-white leading-snug">
-                            ${slide.title}
-                        </h3>
-                        
-                        <p class="text-xs sm:text-sm text-sky-200/80 font-medium">
-                            ${slide.subtitle}
-                        </p>
-
-                        <div class="bg-slate-950/70 rounded-xl p-4 border border-slate-800 space-y-2.5 my-3">
-                            <div class="text-[11px] font-mono uppercase tracking-wider text-teal-400 font-semibold flex items-center gap-1.5">
-                                <i class="fa-solid fa-list-check"></i> ประเด็นสำคัญและแนวทางปฏิบัติการ
-                            </div>
-                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
-                                ${(slide.highlights || []).map(h => `
-                                    <li class="flex items-start space-x-2.5">
-                                        <i class="fa-solid fa-circle-check text-teal-400 mt-1 shrink-0 text-xs"></i>
-                                        <span>${h}</span>
-                                    </li>
-                                `).join('')}
-                            </ul>
-                        </div>
-
-                        <div class="p-3 rounded-xl bg-gradient-to-r from-teal-950/80 to-sky-950/80 border border-teal-500/30 flex items-center gap-2.5 text-xs font-medium text-emerald-300">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                                <i class="fa-solid fa-chart-line text-sm"></i>
-                            </div>
-                            <span>${slide.metrics}</span>
-                        </div>
-                    </div>
+            if (metrics) {
+                metrics.innerHTML = `
+                    <i class="fa-solid fa-shield-check text-emerald-600 dark:text-emerald-400 text-base shrink-0"></i>
+                    <span>${doc.metrics}</span>
                 `;
             }
 
-            const counterEl = document.getElementById('inline-slide-counter');
-            if (counterEl) {
-                counterEl.textContent = `หน้า ${index + 1} / ${portfolioSlides.length}`;
-            }
+            renderTimelineStepper();
+        }
 
-            const dotsEl = document.getElementById('inline-slide-dots');
-            if (dotsEl) {
-                dotsEl.innerHTML = portfolioSlides.map((_, i) => `
-                    <button type="button" onclick="renderSlideContent(${i})" title="ไปยังหน้าที่ ${i + 1}" class="h-2 rounded-full transition-all duration-300 ${i === index ? 'bg-sky-400 w-7' : 'bg-slate-700 hover:bg-slate-500 w-2'}"></button>
-                `).join('');
+        function changeTimelineStep(direction) {
+            let next = currentTimelineIndex + direction;
+            if (next < 0) next = TIMELINE_PORTFOLIO_DOCS.length - 1;
+            if (next >= TIMELINE_PORTFOLIO_DOCS.length) next = 0;
+            selectTimelineStep(next);
+        }
+
+        // Rotate Document 90 Degrees
+        function rotateCurrentDoc() {
+            currentDocRotation = (currentDocRotation + 90) % 360;
+            applyDocTransform();
+        }
+
+        // Toggle Orientation (Horizontal vs Vertical)
+        function toggleDocOrientation() {
+            currentDocRotation = (currentDocRotation === 0) ? 90 : 0;
+            applyDocTransform();
+            const btnText = document.getElementById('orientation-text');
+            if (btnText) {
+                btnText.textContent = (currentDocRotation === 90) ? 'โหมด: แนวนอน (90°)' : 'โหมด: แนวตั้ง (0°)';
             }
         }
 
-        function changeSlide(direction) {
-            let next = currentSlideIndex + direction;
-            if (next < 0) next = portfolioSlides.length - 1;
-            if (next >= portfolioSlides.length) next = 0;
-            renderSlideContent(next);
+        function applyDocTransform() {
+            const img = document.getElementById('stage-main-doc-img');
+            if (!img) return;
+            const scale = isDocumentZoomed ? 1.45 : 1.0;
+            img.style.transform = `rotate(${currentDocRotation}deg) scale(${scale})`;
+            img.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
         }
 
-        // Fullscreen reader modal
-        function openDriveFullscreenModal(mode) {
+        function toggleDocZoom() {
+            isDocumentZoomed = !isDocumentZoomed;
+            const icon = document.getElementById('zoom-icon');
+            if (icon) {
+                icon.className = isDocumentZoomed ? 'fa-solid fa-magnifying-glass-minus' : 'fa-solid fa-magnifying-glass-plus';
+            }
+            applyDocTransform();
+        }
+
+        // Toggle between Split Layout (Doc + Desc) and Full Width Doc Layout
+        function toggleShowcaseLayoutMode() {
+            isFullWidthLayout = !isFullWidthLayout;
+            const leftCol = document.getElementById('showcase-left-col');
+            const rightCol = document.getElementById('showcase-right-col');
+            const textEl = document.getElementById('layout-mode-text');
+            const iconEl = document.getElementById('layout-mode-icon');
+
+            if (isFullWidthLayout) {
+                leftCol.className = "lg:col-span-12 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300";
+                rightCol.classList.add('hidden');
+                if (textEl) textEl.textContent = "แสดงเต็มความกว้าง";
+                if (iconEl) iconEl.className = "fa-solid fa-table-columns text-teal-400";
+            } else {
+                leftCol.className = "lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300";
+                rightCol.classList.remove('hidden');
+                if (textEl) textEl.textContent = "เอกสาร + อธิบาย";
+                if (iconEl) iconEl.className = "fa-solid fa-columns text-sky-600";
+            }
+        }
+
+        // Protected Download Function (Password Protected)
+        function triggerProtectedDownload() {
+            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            if (!doc) return;
+
+            const pass = prompt(`🔐 กรุณากรอกรหัสผ่านเพื่อยืนยันสิทธิ์ดาวน์โหลดเอกสาร:\n"${doc.title}" (Password):`);
+            if (pass === null) {
+                return; // User cancelled
+            }
+            if (pass === ADMIN_PASSWORD) {
+                showToast("✅ ยืนยันรหัสผ่านถูกต้อง กำลังดาวน์โหลดเอกสาร...");
+                const ext = doc.localUrl.endsWith('.jpg') ? '.jpg' : '.png';
+                const a = document.createElement('a');
+                a.href = doc.localUrl;
+                a.download = (doc.id || 'document') + ext;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                alert("⛔ รหัสผ่านไม่ถูกต้อง ไม่อนุญาตให้ดาวน์โหลดเอกสาร");
+            }
+        }
+
+        // Fullscreen Modal for Timeline Document
+        function openDocFullscreenModal() {
+            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            if (!doc) return;
+
             const modal = document.getElementById('fullscreen-modal');
             const titleEl = document.getElementById('modal-title');
             const bodyEl = document.getElementById('modal-body');
@@ -2130,111 +2271,50 @@
             const footerLink = document.getElementById('modal-footer-drive-link');
             if (!modal) return;
 
-            const btnDrive = document.getElementById('modal-btn-drive');
-            const btnPhoto = document.getElementById('modal-btn-photo');
-            const btnSlides = document.getElementById('modal-btn-slides');
-            [btnDrive, btnPhoto, btnSlides].forEach(b => {
-                if (b) {
-                    b.classList.remove('bg-sky-600', 'text-white');
-                    b.classList.add('bg-slate-800', 'text-slate-300');
-                }
-            });
+            if (titleEl) titleEl.textContent = `${doc.title} — ปี ${doc.dateTh} (${doc.year})`;
+            if (footerId) footerId.textContent = doc.driveId;
+            if (footerLink) footerLink.href = doc.driveViewUrl;
 
-            const isFolder = (currentDriveDocId === "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM");
-            const previewUrl = isFolder 
-                ? `https://drive.google.com/embeddedfolderview?id=${currentDriveDocId}#grid`
-                : `https://drive.google.com/file/d/${currentDriveDocId}/preview`;
-            const viewUrl = isFolder
-                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
-                : `https://drive.google.com/file/d/${currentDriveDocId}/view?usp=sharing`;
-
-            if (footerId) footerId.textContent = currentDriveDocId;
-            if (footerLink) footerLink.href = viewUrl;
-
-            if (mode === 'profile-photo') {
-                if (btnPhoto) {
-                    btnPhoto.classList.remove('bg-slate-800', 'text-slate-300');
-                    btnPhoto.classList.add('bg-sky-600', 'text-white');
-                }
-                if (titleEl) titleEl.textContent = "ภาพถ่ายโปรไฟล์ — ทวีศักดิ์ คำปก (Taweesak Khampok)";
-                if (bodyEl) {
-                    bodyEl.innerHTML = `
-                        <div class="h-full w-full flex items-center justify-center p-4">
-                            <img src="./profile.jpg" alt="Profile Full" class="max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl border border-slate-700">
+            if (bodyEl) {
+                bodyEl.innerHTML = `
+                    <div class="h-full w-full flex flex-col items-center justify-between p-4 bg-slate-950">
+                        <div class="flex items-center gap-2 mb-2">
+                            <button type="button" onclick="rotateModalDoc()" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold hover:bg-slate-700 transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-rotate-right text-teal-400"></i> หมุน 90°
+                            </button>
+                            <button type="button" onclick="triggerProtectedDownload()" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-semibold hover:bg-emerald-600 transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-lock text-[10px]"></i>
+                                <i class="fa-solid fa-download"></i> ดาวน์โหลด
+                            </button>
+                            <a href="${doc.driveViewUrl}" target="_blank" class="px-3 py-1.5 rounded-lg bg-sky-700 text-white text-xs font-semibold hover:bg-sky-600 transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> เปิดบน Google Drive
+                            </a>
                         </div>
-                    `;
-                }
-            } else if (mode === 'ebook-slides') {
-                if (btnSlides) {
-                    btnSlides.classList.remove('bg-slate-800', 'text-slate-300');
-                    btnSlides.classList.add('bg-sky-600', 'text-white');
-                }
-                if (titleEl) titleEl.textContent = "E-Book: NHR QCC 2025 LPR Presentation — สไลด์ผลงานจริง";
-                if (bodyEl) {
-                    const s = portfolioSlides[currentSlideIndex];
-                    bodyEl.innerHTML = `
-                        <div class="max-w-4xl w-full mx-auto bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-10 text-white space-y-6 shadow-2xl overflow-y-auto max-h-[82vh]">
-                            <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
-                                <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-mono font-bold border border-sky-500/30">
-                                    ${s.badge}
-                                </span>
-                                <span class="text-xs font-mono text-slate-400">หน้า ${currentSlideIndex + 1} จาก ${portfolioSlides.length}</span>
-                            </div>
-                            
-                            <h2 class="text-2xl sm:text-3xl font-display font-bold text-white leading-snug">${s.title}</h2>
-                            <p class="text-sm sm:text-base text-sky-200/80 font-medium">${s.subtitle}</p>
-                            
-                            <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
-                                <div class="text-xs font-mono uppercase tracking-wider text-teal-400 font-bold flex items-center gap-2">
-                                    <i class="fa-solid fa-list-check"></i> รายละเอียดการดำเนินงานและผลลัพธ์
-                                </div>
-                                <ul class="space-y-2.5 text-sm text-slate-200">
-                                    ${(s.highlights || []).map(h => `
-                                        <li class="flex items-start gap-2.5">
-                                            <i class="fa-solid fa-circle-check text-teal-400 mt-1 shrink-0 text-xs"></i>
-                                            <span>${h}</span>
-                                        </li>
-                                    `).join('')}
-                                </ul>
-                            </div>
-                            
-                            <div class="p-4 rounded-xl bg-gradient-to-r from-teal-950 to-sky-950 border border-teal-500/40 text-emerald-300 font-semibold text-xs sm:text-sm flex items-center gap-3">
-                                <i class="fa-solid fa-chart-line text-lg text-emerald-400 shrink-0"></i>
-                                <span>${s.metrics}</span>
-                            </div>
-
-                            <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
-                                <button type="button" onclick="changeSlide(-1); openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition flex items-center gap-2">
-                                    <i class="fa-solid fa-chevron-left"></i> หน้าก่อนหน้า
-                                </button>
-                                <div class="flex items-center gap-1.5">
-                                    ${portfolioSlides.map((_, i) => `
-                                        <button type="button" onclick="currentSlideIndex=${i}; renderSlideContent(${i}); openDriveFullscreenModal('ebook-slides')" class="h-2 rounded-full transition-all ${i === currentSlideIndex ? 'bg-sky-400 w-6' : 'bg-slate-700 w-2 hover:bg-slate-500'}"></button>
-                                    `).join('')}
-                                </div>
-                                <button type="button" onclick="changeSlide(1); openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold transition flex items-center gap-2">
-                                    หน้าถัดไป <i class="fa-solid fa-chevron-right"></i>
-                                </button>
-                            </div>
+                        <div class="flex-1 w-full flex items-center justify-center overflow-auto p-2">
+                            <img id="modal-full-img" src="${doc.localUrl}" alt="${doc.title}" class="max-h-[78vh] max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-300">
                         </div>
-                    `;
-                }
-            } else {
-                // mode === 'drive-embed'
-                if (btnDrive) {
-                    btnDrive.classList.remove('bg-slate-800', 'text-slate-300');
-                    btnDrive.classList.add('bg-sky-600', 'text-white');
-                }
-                if (titleEl) titleEl.textContent = "ตัวอย่างเอกสาร Google Drive — คลังไฟล์จริงระดับความคมชัดสูง";
-                if (bodyEl) {
-                    bodyEl.innerHTML = `
-                        <iframe src="${previewUrl}" class="w-full h-full border-0 bg-slate-900 rounded-xl" allow="autoplay" title="Google Drive Preview Fullscreen"></iframe>
-                    `;
-                }
+                        <div class="flex items-center justify-between w-full max-w-xl pt-2 border-t border-slate-800 text-xs text-slate-300">
+                            <button type="button" onclick="changeTimelineStep(-1); openDocFullscreenModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold transition">
+                                ← เอกสารก่อนหน้า
+                            </button>
+                            <span>เอกสาร ${currentTimelineIndex + 1} / ${TIMELINE_PORTFOLIO_DOCS.length}</span>
+                            <button type="button" onclick="changeTimelineStep(1); openDocFullscreenModal()" class="px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold transition">
+                                เอกสารถัดไป →
+                            </button>
+                        </div>
+                    </div>
+                `;
             }
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+        }
+
+        let modalDocRotation = 0;
+        function rotateModalDoc() {
+            modalDocRotation = (modalDocRotation + 90) % 360;
+            const img = document.getElementById('modal-full-img');
+            if (img) img.style.transform = `rotate(${modalDocRotation}deg)`;
         }
 
         function closeDriveFullscreenModal() {
@@ -2256,6 +2336,31 @@
             }
         }
 
+        function updateDriveViewerDisplay() {
+            selectTimelineStep(currentTimelineIndex);
+        }
+
+        // Backward compatibility for any button calling openDriveFullscreenModal
+        function openDriveFullscreenModal(mode) {
+            if (mode === 'profile-photo') {
+                const modal = document.getElementById('fullscreen-modal');
+                const titleEl = document.getElementById('modal-title');
+                const bodyEl = document.getElementById('modal-body');
+                if (!modal) return;
+                if (titleEl) titleEl.textContent = "ภาพถ่ายโปรไฟล์ — ทวีศักดิ์ คำปก (Taweesak Khampok)";
+                if (bodyEl) {
+                    bodyEl.innerHTML = `
+                        <div class="h-full w-full flex items-center justify-center p-4 bg-slate-950">
+                            <img src="./profile.jpg" alt="Profile Full" class="max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl border border-slate-700">
+                        </div>
+                    `;
+                }
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                openDocFullscreenModal();
+            }
+        }
         // Theme Toggle (Dark / Light Mode)
         function toggleDarkMode() {
             const htmlEl = document.documentElement;
