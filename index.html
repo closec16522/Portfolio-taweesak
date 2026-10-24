@@ -419,7 +419,7 @@
             </div>
         </section>
 
-        <!-- 2. LIVE GOOGLE DRIVE & INTERACTIVE E-BOOK VIEWER SECTION -->
+                <!-- 2. LIVE GOOGLE DRIVE & INTERACTIVE E-BOOK VIEWER SECTION -->
         <section id="drive-showcase" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
                 <div>
@@ -431,13 +431,13 @@
                         คลังไฟล์จริงจาก Google Drive และสไลด์ผลงานแบบ E-Book (กดดูเต็มจอได้)
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                        ดึงข้อมูลโดยตรงจาก Google Drive ID: <code id="display-drive-id-code" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 font-mono">16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</code> พร้อมระบบเปิดอ่านสไลด์โครงการ LPR ครบทุกหน้า
+                        ดึงเอกสารผลงานและไฟล์ PDF โดยตรงจาก Google Drive ID: <code id="display-drive-id-code" class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-sky-600 dark:text-sky-400 font-mono">1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI</code> พร้อมระบบเปิดอ่านสไลด์โครงการ LPR ครบทุกหน้า
                     </p>
                 </div>
 
                 <div class="flex flex-wrap gap-2">
                     <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
-                        <i class="fa-solid fa-file-arrow-up mr-2"></i> อัปโหลดเอกสาร / เลือกไฟล์ Google Drive
+                        <i class="fa-solid fa-file-arrow-up mr-2"></i> อัปโหลดเอกสาร / เปลี่ยน ID Drive
                     </button>
                     <button type="button" onclick="openSlideEditorModal()" class="admin-only-control px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs sm:text-sm font-bold shadow-sm transition items-center">
                         <i class="fa-solid fa-pen-ruler mr-2"></i> แก้ไขสไลด์ E-Book
@@ -448,26 +448,26 @@
                     <button type="button" onclick="openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center">
                         <i class="fa-solid fa-book-open mr-2"></i> เปิดอ่าน E-Book เต็มจอ
                     </button>
-                    <a id="external-drive-link" href="https://drive.google.com/file/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM/view" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium border border-slate-200 dark:border-slate-700 transition flex items-center">
+                    <a id="external-drive-link" href="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium border border-slate-200 dark:border-slate-700 transition flex items-center">
                         <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดในแท็บใหม่
                     </a>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                <!-- Left: Google Drive & Uploaded Document Viewer Card -->
-                <div class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 overflow-hidden">
+                <!-- Left: Google Drive & Interactive PDF Viewer Card -->
+                <div class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/80 overflow-hidden shadow-sm">
                     <div class="p-4 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-2">
                         <div class="flex items-center space-x-2.5">
-                            <i class="fa-brands fa-google-drive text-sky-600 dark:text-sky-400 text-lg"></i>
+                            <i class="fa-brands fa-google-drive text-sky-600 dark:text-sky-400 text-xl"></i>
                             <div>
-                                <h3 class="font-bold text-slate-800 dark:text-white text-sm">คลังไฟล์และเอกสาร (Google Drive / Upload)</h3>
-                                <p id="drive-card-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">ID: 16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</p>
+                                <h3 class="font-bold text-slate-800 dark:text-white text-sm">คลังไฟล์และเอกสารจริง (Google Drive)</h3>
+                                <p id="drive-card-subtitle" class="text-[11px] text-slate-500 dark:text-slate-400 font-mono">ID: 1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-1.5">
                             <button type="button" onclick="openMediaManagerModal('drive')" class="admin-only-control px-2.5 py-1.5 rounded-lg bg-amber-500 text-slate-950 hover:bg-amber-400 text-xs font-bold transition items-center">
-                                <i class="fa-solid fa-upload mr-1"></i> อัปโหลด/เปลี่ยน
+                                <i class="fa-solid fa-upload mr-1"></i> เปลี่ยน ID
                             </button>
                             <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="px-2.5 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400 hover:bg-sky-100 text-xs font-semibold transition flex items-center">
                                 <i class="fa-solid fa-expand mr-1"></i> เต็มจอ
@@ -475,42 +475,50 @@
                         </div>
                     </div>
 
-                    <div id="drive-preview-stage" class="relative bg-slate-900 h-80 sm:h-96 w-full flex flex-col items-center justify-center overflow-hidden p-3">
-                        <img id="inline-drive-direct-img"
-                             referrerpolicy="no-referrer"
-                             src="https://lh3.googleusercontent.com/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM=w1000"
-                             alt="Google Drive File Preview"
-                             onerror="handleDrivePreviewImgError(this)"
-                             onclick="openDriveFullscreenModal('drive-embed')"
-                             class="w-full h-full object-contain rounded-xl cursor-pointer transition duration-300 hover:scale-[1.02]" />
-
-                        <div id="drive-fallback-card" class="hidden w-full h-full flex flex-col items-center justify-center text-center p-6 bg-gradient-to-br from-slate-900 via-slate-800 to-sky-950 rounded-xl border border-slate-700">
-                            <div class="w-16 h-16 rounded-2xl bg-sky-500/20 border border-sky-400/30 text-sky-400 flex items-center justify-center text-3xl mb-3">
-                                <i class="fa-brands fa-google-drive"></i>
-                            </div>
-                            <h4 class="text-white font-display font-bold text-base">เชื่อมต่อไฟล์ Google Drive พร้อมใช้งาน</h4>
-                            <p id="drive-fallback-id-text" class="text-xs text-sky-300 font-mono mt-1">ID: 16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM</p>
-                            <p class="text-xs text-slate-300 mt-2 max-w-xs">
-                                กรุณาตั้งค่าแชร์ไฟล์ใน Drive เป็น <strong>"ทุกคนที่มีลิงก์ (Anyone with the link)"</strong> หรืออัปโหลดไฟล์จากเครื่อง
-                            </p>
-                            <div class="mt-4 flex flex-wrap justify-center gap-2">
-                                <a id="fallback-open-drive-btn" href="https://drive.google.com/file/d/16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM/view" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold shadow transition flex items-center">
-                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> เปิดบน Google Drive
-                                </a>
-                                <button type="button" onclick="openMediaManagerModal('drive')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow transition flex items-center">
-                                    <i class="fa-solid fa-file-arrow-up mr-1.5"></i> อัปโหลดไฟล์
-                                </button>
-                            </div>
+                    <!-- Document Selection Bar -->
+                    <div class="px-3.5 py-2.5 bg-slate-100/90 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 w-full">
+                            <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 shrink-0 flex items-center gap-1">
+                                <i class="fa-solid fa-file-pdf text-rose-500"></i> เลือกเอกสาร:
+                            </span>
+                            <select id="drive-doc-selector" onchange="selectDriveDocument(this.value)" class="text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 py-1.5 px-2 focus:outline-none focus:ring-2 focus:ring-sky-500 flex-1 font-sans">
+                                <option value="1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI">📄 การฝึกอบรมและสไลด์ผลงาน LPR (PDF)</option>
+                                <option value="12D73LL6TVwvpoyWS7VbaFOfPLmb-U0xs">📄 เรซูเม่ประวัติการทำงาน (Resume1.pdf)</option>
+                                <option value="1kHAlCARHL77hVaZEf0xl94d67JwruBDj">📄 ผลสอบภาษาอังกฤษ (TOEIC.pdf)</option>
+                                <option value="14Gh3NGcM7dUfuGc1EFOjaeLTzVgle9WU">📄 ทรานสคริปต์ ป.ตรี (Transcripts.pdf)</option>
+                                <option value="12ErpfsgbHDpV6BYG2QJ-Alsk80PyLcU-">📄 ใบสมัครงาน SCG Ceramics (PDF)</option>
+                                <option value="1w2SECTasi8YGIufpz93EMe90dGnn2zkg">📄 เอกสารสำคัญทหาร สด.8 (PDF)</option>
+                                <option value="16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM">📂 โฟลเดอร์รวมเอกสารและใบเซอร์ทั้งหมด (Folder)</option>
+                            </select>
+                            <a id="drive-doc-external-link" href="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs transition shrink-0" title="เปิดไฟล์บน Google Drive">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
                         </div>
-
-                        <iframe id="inline-uploaded-pdf-iframe" src="about:blank" class="hidden w-full h-full border-0 rounded-xl bg-white" title="Uploaded PDF Viewer"></iframe>
                     </div>
 
-                    <div class="p-3.5 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                        <span>รองรับการอัปโหลดและดึงภาพจาก Google Drive</span>
-                        <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline">
-                            คลิกขยายเต็มจอ →
-                        </button>
+                    <!-- PDF / Drive Preview Stage -->
+                    <div id="drive-preview-stage" class="relative bg-slate-900 h-96 sm:h-[460px] w-full flex flex-col items-center justify-center overflow-hidden">
+                        <iframe id="inline-drive-embed-iframe"
+                                src="https://drive.google.com/file/d/1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI/preview"
+                                class="w-full h-full border-0 bg-slate-900"
+                                allow="autoplay"
+                                title="Google Drive Document Preview">
+                        </iframe>
+                    </div>
+
+                    <div class="p-3 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+                        <span id="current-doc-status-text" class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                            <span>แสดงตัวอย่างเอกสารจริงจาก Google Drive Cloud</span>
+                        </span>
+                        <div class="flex items-center gap-3">
+                            <a id="drive-doc-download-link" href="https://drive.google.com/uc?export=download&id=1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-download"></i> ดาวน์โหลด
+                            </a>
+                            <button type="button" onclick="openDriveFullscreenModal('drive-embed')" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-expand"></i> ขยายเต็มจอ
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -518,7 +526,7 @@
                 <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 text-white border border-slate-800 overflow-hidden shadow-lg">
                     <div class="p-4 bg-slate-950/80 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
                         <div class="flex items-center space-x-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse"></span>
                             <span class="font-display font-bold text-sm text-white">E-Book สรุปผลงาน: โครงการ LPR ระบบรู้ทันทุกการเคลื่อนไหว</span>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -529,8 +537,8 @@
                         </div>
                     </div>
 
-                    <div id="inline-slide-stage" class="p-6 sm:p-8 flex-1 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/70 min-h-[320px]">
-                        <!-- Populated dynamically -->
+                    <div id="inline-slide-stage" class="p-6 sm:p-8 flex-1 flex flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-900 to-sky-950/70 min-h-[360px]">
+                        <!-- Populated dynamically via renderSlideContent() -->
                     </div>
 
                     <div class="p-4 bg-slate-950/90 border-t border-slate-800 flex items-center justify-between gap-2">
@@ -1511,7 +1519,7 @@
 
         let isEditMode = false;
         let currentMediaTarget = 'profile';
-        let currentDriveDocId = "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM";
+        let currentDriveDocId = "1o40_uVK3tkEZ7-S2hbl-foP4ONsUErtI";
         let customUploadedDocDataUrl = "";
         let customUploadedDocType = "";
         let currentSlideIndex = 0;
@@ -1880,7 +1888,7 @@
             const input = document.getElementById('drive-input-url');
             if (!input || !input.value.trim()) return;
             const val = input.value.trim();
-            const match = val.match(/[-w]{25,}/);
+            const match = val.match(/[a-zA-Z0-9_-]{25,}/);
             const fileId = match ? match[0] : val;
 
             if (currentMediaTarget === 'profile') {
@@ -1900,13 +1908,53 @@
             saveAllPortfolioChanges(true);
         }
 
+        function selectDriveDocument(fileId) {
+            currentDriveDocId = fileId;
+            updateDriveViewerDisplay();
+            saveAllPortfolioChanges(true);
+        }
+
         function updateDriveViewerDisplay() {
-            const inlineImg = document.getElementById('inline-drive-direct-img');
-            if (inlineImg) {
-                inlineImg.src = "https://drive.google.com/thumbnail?id=" + currentDriveDocId + "&sz=w1200";
+            const iframe = document.getElementById('inline-drive-embed-iframe');
+            const subtitle = document.getElementById('drive-card-subtitle');
+            const extLink = document.getElementById('drive-doc-external-link');
+            const headerExtLink = document.getElementById('external-drive-link');
+            const dlLink = document.getElementById('drive-doc-download-link');
+            const selector = document.getElementById('drive-doc-selector');
+            const codeDisplay = document.getElementById('display-drive-id-code');
+
+            const isFolder = (currentDriveDocId === "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM");
+            const previewUrl = isFolder 
+                ? `https://drive.google.com/embeddedfolderview?id=${currentDriveDocId}#grid`
+                : `https://drive.google.com/file/d/${currentDriveDocId}/preview`;
+            const viewUrl = isFolder
+                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
+                : `https://drive.google.com/file/d/${currentDriveDocId}/view?usp=sharing`;
+            const dlUrl = isFolder
+                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
+                : `https://drive.google.com/uc?export=download&id=${currentDriveDocId}`;
+
+            if (iframe) {
+                iframe.src = previewUrl;
             }
-            const fallbackCard = document.getElementById('drive-fallback-card');
-            if (fallbackCard) fallbackCard.classList.add('hidden');
+            if (subtitle) {
+                subtitle.textContent = "ID: " + currentDriveDocId;
+            }
+            if (codeDisplay) {
+                codeDisplay.textContent = currentDriveDocId;
+            }
+            if (extLink) {
+                extLink.href = viewUrl;
+            }
+            if (headerExtLink) {
+                headerExtLink.href = viewUrl;
+            }
+            if (dlLink) {
+                dlLink.href = dlUrl;
+            }
+            if (selector && selector.value !== currentDriveDocId) {
+                selector.value = currentDriveDocId;
+            }
         }
 
         // Slide Editor Modal
@@ -1956,9 +2004,9 @@
                 slide.badge = document.getElementById('edit-slide-badge')?.value || slide.badge;
                 slide.title = document.getElementById('edit-slide-title')?.value || slide.title;
                 slide.subtitle = document.getElementById('edit-slide-subtitle')?.value || slide.subtitle;
+                const hlText = document.getElementById('edit-slide-highlights')?.value || '';
+                slide.highlights = hlText.split('\n').map(l => l.trim()).filter(Boolean);
                 slide.metrics = document.getElementById('edit-slide-metrics')?.value || slide.metrics;
-                const hl = document.getElementById('edit-slide-highlights')?.value;
-                if (hl) slide.highlights = hl.split('\n').filter(s => s.trim());
                 const img = document.getElementById('edit-slide-image-url')?.value;
                 if (img !== undefined) slide.imageUrl = img.trim();
                 renderSlideContent(currentSlideIndex);
@@ -1972,15 +2020,14 @@
             portfolioSlides.push({
                 badge: "SLIDE " + String(newIndex).padStart(2, '0') + " • NEW SECTION",
                 title: "หัวข้อสไลด์ผลงานใหม่",
-                subtitle: "คำอธิบายประกอบผลงานและรายละเอียดหน้างาน",
+                subtitle: "คำอธิบายภาพรวมและรายละเอียดของสไลด์นี้",
                 highlights: [
-                    "จุดเด่นและสาระสำคัญของโครงการข้อที่ 1",
-                    "จุดเด่นและสาระสำคัญของโครงการข้อที่ 2"
+                    "รายละเอียดผลงานหรือความสำเร็จจุดที่ 1",
+                    "รายละเอียดผลงานหรือความสำเร็จจุดที่ 2"
                 ],
-                metrics: "เป้าหมายและผลลัพธ์: ตัวชี้วัดสำคัญของสไลด์นี้",
+                metrics: "ผลลัพธ์ตัวชี้วัดหรือประสิทธิภาพของโครงการ",
                 imageUrl: ""
             });
-            openSlideEditorModal();
             const select = document.getElementById('editor-slide-select');
             if (select) {
                 select.value = portfolioSlides.length - 1;
@@ -1992,7 +2039,7 @@
 
         function deleteCurrentPortfolioSlide() {
             if (portfolioSlides.length <= 1) {
-                alert("ต้องมีสไลด์อย่างน้อย 1 สไลด์");
+                alert("ต้องมีสไลด์อย่างน้อย 1 หน้า");
                 return;
             }
             if (confirm("คุณแน่ใจหรือไม่ว่าต้องการลบสไลด์นี้?")) {
@@ -2004,41 +2051,65 @@
             }
         }
 
-        // Slide Viewer
+        // Dynamic Slide Viewer
         function renderSlideContent(index) {
             currentSlideIndex = index;
             const slide = portfolioSlides[index];
             if (!slide) return;
 
-            const badgeEl = document.getElementById('inline-slide-badge');
-            const titleEl = document.getElementById('inline-slide-title');
-            const subEl = document.getElementById('inline-slide-sub');
-            const hlEl = document.getElementById('inline-slide-highlights');
-            const metEl = document.getElementById('inline-slide-metrics');
+            const stage = document.getElementById('inline-slide-stage');
+            if (stage) {
+                stage.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 font-mono text-xs font-semibold border border-sky-500/30">
+                                <i class="fa-solid fa-layer-group text-[10px]"></i>
+                                ${slide.badge}
+                            </span>
+                            <span class="text-xs font-mono text-slate-400">สไลด์ ${index + 1} / ${portfolioSlides.length}</span>
+                        </div>
+                        
+                        <h3 class="text-xl sm:text-2xl font-display font-bold text-white leading-snug">
+                            ${slide.title}
+                        </h3>
+                        
+                        <p class="text-xs sm:text-sm text-sky-200/80 font-medium">
+                            ${slide.subtitle}
+                        </p>
+
+                        <div class="bg-slate-950/70 rounded-xl p-4 border border-slate-800 space-y-2.5 my-3">
+                            <div class="text-[11px] font-mono uppercase tracking-wider text-teal-400 font-semibold flex items-center gap-1.5">
+                                <i class="fa-solid fa-list-check"></i> ประเด็นสำคัญและแนวทางปฏิบัติการ
+                            </div>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                                ${(slide.highlights || []).map(h => `
+                                    <li class="flex items-start space-x-2.5">
+                                        <i class="fa-solid fa-circle-check text-teal-400 mt-1 shrink-0 text-xs"></i>
+                                        <span>${h}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-gradient-to-r from-teal-950/80 to-sky-950/80 border border-teal-500/30 flex items-center gap-2.5 text-xs font-medium text-emerald-300">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-chart-line text-sm"></i>
+                            </div>
+                            <span>${slide.metrics}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
             const counterEl = document.getElementById('inline-slide-counter');
-
-            if (badgeEl) badgeEl.textContent = slide.badge;
-            if (titleEl) titleEl.textContent = slide.title;
-            if (subEl) subEl.textContent = slide.subtitle;
-            if (counterEl) counterEl.textContent = `สไลด์ ${index + 1} จาก ${portfolioSlides.length}`;
-
-            if (hlEl) {
-                hlEl.innerHTML = (slide.highlights || []).map(h => `
-                    <li class="flex items-start space-x-2">
-                        <i class="fa-solid fa-circle-check text-sky-500 mt-1 shrink-0 text-xs"></i>
-                        <span>${h}</span>
-                    </li>
-                `).join('');
+            if (counterEl) {
+                counterEl.textContent = `หน้า ${index + 1} / ${portfolioSlides.length}`;
             }
 
-            if (metEl) {
-                metEl.innerHTML = `<i class="fa-solid fa-chart-line text-emerald-400 mr-1.5 shrink-0"></i> <span>${slide.metrics}</span>`;
-            }
-
-            const dots = document.getElementById('slide-dots-container');
-            if (dots) {
-                dots.innerHTML = portfolioSlides.map((_, i) => `
-                    <button type="button" onclick="renderSlideContent(${i})" class="w-2.5 h-2.5 rounded-full transition ${i === index ? 'bg-sky-500 w-6' : 'bg-slate-300 dark:bg-slate-700 hover:bg-slate-400'}"></button>
+            const dotsEl = document.getElementById('inline-slide-dots');
+            if (dotsEl) {
+                dotsEl.innerHTML = portfolioSlides.map((_, i) => `
+                    <button type="button" onclick="renderSlideContent(${i})" title="ไปยังหน้าที่ ${i + 1}" class="h-2 rounded-full transition-all duration-300 ${i === index ? 'bg-sky-400 w-7' : 'bg-slate-700 hover:bg-slate-500 w-2'}"></button>
                 `).join('');
             }
         }
@@ -2052,59 +2123,175 @@
 
         // Fullscreen reader modal
         function openDriveFullscreenModal(mode) {
-            const modal = document.getElementById('drive-fullscreen-modal');
-            const titleEl = document.getElementById('reader-modal-title');
-            const bodyEl = document.getElementById('reader-content-body');
+            const modal = document.getElementById('fullscreen-modal');
+            const titleEl = document.getElementById('modal-title');
+            const bodyEl = document.getElementById('modal-body');
+            const footerId = document.getElementById('modal-footer-drive-id');
+            const footerLink = document.getElementById('modal-footer-drive-link');
             if (!modal) return;
 
-            if (mode === 'profile-photo') {
-                if (titleEl) titleEl.textContent = "ภาพถ่ายโปรไฟล์ — ทวีศักดิ์ คำปก";
-                if (bodyEl) {
-                    bodyEl.innerHTML = `<img src="./profile.jpg" alt="Profile Full" class="max-h-[85vh] max-w-full object-contain rounded-2xl shadow-2xl">`;
+            const btnDrive = document.getElementById('modal-btn-drive');
+            const btnPhoto = document.getElementById('modal-btn-photo');
+            const btnSlides = document.getElementById('modal-btn-slides');
+            [btnDrive, btnPhoto, btnSlides].forEach(b => {
+                if (b) {
+                    b.classList.remove('bg-sky-600', 'text-white');
+                    b.classList.add('bg-slate-800', 'text-slate-300');
                 }
-            } else {
-                if (titleEl) titleEl.textContent = "E-Book: NHR QCC 2025 LPR Presentation";
+            });
+
+            const isFolder = (currentDriveDocId === "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM");
+            const previewUrl = isFolder 
+                ? `https://drive.google.com/embeddedfolderview?id=${currentDriveDocId}#grid`
+                : `https://drive.google.com/file/d/${currentDriveDocId}/preview`;
+            const viewUrl = isFolder
+                ? `https://drive.google.com/drive/folders/${currentDriveDocId}?usp=sharing`
+                : `https://drive.google.com/file/d/${currentDriveDocId}/view?usp=sharing`;
+
+            if (footerId) footerId.textContent = currentDriveDocId;
+            if (footerLink) footerLink.href = viewUrl;
+
+            if (mode === 'profile-photo') {
+                if (btnPhoto) {
+                    btnPhoto.classList.remove('bg-slate-800', 'text-slate-300');
+                    btnPhoto.classList.add('bg-sky-600', 'text-white');
+                }
+                if (titleEl) titleEl.textContent = "ภาพถ่ายโปรไฟล์ — ทวีศักดิ์ คำปก (Taweesak Khampok)";
+                if (bodyEl) {
+                    bodyEl.innerHTML = `
+                        <div class="h-full w-full flex items-center justify-center p-4">
+                            <img src="./profile.jpg" alt="Profile Full" class="max-h-[80vh] max-w-full object-contain rounded-2xl shadow-2xl border border-slate-700">
+                        </div>
+                    `;
+                }
+            } else if (mode === 'ebook-slides') {
+                if (btnSlides) {
+                    btnSlides.classList.remove('bg-slate-800', 'text-slate-300');
+                    btnSlides.classList.add('bg-sky-600', 'text-white');
+                }
+                if (titleEl) titleEl.textContent = "E-Book: NHR QCC 2025 LPR Presentation — สไลด์ผลงานจริง";
                 if (bodyEl) {
                     const s = portfolioSlides[currentSlideIndex];
                     bodyEl.innerHTML = `
-                        <div class="max-w-3xl w-full bg-slate-900 border border-slate-700 rounded-3xl p-8 sm:p-12 text-white space-y-6">
-                            <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-mono font-bold">${s.badge}</span>
-                            <h2 class="text-2xl sm:text-3xl font-display font-bold text-white">${s.title}</h2>
-                            <p class="text-sm sm:text-base text-slate-300">${s.subtitle}</p>
-                            <ul class="space-y-3 text-sm text-slate-200">
-                                ${(s.highlights || []).map(h => `<li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-sky-400 mt-1 shrink-0"></i><span>${h}</span></li>`).join('')}
-                            </ul>
-                            <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 text-emerald-400 font-mono text-xs sm:text-sm">
-                                ${s.metrics}
+                        <div class="max-w-4xl w-full mx-auto bg-slate-900 border border-slate-700/80 rounded-3xl p-6 sm:p-10 text-white space-y-6 shadow-2xl overflow-y-auto max-h-[82vh]">
+                            <div class="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                                <span class="px-3 py-1 rounded-full bg-sky-500/20 text-sky-400 text-xs font-mono font-bold border border-sky-500/30">
+                                    ${s.badge}
+                                </span>
+                                <span class="text-xs font-mono text-slate-400">หน้า ${currentSlideIndex + 1} จาก ${portfolioSlides.length}</span>
                             </div>
+                            
+                            <h2 class="text-2xl sm:text-3xl font-display font-bold text-white leading-snug">${s.title}</h2>
+                            <p class="text-sm sm:text-base text-sky-200/80 font-medium">${s.subtitle}</p>
+                            
+                            <div class="p-5 rounded-2xl bg-slate-950/70 border border-slate-800 space-y-3">
+                                <div class="text-xs font-mono uppercase tracking-wider text-teal-400 font-bold flex items-center gap-2">
+                                    <i class="fa-solid fa-list-check"></i> รายละเอียดการดำเนินงานและผลลัพธ์
+                                </div>
+                                <ul class="space-y-2.5 text-sm text-slate-200">
+                                    ${(s.highlights || []).map(h => `
+                                        <li class="flex items-start gap-2.5">
+                                            <i class="fa-solid fa-circle-check text-teal-400 mt-1 shrink-0 text-xs"></i>
+                                            <span>${h}</span>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="p-4 rounded-xl bg-gradient-to-r from-teal-950 to-sky-950 border border-teal-500/40 text-emerald-300 font-semibold text-xs sm:text-sm flex items-center gap-3">
+                                <i class="fa-solid fa-chart-line text-lg text-emerald-400 shrink-0"></i>
+                                <span>${s.metrics}</span>
+                            </div>
+
                             <div class="flex items-center justify-between pt-4 border-t border-slate-800 text-xs">
-                                <button type="button" onclick="changeSlide(-1); openDriveFullscreenModal('ebook')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700">← ก่อนหน้า</button>
-                                <span>สไลด์ ${currentSlideIndex + 1} / ${portfolioSlides.length}</span>
-                                <button type="button" onclick="changeSlide(1); openDriveFullscreenModal('ebook')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700">ถัดไป →</button>
+                                <button type="button" onclick="changeSlide(-1); openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition flex items-center gap-2">
+                                    <i class="fa-solid fa-chevron-left"></i> หน้าก่อนหน้า
+                                </button>
+                                <div class="flex items-center gap-1.5">
+                                    ${portfolioSlides.map((_, i) => `
+                                        <button type="button" onclick="currentSlideIndex=${i}; renderSlideContent(${i}); openDriveFullscreenModal('ebook-slides')" class="h-2 rounded-full transition-all ${i === currentSlideIndex ? 'bg-sky-400 w-6' : 'bg-slate-700 w-2 hover:bg-slate-500'}"></button>
+                                    `).join('')}
+                                </div>
+                                <button type="button" onclick="changeSlide(1); openDriveFullscreenModal('ebook-slides')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold transition flex items-center gap-2">
+                                    หน้าถัดไป <i class="fa-solid fa-chevron-right"></i>
+                                </button>
                             </div>
                         </div>
                     `;
                 }
+            } else {
+                // mode === 'drive-embed'
+                if (btnDrive) {
+                    btnDrive.classList.remove('bg-slate-800', 'text-slate-300');
+                    btnDrive.classList.add('bg-sky-600', 'text-white');
+                }
+                if (titleEl) titleEl.textContent = "ตัวอย่างเอกสาร Google Drive — คลังไฟล์จริงระดับความคมชัดสูง";
+                if (bodyEl) {
+                    bodyEl.innerHTML = `
+                        <iframe src="${previewUrl}" class="w-full h-full border-0 bg-slate-900 rounded-xl" allow="autoplay" title="Google Drive Preview Fullscreen"></iframe>
+                    `;
+                }
             }
+
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
         function closeDriveFullscreenModal() {
-            const modal = document.getElementById('drive-fullscreen-modal');
+            const modal = document.getElementById('fullscreen-modal');
             if (modal) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }
         }
 
-        // Dark Mode Toggle
+        function triggerBrowserFullscreen() {
+            const elem = document.documentElement;
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) elem.requestFullscreen();
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+
+        // Theme Toggle (Dark / Light Mode)
         function toggleDarkMode() {
             const htmlEl = document.documentElement;
             htmlEl.classList.toggle('dark');
             const isDark = htmlEl.classList.contains('dark');
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.className = isDark ? 'fa-solid fa-sun text-sm text-amber-400' : 'fa-solid fa-moon text-sm';
+            }
             try { localStorage.setItem('theme_mode', isDark ? 'dark' : 'light'); } catch(e) {}
         }
+        function toggleTheme() {
+            toggleDarkMode();
+        }
+        window.toggleDarkMode = toggleDarkMode;
+        window.toggleTheme = toggleTheme;
+
+        // Auto apply saved theme on load
+        try {
+            const savedTheme = localStorage.getItem('theme_mode');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        } catch(e) {}
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeDriveFullscreenModal();
+                closePasswordModal();
+                window.closeCertLightbox?.();
+                window.closeTrainingModal?.();
+                closeSlideEditorModal();
+            }
+        });
 
         // Copy to clipboard
         function copyToClipboard(text, msg) {
@@ -2342,6 +2529,12 @@
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            if (themeIcon) {
+                themeIcon.className = isDark ? 'fa-solid fa-sun text-sm text-amber-400' : 'fa-solid fa-moon text-sm';
+            }
+            updateDriveViewerDisplay();
             renderSlideContent(0);
             window.renderTrainingTable();
             loadDataFromGoogleSheet();
