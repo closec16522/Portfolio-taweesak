@@ -321,6 +321,8 @@ function ensureAllSheetsInitialized() {
       ["phone", "062-3285963"],
       ["email", "closec16522@gmail.com"],
       ["address", "116/1 ม.8 ต.ห้วยทราย อ.หนองแค จ.สระบุรี"],
+      ["yearExp", "13+ Years Enterprise Exp."],
+      ["tsmCert", "TSM Certified 2025"],
       ["driveDocId", "16ZL5Xl3TY6mKT3Pt16jkmaMmiL98c5fM"]
     ];
     for (var i = 0; i < defaultProfile.length; i++) {

@@ -235,6 +235,9 @@
                     <i id="header-edit-icon" class="fa-solid fa-lock"></i>
                     <span id="header-edit-text">แก้ไขข้อมูล</span>
                 </button>
+                <button type="button" id="header-cancel-btn" onclick="disableEditMode()" class="hidden px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-white text-xs font-bold transition shadow-sm" title="ยกเลิกการแก้ไข">
+                    <i class="fa-solid fa-xmark mr-1"></i> ยกเลิก
+                </button>
             </div>
         </div>
 
@@ -323,10 +326,11 @@
                     <div class="mt-4 flex flex-wrap justify-center gap-2">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>
-                            TSM Certified 2025
+                            <span id="hero-tsm-text">TSM Certified 2025</span>
                         </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
-                            13+ Years Enterprise Exp.
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 dark:bg-sky-950/60 dark:text-sky-300 border border-sky-200 dark:border-sky-800" title="สามารถแก้ไขอายุงานได้ในโหมดแก้ไข">
+                            <i class="fa-solid fa-clock-rotate-left mr-1.5 text-sky-500"></i>
+                            <span id="hero-exp-text">13+ Years Enterprise Exp.</span>
                         </span>
                     </div>
                 </div>
@@ -1502,7 +1506,7 @@
     <!-- APPLICATION LOGIC: REALTIME GOOGLE SHEETS SYNC & EXECUTIVE CONTROLLER -->
     <script>
         const ADMIN_PASSWORD = "NUTza067668141";
-        const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxmuimN7MDKFIAx0jiBLP0DsVF2-ydfRUGK5mwHqYNloMsPWV_G2TUrd3Ou3xQD548G9A/exec";
+        const GAS_ENDPOINT = "https://script.google.com/macros/s/AKfycbzqunf4WO3YOlZsnFkdErhO5oi8qD1u4nQF_NIE9Pf4TipZduNtaqcL4nDFiMv_DLYHrw/exec";
         const GOOGLE_SHEET_ID = "1UMNzeywtTkZ4jdMdurBnFEWVmNdJulsv58wq0krftCA";
 
         let isEditMode = false;
@@ -1620,7 +1624,7 @@
 
         const NAMED_EDITABLE_IDS = [
             'hero-badge', 'hero-name', 'hero-title', 'hero-bio1', 'hero-bio2',
-            'contact-phone', 'contact-email', 'contact-address',
+            'contact-phone', 'contact-email', 'contact-address', 'hero-exp-text', 'hero-tsm-text',
             'kpi-val-0', 'kpi-val-1', 'kpi-val-2', 'kpi-val-3', 'kpi-val-4', 'kpi-val-5',
             'kpi-title-0', 'kpi-title-1', 'kpi-title-2', 'kpi-title-3', 'kpi-title-4', 'kpi-title-5',
             'kpi-desc-0', 'kpi-desc-1', 'kpi-desc-2', 'kpi-desc-3', 'kpi-desc-4', 'kpi-desc-5'
@@ -1642,11 +1646,14 @@
             });
 
             const headerBtn = document.getElementById('header-edit-btn');
+            const cancelBtn = document.getElementById('header-cancel-btn');
             if (headerBtn) {
                 headerBtn.classList.add('unlocked');
-                document.getElementById('header-edit-icon').className = "fa-solid fa-unlock-keyhole";
-                document.getElementById('header-edit-text').textContent = "โหมดแก้ไขเปิดอยู่";
+                document.getElementById('header-edit-icon').className = "fa-solid fa-floppy-disk";
+                document.getElementById('header-edit-text').textContent = "บันทึกข้อมูลลง Google Sheet";
+                headerBtn.title = "คลิกเพื่อบันทึกการแก้ไขทั้งหมดลง Google Sheet ทันที";
             }
+            if (cancelBtn) cancelBtn.classList.remove('hidden');
             showToast("เปิดโหมดแก้ไขแล้ว: สามารถคลิกแก้ไขข้อความได้โดยตรง แล้วกดปุ่ม 'บันทึกข้อมูลทันที' เพื่อซิงค์ลง Google Sheet");
         }
 
@@ -1665,17 +1672,20 @@
             });
 
             const headerBtn = document.getElementById('header-edit-btn');
+            const cancelBtn = document.getElementById('header-cancel-btn');
             if (headerBtn) {
                 headerBtn.classList.remove('unlocked');
                 document.getElementById('header-edit-icon').className = "fa-solid fa-lock";
                 document.getElementById('header-edit-text').textContent = "แก้ไขข้อมูล";
+                headerBtn.title = "คลิกเพื่อเข้าสู่โหมดแก้ไขข้อมูล";
             }
+            if (cancelBtn) cancelBtn.classList.add('hidden');
         }
 
         function handleEditButtonClick() {
             if (isEditMode) {
-                disableEditMode();
-                showToast("ปิดโหมดแก้ไขเรียบร้อยแล้ว");
+                // If currently editing, clicking the button SAVES changes to Google Sheet!
+                saveAllPortfolioChanges(true);
                 return;
             }
             openPasswordModal();
@@ -1736,6 +1746,8 @@
                 name: document.getElementById('hero-name')?.innerHTML || '',
                 title: document.getElementById('hero-title')?.textContent || '',
                 badge: document.getElementById('hero-badge')?.textContent || '',
+                yearExp: document.getElementById('hero-exp-text')?.textContent.trim() || '13+ Years Enterprise Exp.',
+                tsmCert: document.getElementById('hero-tsm-text')?.textContent.trim() || 'TSM Certified 2025',
                 bio1: document.getElementById('hero-bio1')?.innerHTML || '',
                 bio2: document.getElementById('hero-bio2')?.innerHTML || '',
                 phone: document.getElementById('contact-phone')?.textContent || '',
@@ -1772,7 +1784,11 @@
 
                 const nowStr = new Date().toLocaleTimeString('th-TH');
                 if (badge) badge.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i> บันทึก Google Sheet แล้ว (' + nowStr + ')';
-                if (notify) showToast("✅ บันทึกข้อมูลลง Google Sheet สำเร็จแล้ว (Realtime Database)");
+                if (notify) {
+                    showToast("✅ บันทึกข้อมูลลง Google Sheet สำเร็จแล้ว (Realtime Database)");
+                    alert("✅ บันทึกข้อมูลลง Google Sheet (Sheet ID: 1UMNzeywtTkZ4jdMdurBnFEWVmNdJulsv58wq0krftCA) เรียบร้อยแล้ว!\n\nข้อมูลอัปเดตแบบ Realtime แล้วครับ");
+                    disableEditMode();
+                }
             } catch (err) {
                 console.error('Error saving to Google Sheet:', err);
                 const nowStr = new Date().toLocaleTimeString('th-TH');
@@ -1797,6 +1813,8 @@
                         if (p.phone && document.getElementById('contact-phone')) document.getElementById('contact-phone').textContent = p.phone;
                         if (p.email && document.getElementById('contact-email')) document.getElementById('contact-email').textContent = p.email;
                         if (p.address && document.getElementById('contact-address')) document.getElementById('contact-address').textContent = p.address;
+                        if (p.yearExp && document.getElementById('hero-exp-text')) document.getElementById('hero-exp-text').textContent = p.yearExp;
+                        if (p.tsmCert && document.getElementById('hero-tsm-text')) document.getElementById('hero-tsm-text').textContent = p.tsmCert;
                         if (p.driveDocId) {
                             currentDriveDocId = p.driveDocId;
                             updateDriveViewerDisplay();
