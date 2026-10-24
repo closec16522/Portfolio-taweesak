@@ -419,7 +419,7 @@
             </div>
         </section>
 
-                        <!-- 2. LIVE GOOGLE DRIVE DOCUMENT SHOWCASE & INTERACTIVE TIMELINE PORTFOLIO -->
+                                <!-- 2. LIVE GOOGLE DRIVE DOCUMENT SHOWCASE & INTERACTIVE TIMELINE PORTFOLIO (FULL STAGE) -->
         <section id="drive-showcase" class="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-10 shadow-xl shadow-slate-200/60 dark:shadow-none border border-slate-200/80 dark:border-slate-800 space-y-6">
             <!-- Header -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-6">
@@ -432,28 +432,22 @@
                         คลังไฟล์และเอกสารจริง (Google Drive Timeline)
                     </h2>
                     <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                        ด้านซ้ายแสดงเอกสารต้นฉบับความละเอียดสูง ด้านขวาอธิบายข้อมูลสำคัญ พร้อมระบบเรียงลำดับตาม Timeline เหตุการณ์
+                        แสดงเอกสารและใบรับรองฉบับจริงความละเอียดสูงเต็มหน้าจอ สามารถสลับดูตามไทม์ไลน์ หมุนภาพ และบันทึกมุมมองได้ถาวร
                     </p>
                 </div>
 
-                <!-- Controls: View Mode, Rotate, Fullscreen, Protected Download -->
+                <!-- Controls: Rotate, Save Rotation, Delete, Protected Download, Fullscreen -->
                 <div class="flex flex-wrap items-center gap-2">
-                    <!-- Orientation Toggle Button (กดหมุด/ปรับแนวนอน-แนวตั้ง) -->
-                    <button type="button" id="btn-toggle-orientation" onclick="toggleDocOrientation()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="กดหมุดเพื่อสลับมุมมอง แนวนอน / แนวตั้ง">
-                        <i id="orientation-icon" class="fa-solid fa-arrows-rotate text-sky-600 dark:text-sky-400"></i>
-                        <span id="orientation-text">หมุนดูแนวนอน/ตั้ง</span>
-                    </button>
-
                     <!-- Rotate 90 deg button (กดหมุน) -->
-                    <button type="button" onclick="rotateCurrentDoc()" class="px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="หมุนเอกสาร 90 องศา">
+                    <button type="button" onclick="rotateCurrentDoc()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="หมุนเอกสาร 90 องศา">
                         <i class="fa-solid fa-rotate-right text-teal-600 dark:text-teal-400"></i>
                         <span>หมุน 90°</span>
                     </button>
 
-                    <!-- Toggle Full-Width Document vs Dual Pane (เอกสารอย่างเดียว vs พร้อมคำอธิบาย) -->
-                    <button type="button" id="btn-toggle-layout-mode" onclick="toggleShowcaseLayoutMode()" class="px-3.5 py-2.5 rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-700 dark:text-sky-300 hover:bg-sky-100 dark:hover:bg-sky-900 text-xs sm:text-sm font-semibold border border-sky-300 dark:border-sky-800 transition flex items-center gap-1.5" title="สลับโหมด แสดงเอกสารเต็มๆ หรือ แสดงคู่กับคำอธิบาย">
-                        <i id="layout-mode-icon" class="fa-solid fa-columns text-sky-600"></i>
-                        <span id="layout-mode-text">เอกสาร + อธิบาย</span>
+                    <!-- Save Rotation button (ปุ่มบันทึกมุมมอง) -->
+                    <button type="button" id="btn-save-rotation" onclick="saveCurrentDocRotation()" class="px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 transition flex items-center gap-1.5" title="บันทึกมุมมองของเอกสารนี้ถาวร">
+                        <i class="fa-solid fa-floppy-disk text-emerald-500"></i>
+                        <span>บันทึกมุมมอง</span>
                     </button>
 
                     <!-- Delete Document Button (ปุ่มลบเอกสาร) -->
@@ -490,114 +484,71 @@
                 </div>
             </div>
 
-            <!-- Main Content Area: Left (Document Viewer) & Right (Document Explanation) -->
-            <div id="showcase-content-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                <!-- Left: Document Viewer Stage -->
-                <div id="showcase-left-col" class="lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300">
-                    <!-- Stage Top Bar -->
-                    <div class="p-3.5 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
-                        <div class="flex items-center space-x-2 text-white">
-                            <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
-                            <span id="stage-doc-title-bar" class="font-display font-bold text-slate-200">หนังสือสำคัญทางทหาร (สด.8)</span>
-                        </div>
-                        <div class="flex items-center space-x-2 text-slate-400">
-                            <button type="button" onclick="rotateCurrentDoc()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="หมุนเอกสาร 90 องศา">
-                                <i class="fa-solid fa-rotate-right"></i>
-                            </button>
-                            <button type="button" onclick="toggleDocZoom()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="ซูมเข้า/ออก">
-                                <i id="zoom-icon" class="fa-solid fa-magnifying-glass-plus"></i>
-                            </button>
-                            <button type="button" onclick="openDocFullscreenModal()" class="p-1.5 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition" title="ขยายเต็มหน้าจอ">
-                                <i class="fa-solid fa-expand"></i>
-                            </button>
-                        </div>
+            <!-- Full-Width Document Viewer Stage (แสดงเอกสารเต็มจอ) -->
+            <div class="w-full flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-2xl transition-all duration-300">
+                <!-- Stage Top Bar -->
+                <div class="p-3.5 sm:p-4 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+                    <div class="flex items-center space-x-2.5 text-white">
+                        <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse"></span>
+                        <span id="stage-doc-title-bar" class="font-display font-bold text-slate-100 text-sm sm:text-base">เอกสาร</span>
                     </div>
 
-                    <!-- Image / Document Viewport -->
-                    <div id="stage-viewport" class="relative bg-slate-950 flex-1 min-h-[460px] sm:min-h-[540px] flex items-center justify-center p-4 overflow-hidden select-none">
-                        <img id="stage-main-doc-img"
-                             src="./docs/sd8.png"
-                             alt="Document Viewer"
-                             class="max-h-[500px] max-w-full object-contain rounded-lg shadow-2xl transition-transform duration-300 cursor-zoom-in"
-                             onclick="openDocFullscreenModal()" />
-                    </div>
-
-                    <!-- Stage Bottom Controls Bar -->
-                    <div class="p-3 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2">
-                        <div class="flex items-center space-x-2">
-                            <span id="stage-doc-counter" class="font-mono text-sky-400">เอกสารที่ 1 จาก 7</span>
-                            <span class="text-slate-600">•</span>
-                            <span id="stage-doc-dimensions" class="text-slate-400 font-mono">แนวตั้ง (Portrait)</span>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <button type="button" onclick="triggerProtectedDownload()" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5 transition">
-                                <i class="fa-solid fa-lock text-[10px]"></i>
-                                <i class="fa-solid fa-download"></i>
-                                <span>ดาวน์โหลดไฟล์</span>
-                            </button>
-                            <span class="text-slate-600">|</span>
-                            <a id="stage-external-drive-link" href="https://drive.google.com/file/d/1w2SECTasi8YGIufpz93EMe90dGnn2zkg/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition">
-                                <span>เปิดบน Google Drive</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
-                            </a>
-                        </div>
+                    <div class="flex items-center space-x-2 text-slate-300">
+                        <span id="stage-doc-rotation-status" class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 font-mono text-xs border border-slate-700">มุมมอง: 0°</span>
+                        <button type="button" onclick="rotateCurrentDoc()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition flex items-center gap-1" title="หมุนเอกสาร 90 องศา">
+                            <i class="fa-solid fa-rotate-right text-teal-400"></i>
+                            <span class="hidden sm:inline text-xs">หมุน</span>
+                        </button>
+                        <button type="button" onclick="saveCurrentDocRotation()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 transition flex items-center gap-1" title="บันทึกมุมมองนี้">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            <span class="hidden sm:inline text-xs">บันทึกมุมมอง</span>
+                        </button>
+                        <button type="button" onclick="toggleDocZoom()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition" title="ซูมเข้า/ออก">
+                            <i id="zoom-icon" class="fa-solid fa-magnifying-glass-plus"></i>
+                        </button>
+                        <button type="button" onclick="openDocFullscreenModal()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition" title="ขยายเต็มหน้าจอ">
+                            <i class="fa-solid fa-expand"></i>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Right: Document Description & Details (ด้านขวา อธิบายเอกสาร) -->
-                <div id="showcase-right-col" class="lg:col-span-5 flex flex-col justify-between rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 p-6 sm:p-7 space-y-5 transition-all duration-300">
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between gap-2">
-                            <span id="desc-doc-badge" class="px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 font-mono text-xs font-bold border border-sky-300 dark:border-sky-800">
-                                MILITARY SERVICE • สด.8
-                            </span>
-                            <span id="desc-doc-year" class="text-xs font-mono font-bold text-slate-500 dark:text-slate-400">
-                                ปี พ.ศ. 2550
-                            </span>
-                        </div>
+                <!-- Image / Document Viewport (Full Stage) -->
+                <div id="stage-viewport" class="relative bg-slate-950 flex-1 min-h-[560px] sm:min-h-[720px] flex items-center justify-center p-4 sm:p-8 overflow-hidden select-none">
+                    <img id="stage-main-doc-img"
+                         src="./docs/sd8.png"
+                         alt="Document Viewer"
+                         class="max-h-[700px] sm:max-h-[800px] max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-300 cursor-zoom-in border border-slate-800/80"
+                         onclick="openDocFullscreenModal()" />
+                </div>
 
-                        <div>
-                            <h3 id="desc-doc-title" class="text-xl sm:text-2xl font-display font-bold text-slate-900 dark:text-white leading-snug">
-                                หนังสือสำคัญทางทหาร (แบบ สด.8)
-                            </h3>
-                            <p id="desc-doc-subtitle" class="text-xs sm:text-sm text-sky-600 dark:text-sky-400 font-semibold mt-1">
-                                กระทรวงกลาโหม • กองทัพบก
-                            </p>
-                        </div>
-
-                        <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60">
-                            <p id="desc-doc-narrative">
-                                หลักฐานการผ่านการเกณฑ์ทหารและสำเร็จการฝึกวิชาทหารตามพระราชบัญญัติรับราชการทหาร กองหนุนประเภทที่ 1 พร้อมปฏิบัติงานเต็มเวลาโดยไม่มีพันธะทางทหาร
-                            </p>
-                        </div>
-
-                        <div class="space-y-2">
-                            <div class="text-[11px] font-mono uppercase tracking-wider text-teal-600 dark:text-teal-400 font-bold flex items-center gap-1.5">
-                                <i class="fa-solid fa-list-check"></i> ประเด็นสำคัญและความสำคัญ
-                            </div>
-                            <ul id="desc-doc-highlights" class="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-                                <!-- Populated dynamically -->
-                            </ul>
-                        </div>
+                <!-- Stage Bottom Controls Bar -->
+                <div class="p-3.5 sm:p-4 bg-slate-950 border-t border-slate-800 flex flex-wrap items-center justify-between text-xs sm:text-sm text-slate-400 gap-3">
+                    <div class="flex items-center space-x-2">
+                        <button type="button" onclick="changeTimelineStep(-1)" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-chevron-left"></i> ก่อนหน้า
+                        </button>
+                        <span id="stage-doc-counter" class="font-mono text-sky-400 font-semibold px-2">เอกสารที่ 1 จาก 7</span>
+                        <button type="button" onclick="changeTimelineStep(1)" class="px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                            ถัดไป <i class="fa-solid fa-chevron-right"></i>
+                        </button>
                     </div>
 
-                    <div class="space-y-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                        <div id="desc-doc-metrics" class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-semibold flex items-center gap-2">
-                            <i class="fa-solid fa-shield-check text-emerald-600 dark:text-emerald-400 text-base shrink-0"></i>
-                            <span>Status: ปลอดภาระทางทหาร 100% | หมวดหมู่: กองหนุนประเภทที่ 1</span>
-                        </div>
-
-                        <div class="flex items-center justify-between gap-2 pt-1">
-                            <button type="button" onclick="changeTimelineStep(-1)" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-chevron-left"></i> เอกสารก่อนหน้า
-                            </button>
-                            <button type="button" onclick="deleteCurrentTimelineDoc()" class="px-3 py-2 rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/60 text-xs font-bold transition flex items-center gap-1.5" title="ลบเอกสารนี้">
-                                <i class="fa-solid fa-trash-can"></i> ลบเอกสารนี้
-                            </button>
-                            <button type="button" onclick="changeTimelineStep(1)" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition flex items-center gap-1.5">
-                                เอกสารถัดไป <i class="fa-solid fa-chevron-right"></i>
-                            </button>
-                        </div>
+                    <div class="flex items-center space-x-3 text-xs sm:text-sm">
+                        <button type="button" onclick="deleteCurrentTimelineDoc()" class="text-rose-400 hover:text-rose-300 font-semibold flex items-center gap-1.5 transition" title="ลบเอกสารนี้ออกจากไทม์ไลน์">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                            <span>ลบเอกสาร</span>
+                        </button>
+                        <span class="text-slate-700">|</span>
+                        <button type="button" onclick="triggerProtectedDownload()" class="text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-lock text-[10px]"></i>
+                            <i class="fa-solid fa-download"></i>
+                            <span>ดาวน์โหลดไฟล์</span>
+                        </button>
+                        <span class="text-slate-700">|</span>
+                        <a id="stage-external-drive-link" href="#" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition">
+                            <span>เปิดบน Google Drive</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -2102,6 +2053,12 @@
         ];
 
         let currentTimelineDocs = [...TIMELINE_PORTFOLIO_DOCS];
+        let savedRotations = {};
+        try {
+            const saved = localStorage.getItem('taweesak_doc_rotations');
+            if (saved) savedRotations = JSON.parse(saved);
+        } catch(e) {}
+
         try {
             const savedDocs = localStorage.getItem('taweesak_timeline_docs');
             if (savedDocs) {
@@ -2114,7 +2071,6 @@
 
         let currentTimelineIndex = 0;
         let currentDocRotation = 0;
-        let isFullWidthLayout = false;
         let isDocumentZoomed = false;
 
         function renderTimelineStepper() {
@@ -2136,7 +2092,7 @@
                         }">${idx + 1}</span>
                         <div class="text-left">
                             <div class="font-mono text-[10px] uppercase tracking-wider opacity-80">${doc.year}</div>
-                            <div class="text-xs font-semibold whitespace-nowrap">${doc.title.split('(')[0].trim().substring(0, 18)}...</div>
+                            <div class="text-xs font-semibold whitespace-nowrap">${doc.title.split('(')[0].trim().substring(0, 20)}...</div>
                         </div>
                         <span onclick="event.stopPropagation(); deleteTimelineDocByIndex(${idx})" title="ลบเอกสารนี้ออกจากไทม์ไลน์" class="ml-1 p-1 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/80 transition opacity-60 group-hover:opacity-100" aria-label="ลบเอกสาร">
                             <i class="fa-solid fa-xmark text-xs"></i>
@@ -2152,56 +2108,32 @@
             const doc = currentTimelineDocs[currentTimelineIndex];
             if (!doc) return;
 
-            // Reset rotation and zoom on step change
-            currentDocRotation = 0;
+            // Load saved rotation for this document
+            currentDocRotation = (savedRotations[doc.id] !== undefined) ? savedRotations[doc.id] : (doc.rotation || 0);
             isDocumentZoomed = false;
 
-            // Update Left Column (Document Stage)
+            // Update Stage Elements
             const img = document.getElementById('stage-main-doc-img');
             const titleBar = document.getElementById('stage-doc-title-bar');
             const counter = document.getElementById('stage-doc-counter');
-            const dims = document.getElementById('stage-doc-dimensions');
             const extLink = document.getElementById('stage-external-drive-link');
+            const rotStatus = document.getElementById('stage-doc-rotation-status');
+            const btnSaveRot = document.getElementById('btn-save-rotation');
 
             if (img) {
                 img.src = doc.localUrl;
                 img.alt = doc.title;
-                img.style.transform = 'rotate(0deg) scale(1)';
+                img.style.transform = `rotate(${currentDocRotation}deg) scale(1)`;
             }
-            if (titleBar) titleBar.textContent = doc.title;
+            if (titleBar) titleBar.textContent = `${doc.title} — ปี ${doc.dateTh || doc.year}`;
             if (counter) counter.textContent = `เอกสารที่ ${currentTimelineIndex + 1} จาก ${currentTimelineDocs.length}`;
-            if (dims) dims.textContent = doc.defaultOrientation === 'landscape' ? 'แนวนอน (Landscape)' : 'แนวตั้ง (Portrait)';
+            if (rotStatus) rotStatus.textContent = `มุมมอง: ${currentDocRotation}° (บันทึกแล้ว)`;
             if (extLink) extLink.href = doc.driveViewUrl;
 
-            // Update Right Column (Explanation)
-            const badge = document.getElementById('desc-doc-badge');
-            const year = document.getElementById('desc-doc-year');
-            const title = document.getElementById('desc-doc-title');
-            const subtitle = document.getElementById('desc-doc-subtitle');
-            const narrative = document.getElementById('desc-doc-narrative');
-            const highlights = document.getElementById('desc-doc-highlights');
-            const metrics = document.getElementById('desc-doc-metrics');
-
-            if (badge) badge.textContent = doc.badge;
-            if (year) year.textContent = `ปี ${doc.dateTh} (${doc.year})`;
-            if (title) title.textContent = doc.title;
-            if (subtitle) subtitle.textContent = doc.subtitle;
-            if (narrative) narrative.textContent = doc.description;
-
-            if (highlights) {
-                highlights.innerHTML = (doc.highlights || []).map(h => `
-                    <li class="flex items-start space-x-2.5">
-                        <i class="fa-solid fa-circle-check text-teal-500 mt-1 shrink-0 text-xs"></i>
-                        <span>${h}</span>
-                    </li>
-                `).join('');
-            }
-
-            if (metrics) {
-                metrics.innerHTML = `
-                    <i class="fa-solid fa-shield-check text-emerald-600 dark:text-emerald-400 text-base shrink-0"></i>
-                    <span>${doc.metrics}</span>
-                `;
+            if (btnSaveRot) {
+                btnSaveRot.classList.remove('bg-emerald-600', 'text-white', 'animate-pulse');
+                btnSaveRot.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-800', 'dark:text-slate-200');
+                btnSaveRot.innerHTML = `<i class="fa-solid fa-floppy-disk text-emerald-500"></i> <span>บันทึกมุมมอง</span>`;
             }
 
             renderTimelineStepper();
@@ -2213,6 +2145,66 @@
             if (next < 0) next = currentTimelineDocs.length - 1;
             if (next >= currentTimelineDocs.length) next = 0;
             selectTimelineStep(next);
+        }
+
+        // Rotate Document 90 Degrees
+        function rotateCurrentDoc() {
+            currentDocRotation = (currentDocRotation + 90) % 360;
+            applyDocTransform();
+
+            const rotStatus = document.getElementById('stage-doc-rotation-status');
+            if (rotStatus) rotStatus.textContent = `มุมมอง: ${currentDocRotation}° (ยังไม่บันทึก)`;
+
+            const btnSaveRot = document.getElementById('btn-save-rotation');
+            if (btnSaveRot) {
+                btnSaveRot.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-800', 'dark:text-slate-200');
+                btnSaveRot.classList.add('bg-emerald-600', 'text-white', 'animate-pulse');
+                btnSaveRot.innerHTML = `<i class="fa-solid fa-floppy-disk text-white"></i> <span>บันทึกมุมมอง ${currentDocRotation}°</span>`;
+            }
+        }
+
+        // Save Current Document Rotation Permanently
+        function saveCurrentDocRotation() {
+            const doc = currentTimelineDocs[currentTimelineIndex];
+            if (!doc) return;
+
+            savedRotations[doc.id] = currentDocRotation;
+            doc.rotation = currentDocRotation;
+
+            try {
+                localStorage.setItem('taweesak_doc_rotations', JSON.stringify(savedRotations));
+            } catch(e) {}
+
+            showToast(`✅ บันทึกมุมมอง ${currentDocRotation}° ของเอกสาร "${doc.title}" เรียบร้อยแล้ว (ถาวร)`);
+
+            const rotStatus = document.getElementById('stage-doc-rotation-status');
+            if (rotStatus) rotStatus.textContent = `มุมมอง: ${currentDocRotation}° (บันทึกแล้ว)`;
+
+            const btnSaveRot = document.getElementById('btn-save-rotation');
+            if (btnSaveRot) {
+                btnSaveRot.classList.remove('bg-emerald-600', 'text-white', 'animate-pulse');
+                btnSaveRot.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-800', 'dark:text-slate-200');
+                btnSaveRot.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> <span>บันทึกแล้ว (${currentDocRotation}°)</span>`;
+            }
+
+            saveAllPortfolioChanges(true);
+        }
+
+        function applyDocTransform() {
+            const img = document.getElementById('stage-main-doc-img');
+            if (!img) return;
+            const scale = isDocumentZoomed ? 1.45 : 1.0;
+            img.style.transform = `rotate(${currentDocRotation}deg) scale(${scale})`;
+            img.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+
+        function toggleDocZoom() {
+            isDocumentZoomed = !isDocumentZoomed;
+            const icon = document.getElementById('zoom-icon');
+            if (icon) {
+                icon.className = isDocumentZoomed ? 'fa-solid fa-magnifying-glass-minus' : 'fa-solid fa-magnifying-glass-plus';
+            }
+            applyDocTransform();
         }
 
         // Delete Document from Timeline
@@ -2285,60 +2277,6 @@
             }
         }
 
-        // Rotate Document 90 Degrees
-        function rotateCurrentDoc() {
-            currentDocRotation = (currentDocRotation + 90) % 360;
-            applyDocTransform();
-        }
-
-        // Toggle Orientation (Horizontal vs Vertical)
-        function toggleDocOrientation() {
-            currentDocRotation = (currentDocRotation === 0) ? 90 : 0;
-            applyDocTransform();
-            const btnText = document.getElementById('orientation-text');
-            if (btnText) {
-                btnText.textContent = (currentDocRotation === 90) ? 'โหมด: แนวนอน (90°)' : 'โหมด: แนวตั้ง (0°)';
-            }
-        }
-
-        function applyDocTransform() {
-            const img = document.getElementById('stage-main-doc-img');
-            if (!img) return;
-            const scale = isDocumentZoomed ? 1.45 : 1.0;
-            img.style.transform = `rotate(${currentDocRotation}deg) scale(${scale})`;
-            img.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-        }
-
-        function toggleDocZoom() {
-            isDocumentZoomed = !isDocumentZoomed;
-            const icon = document.getElementById('zoom-icon');
-            if (icon) {
-                icon.className = isDocumentZoomed ? 'fa-solid fa-magnifying-glass-minus' : 'fa-solid fa-magnifying-glass-plus';
-            }
-            applyDocTransform();
-        }
-
-        // Toggle between Split Layout (Doc + Desc) and Full Width Doc Layout
-        function toggleShowcaseLayoutMode() {
-            isFullWidthLayout = !isFullWidthLayout;
-            const leftCol = document.getElementById('showcase-left-col');
-            const rightCol = document.getElementById('showcase-right-col');
-            const textEl = document.getElementById('layout-mode-text');
-            const iconEl = document.getElementById('layout-mode-icon');
-
-            if (isFullWidthLayout) {
-                leftCol.className = "lg:col-span-12 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300";
-                rightCol.classList.add('hidden');
-                if (textEl) textEl.textContent = "แสดงเต็มความกว้าง";
-                if (iconEl) iconEl.className = "fa-solid fa-table-columns text-teal-400";
-            } else {
-                leftCol.className = "lg:col-span-7 flex flex-col justify-between rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl transition-all duration-300";
-                rightCol.classList.remove('hidden');
-                if (textEl) textEl.textContent = "เอกสาร + อธิบาย";
-                if (iconEl) iconEl.className = "fa-solid fa-columns text-sky-600";
-            }
-        }
-
         // Protected Download Function (Password Protected)
         function triggerProtectedDownload() {
             const doc = currentTimelineDocs[currentTimelineIndex];
@@ -2374,9 +2312,11 @@
             const footerLink = document.getElementById('modal-footer-drive-link');
             if (!modal) return;
 
-            if (titleEl) titleEl.textContent = `${doc.title} — ปี ${doc.dateTh} (${doc.year})`;
+            if (titleEl) titleEl.textContent = `${doc.title} — ปี ${doc.dateTh || doc.year}`;
             if (footerId) footerId.textContent = doc.driveId;
             if (footerLink) footerLink.href = doc.driveViewUrl;
+
+            modalDocRotation = currentDocRotation;
 
             if (bodyEl) {
                 bodyEl.innerHTML = `
@@ -2394,7 +2334,7 @@
                             </a>
                         </div>
                         <div class="flex-1 w-full flex items-center justify-center overflow-auto p-2">
-                            <img id="modal-full-img" src="${doc.localUrl}" alt="${doc.title}" class="max-h-[78vh] max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-300">
+                            <img id="modal-full-img" src="${doc.localUrl}" alt="${doc.title}" style="transform: rotate(${modalDocRotation}deg);" class="max-h-[78vh] max-w-full object-contain rounded-xl shadow-2xl transition-transform duration-300">
                         </div>
                         <div class="flex items-center justify-between w-full max-w-xl pt-2 border-t border-slate-800 text-xs text-slate-300">
                             <button type="button" onclick="changeTimelineStep(-1); openDocFullscreenModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold transition">
@@ -2416,8 +2356,11 @@
         let modalDocRotation = 0;
         function rotateModalDoc() {
             modalDocRotation = (modalDocRotation + 90) % 360;
+            currentDocRotation = modalDocRotation;
             const img = document.getElementById('modal-full-img');
             if (img) img.style.transform = `rotate(${modalDocRotation}deg)`;
+            applyDocTransform();
+            saveCurrentDocRotation();
         }
 
         function closeDriveFullscreenModal() {
