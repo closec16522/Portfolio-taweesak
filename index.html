@@ -10,23 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <link rel="alternate icon" href="./favicon.ico">
+    <!-- Production Compiled Tailwind CSS (Optimized for Production, No CDN Warning) -->
+    <link rel="stylesheet" href="./css/tailwind.min.css">
     <script>
-        if (typeof tailwind !== 'undefined') {
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ['Sarabun', 'Inter', 'sans-serif'],
-                            display: ['Prompt', 'Inter', 'sans-serif'],
-                            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
-                        }
-                    }
-                }
-            };
-        }
 
         window.executiveSvgAvatar = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
             <svg xmlns="http://www.w3.org/2000/svg" width="600" height="750" viewBox="0 0 600 750">
@@ -111,6 +100,12 @@
         }
         h1, h2, h3, h4, .font-display {
             font-family: 'Prompt', 'Inter', sans-serif;
+        }
+        .font-sans {
+            font-family: 'Sarabun', 'Inter', sans-serif;
+        }
+        .font-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
         .hidden {
             display: none !important;
@@ -303,7 +298,7 @@
                         <div class="w-60 h-72 sm:w-64 sm:h-80 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border-4 border-white dark:border-slate-800 shadow-xl relative cursor-pointer" onclick="openDriveFullscreenModal('profile-photo')" title="คลิกเพื่อดูภาพโปรไฟล์ขนาดเต็มจอ">
                             <img id="hero-drive-img"
                                  referrerpolicy="no-referrer"
-                                 src="/profile.jpg" data-drive-id="1CdBgiIlgzRiveKbQMhV30s9qrzCyL3FF"
+                                 src="./profile.jpg" data-drive-id="1CdBgiIlgzRiveKbQMhV30s9qrzCyL3FF"
                                  alt="ทวีศักดิ์ คำปก (Taweesak Khampok)"
                                  class="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
                                  onerror="handleHeroImageFallback(this)"
@@ -870,7 +865,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1962.jpg', 'การบริหารจัดการฐานข้อมูล Oracle 12c')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1962.jpg', 'การบริหารจัดการฐานข้อมูล Oracle 12c')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -911,7 +906,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1955.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft PowerPoint 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1955.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft PowerPoint 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -933,7 +928,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1956.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft Access 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1956.jpg', 'ใบรับรองสำเร็จหลักสูตร Microsoft Access 2010')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -955,7 +950,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1957.jpg', 'ใบรับรองการเข้าร่วมอบรมเชิงปฏิบัติการการเขียนภาษาอังกฤษธุรกิจ')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1957.jpg', 'ใบรับรองการเข้าร่วมอบรมเชิงปฏิบัติการการเขียนภาษาอังกฤษธุรกิจ')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -977,7 +972,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1958.jpg', 'วุฒิบัตรหลักสูตรการทำงานทางด้านการคำนวณโดยใช้โปรแกรม Microsoft Excel 2010 ขั้นสูง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1958.jpg', 'วุฒิบัตรหลักสูตรการทำงานทางด้านการคำนวณโดยใช้โปรแกรม Microsoft Excel 2010 ขั้นสูง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -999,7 +994,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1959.jpg', 'วุฒิบัตรหลักสูตรการเขียนแบบทางวิศวกรรมโดยใช้โปรแกรม AutoCAD (3 มิติ)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1959.jpg', 'วุฒิบัตรหลักสูตรการเขียนแบบทางวิศวกรรมโดยใช้โปรแกรม AutoCAD (3 มิติ)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1021,7 +1016,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1960.jpg', 'เกียรติบัตรรางวัลชมเชย โครงงานสหกิจศึกษาดีเด่น ด้านนวัตกรรม ระดับเครือข่าย')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1960.jpg', 'เกียรติบัตรรางวัลชมเชย โครงงานสหกิจศึกษาดีเด่น ด้านนวัตกรรม ระดับเครือข่าย')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1043,7 +1038,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1961.jpg', 'เกียรติบัตรรางวัลรองชนะเลิศอันดับ 1 โครงงานสหกิจศึกษาดีเด่น กลุ่มวิทยาศาสตร์และเทคโนโลยี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1961.jpg', 'เกียรติบัตรรางวัลรองชนะเลิศอันดับ 1 โครงงานสหกิจศึกษาดีเด่น กลุ่มวิทยาศาสตร์และเทคโนโลยี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1065,7 +1060,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1963.jpg', 'ใบรายงานผลคะแนนสอบ TOEIC (470 คะแนน)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1963.jpg', 'ใบรายงานผลคะแนนสอบ TOEIC (470 คะแนน)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1087,7 +1082,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1964.jpg', 'หนังสือแต่งตั้งตำแหน่งวิศวกรชำนาญการฝ่ายวิศวกรรม')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1964.jpg', 'หนังสือแต่งตั้งตำแหน่งวิศวกรชำนาญการฝ่ายวิศวกรรม')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1109,7 +1104,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1965.jpg', 'เกียรติบัตรผู้ปฏิบัติงานด้วยความเสียสละและอุตสาหะครบรอบ 10 ปี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1965.jpg', 'เกียรติบัตรผู้ปฏิบัติงานด้วยความเสียสละและอุตสาหะครบรอบ 10 ปี')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1131,7 +1126,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1966.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Boom Lift \'Snorkel\' รุ่น A46JE')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1966.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Boom Lift \'Snorkel\' รุ่น A46JE')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1153,7 +1148,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1967.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Scissor Lift \'Snorkel\' รุ่น S4726E')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1967.jpg', 'ใบรับรองความปลอดภัยในการปฏิบัติงานเกี่ยวกับเครื่องจักร Scissor Lift \'Snorkel\' รุ่น S4726E')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1175,7 +1170,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1968.jpg', 'หนังสือการขึ้นทะเบียนผู้บังคับหรือปล่อยอากาศยานซึ่งไม่มีคนขับ (ใบอนุญาตขับโดรน น้ำหนักไม่เกิน 25 กิโลกรัม)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1968.jpg', 'หนังสือการขึ้นทะเบียนผู้บังคับหรือปล่อยอากาศยานซึ่งไม่มีคนขับ (ใบอนุญาตขับโดรน น้ำหนักไม่เกิน 25 กิโลกรัม)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1197,7 +1192,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1969.jpg', 'ประกาศนียบัตรหลักสูตรอบรมยานยนต์ไฟฟ้าดัดแปลง EV Conversion รุ่นที่ 51')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1969.jpg', 'ประกาศนียบัตรหลักสูตรอบรมยานยนต์ไฟฟ้าดัดแปลง EV Conversion รุ่นที่ 51')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1219,7 +1214,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1970.jpg', 'ประกาศนียบัตรหลักสูตรอบรมการจัดการพลังงานและระบบกักเก็บพลังงานแสงอาทิตย์ (Energy Storage Solar System)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1970.jpg', 'ประกาศนียบัตรหลักสูตรอบรมการจัดการพลังงานและระบบกักเก็บพลังงานแสงอาทิตย์ (Energy Storage Solar System)')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
@@ -1241,7 +1236,7 @@
           </div>
         </div>
         
-          <button type="button" onclick="openCertLightbox('/certs/IMG_1971.jpg', 'วุฒิบัตรหลักสูตรความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้าสำหรับลูกจ้าง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
+          <button type="button" onclick="openCertLightbox('./certs/IMG_1971.jpg', 'วุฒิบัตรหลักสูตรความปลอดภัยในการทำงานเกี่ยวกับไฟฟ้าสำหรับลูกจ้าง')" class="shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 hover:bg-teal-100 dark:hover:bg-teal-900 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800 text-xs font-semibold shadow-xs transition group" title="คลิกดูภาพใบประกาศนียบัตร">
             <i class="fa-solid fa-image text-teal-600 group-hover:scale-110 transition"></i>
             <span>ดูรูป</span>
           </button>
