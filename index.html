@@ -456,6 +456,18 @@
                         <span id="layout-mode-text">เอกสาร + อธิบาย</span>
                     </button>
 
+                    <!-- Delete Document Button (ปุ่มลบเอกสาร) -->
+                    <button type="button" onclick="deleteCurrentTimelineDoc()" class="px-3.5 py-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 text-rose-600 dark:text-rose-300 text-xs sm:text-sm font-semibold border border-rose-200 dark:border-rose-800 transition flex items-center gap-1.5" title="ลบเอกสารที่เลือกออกจากไทม์ไลน์">
+                        <i class="fa-solid fa-trash-can text-rose-500"></i>
+                        <span>ลบเอกสารนี้</span>
+                    </button>
+
+                    <!-- Restore Deleted Docs Button -->
+                    <button type="button" id="btn-restore-docs" onclick="restoreDefaultTimelineDocs()" class="hidden px-3.5 py-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs sm:text-sm font-semibold border border-amber-200 dark:border-amber-800 transition items-center gap-1.5" title="คืนค่าเอกสารที่เคยลบไปทั้งหมด">
+                        <i class="fa-solid fa-rotate-left text-amber-500"></i>
+                        <span>คืนค่าเอกสารทั้งหมด</span>
+                    </button>
+
                     <!-- Protected Download Button (ใส่รหัสผ่าน) -->
                     <button type="button" onclick="triggerProtectedDownload()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1.5" title="ดาวน์โหลดเอกสาร (ต้องใช้รหัสผ่านยืนยัน)">
                         <i class="fa-solid fa-lock text-xs"></i>
@@ -576,10 +588,13 @@
                         </div>
 
                         <div class="flex items-center justify-between gap-2 pt-1">
-                            <button type="button" onclick="changeTimelineStep(-1)" class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5">
+                            <button type="button" onclick="changeTimelineStep(-1)" class="px-3 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 text-xs font-bold transition flex items-center gap-1.5">
                                 <i class="fa-solid fa-chevron-left"></i> เอกสารก่อนหน้า
                             </button>
-                            <button type="button" onclick="changeTimelineStep(1)" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition flex items-center gap-1.5">
+                            <button type="button" onclick="deleteCurrentTimelineDoc()" class="px-3 py-2 rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/60 text-xs font-bold transition flex items-center gap-1.5" title="ลบเอกสารนี้">
+                                <i class="fa-solid fa-trash-can"></i> ลบเอกสารนี้
+                            </button>
+                            <button type="button" onclick="changeTimelineStep(1)" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition flex items-center gap-1.5">
                                 เอกสารถัดไป <i class="fa-solid fa-chevron-right"></i>
                             </button>
                         </div>
@@ -2086,6 +2101,17 @@
             }
         ];
 
+        let currentTimelineDocs = [...TIMELINE_PORTFOLIO_DOCS];
+        try {
+            const savedDocs = localStorage.getItem('taweesak_timeline_docs');
+            if (savedDocs) {
+                const parsed = JSON.parse(savedDocs);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    currentTimelineDocs = parsed;
+                }
+            }
+        } catch(e) {}
+
         let currentTimelineIndex = 0;
         let currentDocRotation = 0;
         let isFullWidthLayout = false;
@@ -2095,10 +2121,12 @@
             const container = document.getElementById('timeline-stepper-container');
             if (!container) return;
 
-            container.innerHTML = TIMELINE_PORTFOLIO_DOCS.map((doc, idx) => {
+            checkRestoreButtonVisibility();
+
+            container.innerHTML = currentTimelineDocs.map((doc, idx) => {
                 const isActive = (idx === currentTimelineIndex);
                 return `
-                    <button type="button" onclick="selectTimelineStep(${idx})" class="group flex items-center gap-2 px-3.5 py-2 rounded-xl transition duration-200 shrink-0 border ${
+                    <button type="button" onclick="selectTimelineStep(${idx})" class="group flex items-center gap-2 px-3 py-2 rounded-xl transition duration-200 shrink-0 border relative ${
                         isActive 
                             ? 'bg-sky-600 text-white border-sky-500 shadow-md shadow-sky-500/20 font-bold' 
                             : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-sky-400'
@@ -2108,16 +2136,20 @@
                         }">${idx + 1}</span>
                         <div class="text-left">
                             <div class="font-mono text-[10px] uppercase tracking-wider opacity-80">${doc.year}</div>
-                            <div class="text-xs font-semibold whitespace-nowrap">${doc.title.split('(')[0].trim().substring(0, 22)}...</div>
+                            <div class="text-xs font-semibold whitespace-nowrap">${doc.title.split('(')[0].trim().substring(0, 18)}...</div>
                         </div>
+                        <span onclick="event.stopPropagation(); deleteTimelineDocByIndex(${idx})" title="ลบเอกสารนี้ออกจากไทม์ไลน์" class="ml-1 p-1 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/80 transition opacity-60 group-hover:opacity-100" aria-label="ลบเอกสาร">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </span>
                     </button>
                 `;
             }).join('');
         }
 
         function selectTimelineStep(index) {
-            currentTimelineIndex = Math.max(0, Math.min(index, TIMELINE_PORTFOLIO_DOCS.length - 1));
-            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            if (!currentTimelineDocs || currentTimelineDocs.length === 0) return;
+            currentTimelineIndex = Math.max(0, Math.min(index, currentTimelineDocs.length - 1));
+            const doc = currentTimelineDocs[currentTimelineIndex];
             if (!doc) return;
 
             // Reset rotation and zoom on step change
@@ -2137,7 +2169,7 @@
                 img.style.transform = 'rotate(0deg) scale(1)';
             }
             if (titleBar) titleBar.textContent = doc.title;
-            if (counter) counter.textContent = `เอกสารที่ ${currentTimelineIndex + 1} จาก ${TIMELINE_PORTFOLIO_DOCS.length}`;
+            if (counter) counter.textContent = `เอกสารที่ ${currentTimelineIndex + 1} จาก ${currentTimelineDocs.length}`;
             if (dims) dims.textContent = doc.defaultOrientation === 'landscape' ? 'แนวนอน (Landscape)' : 'แนวตั้ง (Portrait)';
             if (extLink) extLink.href = doc.driveViewUrl;
 
@@ -2176,10 +2208,81 @@
         }
 
         function changeTimelineStep(direction) {
+            if (!currentTimelineDocs || currentTimelineDocs.length === 0) return;
             let next = currentTimelineIndex + direction;
-            if (next < 0) next = TIMELINE_PORTFOLIO_DOCS.length - 1;
-            if (next >= TIMELINE_PORTFOLIO_DOCS.length) next = 0;
+            if (next < 0) next = currentTimelineDocs.length - 1;
+            if (next >= currentTimelineDocs.length) next = 0;
             selectTimelineStep(next);
+        }
+
+        // Delete Document from Timeline
+        function deleteTimelineDocByIndex(idx) {
+            if (idx < 0 || idx >= currentTimelineDocs.length) return;
+            const doc = currentTimelineDocs[idx];
+
+            if (currentTimelineDocs.length <= 1) {
+                alert("ต้องมีเอกสารในไทม์ไลน์อย่างน้อย 1 รายการ ไม่สามารถลบทั้งหมดได้");
+                return;
+            }
+
+            const pass = prompt(`🔐 กรุณากรอกรหัสผ่านเพื่อยืนยันการลบเอกสาร:\n"${doc.title}" ออกจากไทม์ไลน์ (Password):`);
+            if (pass === null) return;
+            if (pass !== ADMIN_PASSWORD) {
+                alert("⛔ รหัสผ่านไม่ถูกต้อง ไม่อนุญาตให้ลบเอกสาร");
+                return;
+            }
+
+            if (!confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบเอกสาร "${doc.title}" ออกจากคลังไฟล์ผลงาน?`)) {
+                return;
+            }
+
+            currentTimelineDocs.splice(idx, 1);
+            try {
+                localStorage.setItem('taweesak_timeline_docs', JSON.stringify(currentTimelineDocs));
+            } catch(e) {}
+
+            if (currentTimelineIndex >= currentTimelineDocs.length) {
+                currentTimelineIndex = Math.max(0, currentTimelineDocs.length - 1);
+            }
+
+            showToast(`🗑️ ลบเอกสาร "${doc.title}" เรียบร้อยแล้ว`);
+            renderTimelineStepper();
+            selectTimelineStep(currentTimelineIndex);
+            saveAllPortfolioChanges(true);
+        }
+
+        function deleteCurrentTimelineDoc() {
+            deleteTimelineDocByIndex(currentTimelineIndex);
+        }
+
+        function restoreDefaultTimelineDocs() {
+            const pass = prompt("🔐 กรุณากรอกรหัสผ่านเพื่อคืนค่าเอกสารทั้งหมด (Password):");
+            if (pass === null) return;
+            if (pass !== ADMIN_PASSWORD) {
+                alert("⛔ รหัสผ่านไม่ถูกต้อง");
+                return;
+            }
+            currentTimelineDocs = [...TIMELINE_PORTFOLIO_DOCS];
+            try {
+                localStorage.removeItem('taweesak_timeline_docs');
+            } catch(e) {}
+            currentTimelineIndex = 0;
+            showToast("✅ คืนค่าเอกสารทั้งหมดเรียบร้อยแล้ว");
+            renderTimelineStepper();
+            selectTimelineStep(0);
+            saveAllPortfolioChanges(true);
+        }
+
+        function checkRestoreButtonVisibility() {
+            const btn = document.getElementById('btn-restore-docs');
+            if (!btn) return;
+            if (currentTimelineDocs.length < TIMELINE_PORTFOLIO_DOCS.length) {
+                btn.classList.remove('hidden');
+                btn.classList.add('inline-flex');
+            } else {
+                btn.classList.add('hidden');
+                btn.classList.remove('inline-flex');
+            }
         }
 
         // Rotate Document 90 Degrees
@@ -2238,7 +2341,7 @@
 
         // Protected Download Function (Password Protected)
         function triggerProtectedDownload() {
-            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            const doc = currentTimelineDocs[currentTimelineIndex];
             if (!doc) return;
 
             const pass = prompt(`🔐 กรุณากรอกรหัสผ่านเพื่อยืนยันสิทธิ์ดาวน์โหลดเอกสาร:\n"${doc.title}" (Password):`);
@@ -2261,7 +2364,7 @@
 
         // Fullscreen Modal for Timeline Document
         function openDocFullscreenModal() {
-            const doc = TIMELINE_PORTFOLIO_DOCS[currentTimelineIndex];
+            const doc = currentTimelineDocs[currentTimelineIndex];
             if (!doc) return;
 
             const modal = document.getElementById('fullscreen-modal');
@@ -2297,7 +2400,7 @@
                             <button type="button" onclick="changeTimelineStep(-1); openDocFullscreenModal()" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold transition">
                                 ← เอกสารก่อนหน้า
                             </button>
-                            <span>เอกสาร ${currentTimelineIndex + 1} / ${TIMELINE_PORTFOLIO_DOCS.length}</span>
+                            <span>เอกสาร ${currentTimelineIndex + 1} / ${currentTimelineDocs.length}</span>
                             <button type="button" onclick="changeTimelineStep(1); openDocFullscreenModal()" class="px-3.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-semibold transition">
                                 เอกสารถัดไป →
                             </button>
