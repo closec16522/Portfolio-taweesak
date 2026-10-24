@@ -1894,7 +1894,7 @@
 
                     if (Array.isArray(data.slides) && data.slides.length > 0) {
                         portfolioSlides = data.slides;
-                        renderSlideContent(currentSlideIndex);
+                        if (typeof renderSlideContent === 'function') renderSlideContent(currentSlideIndex);
                     }
                 }
             } catch (err) {
@@ -2736,6 +2736,11 @@
         };
 
         // Initialize on load
+        function renderSlideContent(idx) {
+            // Safe fallback
+        }
+        window.renderSlideContent = renderSlideContent;
+
         document.addEventListener('DOMContentLoaded', () => {
             const isDark = document.documentElement.classList.contains('dark');
             const themeIcon = document.getElementById('theme-icon');
@@ -2743,12 +2748,12 @@
                 themeIcon.className = isDark ? 'fa-solid fa-sun text-sm text-amber-400' : 'fa-solid fa-moon text-sm';
             }
             updateDriveViewerDisplay();
-            renderSlideContent(0);
+            selectTimelineStep(0);
             window.renderTrainingTable();
             loadDataFromGoogleSheet();
         });
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
-            renderSlideContent(0);
+            selectTimelineStep(0);
             window.renderTrainingTable();
             loadDataFromGoogleSheet();
         }
